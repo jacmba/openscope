@@ -136,6 +136,13 @@
         "disabled": true
     },
     {
+        "icao": "gclp",
+        "level": "medium",
+        "name": "Gran Canaria Gando International Airport",
+        "premium": false,
+        "disabled": false        
+    },
+    {
         "icao": "gcrr",
         "level": "easy",
         "name": "Lanzarote Airport",

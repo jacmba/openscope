@@ -1,0 +1,124 @@
+{
+    "airac": 2501,
+    "radio": {
+        "twr": "Gran Canaria Tower",
+        "app": "Gran Canaria Approach",
+        "dep": "Gran Canaria Approach"
+    },
+    "icao": "GCLP",
+    "iata": "LPA",
+    "magnetic_north": -4,
+    "ctr_radius": 800.0,
+    "ctr_ceiling": 24500,
+    "initial_alt": 4000,
+    "position": ["N27d55m92.00", "W15d23m20.00", "77ft"],
+    "rangeRings": {
+        "enabled": true,
+        "center": ["N27d55m92.00", "W15d23m20.00"],
+        "radius_nm": 5.0
+    },
+    "has_terrain": false,
+    "wind": {
+        "angle": 355,
+        "speed": 6
+    },
+    "arrivalRunway": "03L",
+    "departureRunway": "03R",
+    "defaultMaps": ["Base Map"],
+    "airspace": [
+        {
+            "floor": 0,
+            "ceiling": 150,
+            "airspace_class": "B",
+            "poly": [
+                ["N29.00000000", "W017.00000000"],
+                ["N29.00000000", "W013.00000000"],
+                ["N27.00000000", "W013.00000000"],
+                ["N27.00000000", "W017.00000000"],
+                ["N29.00000000", "W017.00000000"]
+            ]
+        }
+    ],
+    "fixes": {
+        "ARTEM": ["N28d24.32m5", "W16d02.02m9"],
+        "ECKOS": ["N28d02.20m5", "W15d20.18m8"],
+        "GDV": ["N28d04.37m5", "W15d25.44m4"],
+        "TFN": ["N28d32.12m6", "W16d16.07m6"]
+    },
+    "restricted": [
+        {
+            "name": "D53",
+            "height": "32000ft",
+            "poly": [
+                ["N28d16.31m9", "W15d31.35m8"],
+                ["N28d16.31m9", "W15d19.31m0"],
+                ["N28d10.07m4", "W15d24.24m4"],
+                ["N28d16.31m9", "W15d31.35m8"]
+            ]
+        }
+    ],
+    "runways":[
+        {
+            "name": ["03L", "21R"],
+            "end": [
+                ["N27d55.013", "W015d23.054", "77ft"],
+                ["N27d56.069", "W015d22.085", "32ft"]
+            ],
+            "ils": [true, true]
+        },
+        {
+            "name": ["03R", "21L"],
+            "end": [
+                ["N27d55.009", "W015d23.042", "69ft"],
+                ["N27d56.065", "W015d22.073", "26ft"]
+            ],
+            "ils": [false, false]
+        }
+    ],
+    "sids": {
+        "TFN4A": {
+            "icao": "TFN4A",
+            "name": "Tenerife North Four Alpha",
+            "altitude": 6000,
+            "rwy": {
+                "GCLP03L": [["ECKOS", "A14+"], ["GDV", "A30-"], "ARTEM", "TFN"],
+                "GCLP03R": [["ECKOS", "A14+"], ["GDV", "A30-"], "ARTEM", "TFN"]
+            },
+            "body": [],
+            "exitPoints": {
+                "TFN": []
+            },
+            "draw": [
+                ["ECKOS", "GDV", "ARTEM", "TFN"]
+            ]
+        }
+    },
+    "stars": {
+    },
+    "spawnPatterns": [
+        {
+            "origin": "GCLP",
+            "destination": "",
+            "category": "departure",
+            "route": "GCLP03R.TFN4A.TFN",
+            "altitude": "",
+            "speed": "",
+            "method": "random",
+            "rate": 9,
+            "airlines": [
+                ["ibb", 4]
+            ]
+        }
+    ],
+    "maps": [
+        {
+            "name": "Base Map",
+            "lines": [
+                ["N29.00000000", "W017.00000000", "N29.00000000", "W013.00000000"],
+                ["N29.00000000", "W013.00000000", "N27.00000000", "W013.00000000"],
+                ["N27.00000000", "W013.00000000", "N27.00000000", "W017.00000000"],
+                ["N27.00000000", "W017.00000000", "N29.00000000", "W017.00000000"]
+            ]
+        }
+    ]
+}
