@@ -92,7 +92,20 @@
         "ARACO": ["N28d25m57.1", "W17d27m8.4"],
         "DRANO": ["N27d39m20.4", "W15d30m24.4"],
         "LOMAS": ["N27d43m13.6", "W15d41m27.8"],
-        "HIE": ["N27d48m58.2", "W17d53m11.0"]
+        "HIE": ["N27d48m58.2", "W17d53m11.0"],
+        "RASEP": ["N28d41m39.0", "W14d26m48.0"],
+        "LZR": ["N29d09m57.6", "W13d30m38.5"],
+        "KORAL": ["N29d43m53.1", "W12d34m42.0"],
+        "ISLET": ["N28d08m34.0", "W15d17m42.0"],
+        "LARYS": ["N28d52m18.6", "W14d50m03.4"],
+        "SARAY": ["N29d45m31.1", "W14d09m26.7"],
+        "SAMAR": ["N30d53m59.0", "W14d24m56.0"],
+        "VASTO": ["N30d30m34.0", "W13d34m22.0"],
+        "THAIS": ["N28d34m20.0", "W15d31m04.0"],
+        "KASAS": ["N29d59m11.1", "W15d46m07.4"],
+        "BIMBO": ["N31d25m17.2", "W16d01m58.4"],
+        "KONBA": ["N31d18m03.0", "W15d18m06.0"],
+        "NERVO": ["N29d20m18.9", "W15d39m07.2"]
     },
     "restricted": [
         {
@@ -103,6 +116,37 @@
                 ["N28d16.31m9", "W15d19.31m0"],
                 ["N28d10.07m4", "W15d24.24m4"],
                 ["N28d16.31m9", "W15d31.35m8"]
+            ]
+        },
+        {
+            "name": "D54",
+            "height": "4000ft",
+            "poly": [
+                ["N28d09m58.4", "W15d25m09.1"],
+                ["N28d12m17.6", "W15d18m59.1"],
+                ["N28d05m31.8", "W15d20m08.4"],
+                ["N28d09m58.4", "W15d25m09.1"]
+            ]
+        },
+        {
+            "name": "D51",
+            "height": "4000ft",
+            "poly": [
+                ["N27d55m46.8", "W15d21m44.3"],
+                ["N27d59m42.9", "W15d16m43.1"],
+                ["N27d52m14.5", "W15d16m22.8"],
+                ["N27d55m46.8", "W15d21m44.3"]
+            ]
+        },
+        {
+            "name": "D78",
+            "height": "12000ft",
+            "poly": [
+                ["N27d45m59.0", "W15d36m00.4"],
+                ["N27d45m59.0", "W15d33m02.2"],
+                ["N27d42m59.7", "W15d33m02.2"],
+                ["N27d42m59.7", "W15d36m00.4"],
+                ["N27d45m59.0", "W15d36m00.4"]
             ]
         }
     ],
@@ -155,6 +199,118 @@
             },
             "draw": [
                 ["ECKOS", "_GDV119023", "COSTI"]
+            ]
+        },
+        "BIMBO7A": {
+            "icao": "BIMBO7A",
+            "name": "Bimbo Seven Alpha",
+            "altitude": 6000,
+            "rwy": {
+                "GCLP03L": [["ECKOS", "A11+"], ["ISLET", "A50+"], "COLON", "THAIS", "NERVO", "KASAS", "BIMBO"],
+                "GCLP03R": [["ECKOS", "A11+"], ["ISLET", "A50+"], "COLON", "THAIS", "NERVO", "KASAS", "BIMBO"]
+            },
+            "body": [],
+            "exitPoints": {
+                "BIMBO": []
+            },
+            "draw": [
+                ["ECKOS", "ISLET", "COLON","THAIS", "NERVO", "KASAS", "BIMBO"]
+            ]
+        },
+        "KONBA6A": {
+            "icao": "KONBA6A",
+            "name": "Konba Six Alpha",
+            "altitude": 6000,
+            "rwy": {
+                "GCLP03L": [["ECKOS", "A11+"], ["ISLET", "A50+"], "COLON", "THAIS", "NERVO", "KASAS", "KONBA"],
+                "GCLP03R": [["ECKOS", "A11+"], ["ISLET", "A50+"], "COLON", "THAIS", "NERVO", "KASAS", "KONBA"]
+            },
+            "body": [],
+            "exitPoints": {
+                "KONBA": []
+            },
+            "draw": [
+                ["ECKOS", "ISLET", "COLON","THAIS", "NERVO", "KASAS", "KONBA"]
+            ]
+        },
+        "SARAY2A": {
+            "icao": "SARAY2A",
+            "name": "Saray Two Alpha",
+            "altitude": 6000,
+            "rwy": {
+                "GCLP03L": [["ECKOS", "A11+"], ["ISLET", "A50+"], "COLON", "LARYS", "SARAY"],
+                "GCLP03R": [["ECKOS", "A11+"], ["ISLET", "A50+"], "COLON", "LARYS", "SARAY"]
+            },
+            "body": [],
+            "exitPoints": {
+                "SARAY": []
+            },
+            "draw": [
+                ["ECKOS", "ISLET", "COLON", "LARYS", "SARAY"]
+            ]
+        },
+        "SAMAR8A": {
+            "icao": "SAMAR8A",
+            "name": "Samar Eight Alpha",
+            "altitude": 6000,
+            "rwy": {
+                "GCLP03L": [["ECKOS", "A11+"], ["ISLET", "A50+"], "COLON", "LARYS", "SARAY", "SAMAR"],
+                "GCLP03R": [["ECKOS", "A11+"], ["ISLET", "A50+"], "COLON", "LARYS", "SARAY", "SAMAR"]
+            },
+            "body": [],
+            "exitPoints": {
+                "SAMAR": []
+            },
+            "draw": [
+                ["ECKOS", "ISLET", "COLON", "LARYS", "SARAY", "SAMAR"]
+            ]
+        },
+        "VASTO8A": {
+            "icao": "VASTO8A",
+            "name": "Vasto Eight Alpha",
+            "altitude": 6000,
+            "rwy": {
+                "GCLP03L": [["ECKOS", "A11+"], ["ISLET", "A50+"], "COLON", "LARYS", "SARAY", "VASTO"],
+                "GCLP03R": [["ECKOS", "A11+"], ["ISLET", "A50+"], "COLON", "LARYS", "SARAY", "VASTO"]
+            },
+            "body": [],
+            "exitPoints": {
+                "VASTO": []
+            },
+            "draw": [
+                ["ECKOS", "ISLET", "COLON", "LARYS", "SARAY", "VASTO"]
+            ]
+        },
+        "RASEP2A": {
+            "icao": "RASEP2A",
+            "name": "Rasep Two Alpha",
+            "altitude": 6000,
+            "rwy": {
+                "GCLP03L": [["ECKOS", "A11+"], ["ISLET", "A50+"], "RASEP"],
+                "GCLP03R": [["ECKOS", "A11+"], ["ISLET", "A50+"], "RASEP"]
+            },
+            "body": [],
+            "exitPoints": {
+                "RASEP": []
+            },
+            "draw": [
+                ["ECKOS", "ISLET", "RASEP"]
+            ]
+        },
+        "KORAL9A": {
+            "icao": "KORAL9A",
+            "name": "Koral Niner Alpha",
+            "altitude": 6000,
+            "rwy": {
+                "GCLP03L": [["ECKOS", "A11+"], ["ISLET", "A50+"], "LZR", "KORAL"],
+                "GCLP03R": [["ECKOS", "A11+"], ["ISLET", "A50+"], "LZR", "KORAL"]
+            },
+            "body": [],
+            "exitPoints": {
+                "KORAL": []
+            },
+            "draw": [
+                ["ECKOS", "ISLET", "LZR", "KORAL"]
             ]
         },
         "ODEGI2A": {
