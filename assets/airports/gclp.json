@@ -17,7 +17,7 @@
         "center": ["N27d55m92.00", "W15d23m20.00"],
         "radius_nm": 5.0
     },
-    "has_terrain": false,
+    "has_terrain": true,
     "wind": {
         "angle": 355,
         "speed": 6
@@ -68,10 +68,31 @@
         }
     ],
     "fixes": {
+        "_GDV119023": ["N27d54m51.0", "W15d02m13.9"],
+        "_GDV176023": ["N27d39m10.5", "W15d21m43.8"],
+        "_GDV218023": ["N27d40m23.7", "W15d43m38.9"],
+        "_GDV090017": ["N28d05m55.7", "W15d06m37.1"],
+        "KOPUD": ["N28d08m23.0", "W14d30m28.0"],
         "ARTEM": ["N28d24.32m5", "W16d02.02m9"],
         "ECKOS": ["N28d02.20m5", "W15d20.18m8"],
+        "COSTI": ["N27d21m36.5", "W13d42m08.5"],
         "GDV": ["N28d04.37m5", "W15d25.44m4"],
-        "TFN": ["N28d32.12m6", "W16d16.07m6"]
+        "TFN": ["N28d32.12m6", "W16d16.07m6"],
+        "TFS": ["N28d00m08.8", "W16d41m16.5"],
+        "MOVAS" : ["N27d44m12.9", "W16d42m01.8"],
+        "ODEGI": ["N26d53m40.5", "W16d17m24.4"],
+        "REMGI": ["N27d05m24.7", "W15d16m10.6"],
+        "SARWO": ["N27d31m08.2", "W16d14m36.8"],
+        "CANDE": ["N28d19m24.9", "W15d53m5.1"],
+        "COLON": ["N28d19m42.6", "W15d14m31.3"],
+        "ENETA": ["N27d55m29.6", "W14d59m38.4"],
+        "LALTO": ["N27d41m53.2", "W15d00m14.3"],
+        "TUPIK": ["N27d53m27.0", "W14d44m44.0"],
+        "TESEL": ["N28d29m17.8", "W16d49m59.7"],
+        "ARACO": ["N28d25m57.1", "W17d27m8.4"],
+        "DRANO": ["N27d39m20.4", "W15d30m24.4"],
+        "LOMAS": ["N27d43m13.6", "W15d41m27.8"],
+        "HIE": ["N27d48m58.2", "W17d53m11.0"]
     },
     "restricted": [
         {
@@ -104,6 +125,102 @@
         }
     ],
     "sids": {
+        "KOPUD1A": {
+            "icao": "KOPUD1A",
+            "name": "Kopud One Alpha",
+            "altitude": 3000,
+            "rwy": {
+                "GCLP03L": [["ECKOS", "A11+"], "_GDV090017", "KOPUD"],
+                "GCLP03R": [["ECKOS", "A11+"], ["_GDV090017", "A30-"], "KOPUD"]
+            },
+            "body": [],
+            "exitPoints": {
+                "KOPUD": []
+            },
+            "draw": [
+                ["ECKOS", "_GDV090017", "KOPUD"]
+            ]
+        },
+        "COSTI4A": {
+            "icao": "COSTI4A",
+            "name": "Costi Four Alpha",
+            "altitude": 6000,
+            "rwy": {
+                "GCLP03L": [["ECKOS", "A11+"], "_GDV119023", "COSTI"],
+                "GCLP03R": [["ECKOS", "A11+"], "_GDV119023", "COSTI"]
+            },
+            "body": [],
+            "exitPoints": {
+                "ODEGI": []
+            },
+            "draw": [
+                ["ECKOS", "_GDV119023", "COSTI"]
+            ]
+        },
+        "ODEGI2A": {
+            "icao": "ODEGI2A",
+            "name": "Odegi Two Alpha",
+            "altitude": 6000,
+            "rwy": {
+                "GCLP03L": [["ECKOS", "A11+"], "_GDV119023", "_GDV176023", "DRANO", "_GDV218023", "ODEGI"],
+                "GCLP03R": [["ECKOS", "A11+"], "_GDV119023", "_GDV176023", "DRANO", "_GDV218023", "ODEGI"]
+            },
+            "body": [],
+            "exitPoints": {
+                "ODEGI": []
+            },
+            "draw": [
+                ["ECKOS", "_GDV119023", "_GDV176023", "DRANO", "_GDV218023", "ODEGI"]
+            ]
+        },
+        "REMGI2A": {
+            "icao": "REMGI2A",
+            "name": "Remgi Two Alpha",
+            "altitude": 6000,
+            "rwy": {
+                "GCLP03L": [["ECKOS", "A11+"], "_GDV119023", "_GDV176023", "REMGI"],
+                "GCLP03R": [["ECKOS", "A11+"], "_GDV119023", "_GDV176023", "REMGI"]
+            },
+            "body": [],
+            "exitPoints": {
+                "ODEGI": []
+            },
+            "draw": [
+                ["ECKOS", "_GDV119023", "_GDV176023", "REMGI"]
+            ]
+        },
+        "HIE5A": {
+            "icao": "HIE5A",
+            "name": "Hierro Five Alpha",
+            "altitude": 6000,
+            "rwy": {
+                "GCLP03L": [["ECKOS", "A11+"], "_GDV119023", "_GDV176023", "DRANO", "HIE"],
+                "GCLP03R": [["ECKOS", "A11+"], "_GDV119023", "_GDV176023", "DRANO", "HIE"]
+            },
+            "body": [],
+            "exitPoints": {
+                "HIE": []
+            },
+            "draw": [
+                ["ECKOS", "_GDV119023", "_GDV176023", "DRANO", "HIE"]
+            ]
+        },
+        "MOVAS1A": {
+            "icao": "MOVAS1A",
+            "name": "Movas One Alpha",
+            "altitude": 6000,
+            "rwy": {
+                "GCLP03L": [["ECKOS", "A11+"], "_GDV119023", "_GDV176023", "DRANO", "SARWO", "MOVAS"],
+                "GCLP03R": [["ECKOS", "A11+"], "_GDV119023", "_GDV176023", "DRANO", "SARWO", "MOVAS"]
+            },
+            "body": [],
+            "exitPoints": {
+                "MOVAS": []
+            },
+            "draw": [
+                ["ECKOS", "_GDV119023", "_GDV176023", "DRANO", "SARWO", "MOVAS"]
+            ]
+        },
         "TFN4A": {
             "icao": "TFN4A",
             "name": "Tenerife North Four Alpha",
@@ -119,6 +236,38 @@
             "draw": [
                 ["ECKOS", "GDV", "ARTEM", "TFN"]
             ]
+        },
+        "ARACO4A": {
+            "icao": "ARACO4A",
+            "name": "Araco One Alpha",
+            "altitude": 6000,
+            "rwy": {
+                "GCLP03L": [["ECKOS", "A14+"], ["GDV", "A30-"], "ARTEM", "TFN", "TESEL", "ARACO"],
+                "GCLP03R": [["ECKOS", "A14+"], ["GDV", "A30-"], "ARTEM", "TFN", "TESEL", "ARACO"]
+            },
+            "body": [],
+            "exitPoints": {
+                "ARACO": []
+            },
+            "draw": [
+                ["ECKOS", "GDV", "ARTEM", "TFN", "TESEL", "ARACO"]
+            ]
+        },
+        "LOMAS1A": {
+            "icao": "LOMAS1A",
+            "name": "Lomas One Alpha",
+            "altitude": 6000,
+            "rwy": {
+                "GCLP03L": [["ECKOS", "A11+"], "_GDV119023", "_GDV176023", "DRANO", "LOMAS"],
+                "GCLP03R": [["ECKOS", "A11+"], "_GDV119023", "_GDV176023", "DRANO", "LOMAS"]
+            },
+            "body": [],
+            "exitPoints": {
+                "LOMAS": []
+            },
+            "draw": [
+                ["ECKOS", "_GDV119023", "_GDV176023", "DRANO", "LOMAS"]
+            ]
         }
     },
     "stars": {
@@ -128,13 +277,78 @@
             "origin": "GCLP",
             "destination": "",
             "category": "departure",
+            "route": "GCLP03R.KOPUD1A.KOPUD",
+            "altitude": 11000,
+            "speed": "",
+            "method": "random",
+            "rate": 2,
+            "airlines": [
+                ["ibb", 10]
+            ]
+        },
+        {
+            "origin": "GCLP",
+            "destination": "",
+            "category": "departure",
+            "route": "GCLP03R.ARACO4A.ARACO",
+            "altitude": 10000,
+            "speed": "",
+            "method": "random",
+            "rate": 2,
+            "airlines": [
+                ["ibb", 10]
+            ]
+        },
+        {
+            "origin": "GCLP",
+            "destination": "",
+            "category": "departure",
             "route": "GCLP03R.TFN4A.TFN",
             "altitude": 10000,
             "speed": "",
             "method": "random",
-            "rate": 9,
+            "rate": 6,
             "airlines": [
-                ["ibb", 4]
+                ["ibb", 10]
+            ]
+        },
+        {
+            "origin": "GCLP",
+            "destination": "",
+            "category": "departure",
+            "route": "GCLP03R.LOMAS1A.LOMAS..TFS",
+            "altitude": 10000,
+            "speed": "",
+            "method": "random",
+            "rate": 3,
+            "airlines": [
+                ["ibb", 10]
+            ]
+        },
+        {
+            "origin": "GCLP",
+            "destination": "",
+            "category": "departure",
+            "route": "GCLP03R.MOVAS1A.MOVAS",
+            "altitude": 12000,
+            "speed": "",
+            "method": "random",
+            "rate": 3,
+            "airlines": [
+                ["ibb", 10]
+            ]
+        },
+        {
+            "origin": "GCLP",
+            "destination": "",
+            "category": "departure",
+            "route": "GCLP03R.HIE5A.HIE",
+            "altitude": 14000,
+            "speed": "",
+            "method": "random",
+            "rate": 1,
+            "airlines": [
+                ["ibb", 10]
             ]
         }
     ],
