@@ -430,6 +430,22 @@
         }
     },
     "stars": {
+        "REMGI3C": {
+            "icao": "REMGI3C",
+            "name": "Remgi Three Charlie",
+            "altitude": 6000,
+            "rwy": {
+                "GCLP03L": [["REMGI", "A100-"], ["TOMOS", "A50+|S220"], "DRANO", ["FALPU", "A25|S190"], "LPC"],
+                "GCLP03R": [["REMGI", "A100-"], ["TOMOS", "A50+|S220"], "DRANO", ["FALPU", "A25|S190"], "LPC"]
+            },
+            "body": [],
+            "entryPoints": {
+                "REMGI": []
+            },
+            "draw": [
+                ["REMGI", "TOMOS", "DRANO", "FALPU"]
+            ]
+        }
     },
     "spawnPatterns": [
         {
@@ -679,6 +695,20 @@
             "airlines": [
                 ["vir", 10],
                 ["ice", 8]
+            ]
+        },
+        {
+            "origin": "",
+            "destination": "GCLP",
+            "category": "arrival",
+            "route": "REMGI.REMGI3C.GCLP03L",
+            "altitude": 10000,
+            "speed": 250,
+            "method": "random",
+            "rate": 2,
+            "airlines": [
+                ["ibb", 10],
+                ["swq", 5]
             ]
         }
     ],
