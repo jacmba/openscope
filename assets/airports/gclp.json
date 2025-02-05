@@ -105,7 +105,10 @@
         "KASAS": ["N29d59m11.1", "W15d46m07.4"],
         "BIMBO": ["N31d25m17.2", "W16d01m58.4"],
         "KONBA": ["N31d18m03.0", "W15d18m06.0"],
-        "NERVO": ["N29d20m18.9", "W15d39m07.2"]
+        "NERVO": ["N29d20m18.9", "W15d39m07.2"],
+        "TOMOS": ["N27d32m51.0", "W15d33m11.7"],
+        "FALPU": ["N27d46m43.8", "W15d27m14.9"],
+        "LPC": ["N27d49m42.7", "W15d25m56.1"]
     },
     "restricted": [
         {
@@ -195,7 +198,7 @@
             },
             "body": [],
             "exitPoints": {
-                "ODEGI": []
+                "COSTI": []
             },
             "draw": [
                 ["ECKOS", "_GDV119023", "COSTI"]
@@ -339,7 +342,7 @@
             },
             "body": [],
             "exitPoints": {
-                "ODEGI": []
+                "REMGI": []
             },
             "draw": [
                 ["ECKOS", "_GDV119023", "_GDV176023", "REMGI"]
@@ -433,6 +436,19 @@
             "origin": "GCLP",
             "destination": "",
             "category": "departure",
+            "route": "GCLP03R.RASEP2A.RASEP",
+            "altitude": 13000,
+            "speed": "",
+            "method": "random",
+            "rate": 2,
+            "airlines": [
+                ["ibb", 10]
+            ]
+        },
+        {
+            "origin": "GCLP",
+            "destination": "",
+            "category": "departure",
             "route": "GCLP03R.KOPUD1A.KOPUD",
             "altitude": 11000,
             "speed": "",
@@ -505,6 +521,164 @@
             "rate": 1,
             "airlines": [
                 ["ibb", 10]
+            ]
+        },
+        {
+            "origin": "GCLP",
+            "destination": "",
+            "category": "departure",
+            "route": "GCLP03R.ODEGI2A.ODEGI",
+            "altitude": 30000,
+            "speed": "",
+            "method": "random",
+            "rate": 1,
+            "airlines": [
+                ["ibb", 10]
+            ]
+        },
+        {
+            "origin": "GCLP",
+            "destination": "",
+            "category": "departure",
+            "route": "GCLP03R.REMGI2A.REMGI",
+            "altitude": [31000, 33000],
+            "speed": "",
+            "method": "random",
+            "rate": 2,
+            "airlines": [
+                ["ibb", 10],
+                ["swq", 5]
+            ]
+        },
+        {
+            "origin": "GCLP",
+            "destination": "",
+            "category": "departure",
+            "route": "GCLP03R.COSTI4A.COSTI",
+            "altitude": [31000, 33000],
+            "speed": "",
+            "method": "random",
+            "rate": 1,
+            "airlines": [
+                ["ibb", 10],
+                ["ram", 5]
+            ]
+        },
+        {
+            "origin": "GCLP",
+            "destination": "",
+            "category": "departure",
+            "route": "GCLP03R.KORAL9A.KORAL",
+            "altitude": [30000, 32000, 34000, 36000, 38000],
+            "speed": "",
+            "method": "random",
+            "rate": 10,
+            "airlines": [
+                ["ibb", 3],
+                ["vlg", 10],
+                ["ryr", 15],
+                ["ibs", 8],
+                ["ibe", 5],
+                ["eju", 9],
+                ["wzz", 1],
+                ["nrs", 4],
+                ["bti", 1],
+                ["tui", 7],
+                ["sas", 2],
+                ["vkg", 1],
+                ["ewg", 2],
+                ["sdr", 1]
+            ]
+        },
+        {
+            "origin": "GCLP",
+            "destination": "",
+            "category": "departure",
+            "route": "GCLP03R.VASTO8A.VASTO",
+            "altitude": [30000, 32000, 34000, 36000, 38000],
+            "speed": "",
+            "method": "random",
+            "rate": 15,
+            "airlines": [
+                ["ibb", 4],
+                ["vlg", 12],
+                ["ryr", 15],
+                ["ibs", 8],
+                ["ibe", 5],
+                ["eju", 9],
+                ["wzz", 1],
+                ["nrs", 4],
+                ["bti", 1],
+                ["tui", 7],
+                ["sas", 2],
+                ["vkg", 1],
+                ["cai", 2],
+                ["exs", 1],
+                ["tra", 2],
+                ["tfv", 2],
+                ["voe", 2]
+            ]
+        },
+        {
+            "origin": "GCLP",
+            "destination": "",
+            "category": "departure",
+            "route": "GCLP03R.SAMAR8A.SAMAR",
+            "altitude": [30000, 32000, 34000, 36000, 38000],
+            "speed": "",
+            "method": "random",
+            "rate": 6,
+            "airlines": [
+                ["ryr", 10],
+                ["ezy", 9],
+                ["tui", 7],
+                ["exs", 3],
+                ["ein", 4]
+            ]
+        },
+        {
+            "origin": "GCLP",
+            "destination": "",
+            "category": "departure",
+            "route": "GCLP03R.KONBA6A.KONBA",
+            "altitude": [30000, 32000, 34000, 36000, 38000],
+            "speed": "",
+            "method": "random",
+            "rate": 5,
+            "airlines": [
+                ["ryr", 10],
+                ["ezy", 9],
+                ["tui", 7],
+                ["exs", 3],
+                ["ein", 4],
+                ["vir", 2]
+            ]
+        },
+        {
+            "origin": "GCLP",
+            "destination": "",
+            "category": "departure",
+            "route": "GCLP03R.KONBA6A.KONBA",
+            "altitude": [18000, 20000],
+            "speed": "",
+            "method": "random",
+            "rate": 1,
+            "airlines": [
+                ["ibb", 10]
+            ]
+        },
+        {
+            "origin": "GCLP",
+            "destination": "",
+            "category": "departure",
+            "route": "GCLP03R.BIMBO7A.BIMBO",
+            "altitude": [30000, 32000, 34000, 36000, 38000],
+            "speed": "",
+            "method": "random",
+            "rate": 1,
+            "airlines": [
+                ["vir", 10],
+                ["ice", 8]
             ]
         }
     ],
