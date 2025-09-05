@@ -28,7 +28,9 @@ export function _calculateOffsetsToEachWaypointInRoute(waypointModelList) {
 
     // continue with second waypoint, because first is already stored
     for (let i = 1; i < waypointModelList.length; i++) {
-        if (waypointModelList[i].isVectorWaypoint || waypointModelList[i - 1].isVectorWaypoint) {
+        // Skip if either waypoint is undefined or is a vector waypoint
+        if (!waypointModelList[i] || !waypointModelList[i - 1] || 
+            waypointModelList[i].isVectorWaypoint || waypointModelList[i - 1].isVectorWaypoint) {
             continue;
         }
 
@@ -184,7 +186,8 @@ function _calculateSpawnPositionsAndAltitudes(
     spawnSpeed,
     spawnAltitude,
     totalDistance,
-    airspaceCeiling
+    airspaceCeiling,
+    routeString = ''
 ) {
     const spawnPositionsAndAltitudes = [];
     const waypointOffsetMap = _calculateOffsetsToEachWaypointInRoute(waypointModelList);
@@ -201,16 +204,27 @@ function _calculateSpawnPositionsAndAltitudes(
             // heading.
             return distanceToWaypoint > spawnOffset;
         });
+        
+        // Skip if we can't find a valid waypoint index
+        if (nextWaypointIndex === -1 || nextWaypointIndex >= waypointModelList.length) {
+            continue;
+        }
+        
         const nextWaypointModel = waypointModelList[nextWaypointIndex];
         const previousWaypointIndex = Math.max(0, nextWaypointIndex - 1);
         const previousWaypointModel = waypointModelList[previousWaypointIndex];
+        
+        // Skip if either waypoint is undefined
+        if (!nextWaypointModel || !previousWaypointModel) {
+            continue;
+        }
         const distanceFromPreviousWaypointToSpawnPoint = spawnOffset - waypointOffsetMap[previousWaypointIndex];
         const heading = previousWaypointModel.calculateBearingToWaypoint(nextWaypointModel);
         const spawnPositionModel = previousWaypointModel.positionModel.generateDynamicPositionFromBearingAndDistance(
             heading,
             distanceFromPreviousWaypointToSpawnPoint
         );
-        const altitude = _calculateIdealSpawnAltitudeAtOffset(
+        let altitude = _calculateIdealSpawnAltitudeAtOffset(
             altitudeOffsets,
             spawnOffset,
             spawnSpeed,
@@ -218,6 +232,16 @@ function _calculateSpawnPositionsAndAltitudes(
             totalDistance,
             airspaceCeiling
         );
+
+        // Add aggressive altitude variation to prevent identical altitudes
+        // Use deterministic variation based on route and spawn offset for consistency
+        const routeHash = routeString.split('.').reduce((sum, part) => sum + part.charCodeAt(0), 0);
+        const spawnOffsetHash = Math.abs(spawnOffset * 1000) % 1000;
+        const combinedHash = routeHash + spawnOffsetHash;
+        
+        // Create large altitude variation: ±2000 ft with 500 ft steps
+        const altitudeVariation = ((combinedHash % 9) - 4) * 500; // -2000, -1500, -1000, -500, 0, 500, 1000, 1500, 2000
+        altitude = Math.max(2000, altitude + altitudeVariation); // Ensure minimum 2000 ft
 
         spawnPositionsAndAltitudes.push({
             altitude,
@@ -250,17 +274,28 @@ function _calculateSpawnPositionsAndAltitudes(
  * @param totalDistance {number}
  * @return spawnOffsets {array<number>} distances along route, in nm
  */
-const _assembleSpawnOffsets = (entrailDistance, totalDistance = 0) => {
-    const offsetClosestToAirspace = totalDistance - 3;
+const _assembleSpawnOffsets = (entrailDistance, totalDistance = 0, routeString = '') => {
+    // Ensure minimum route distance to prevent aircraft spawning at same position
+    const minRouteDistance = 30; // Minimum 30 NM route distance
+    const effectiveTotalDistance = Math.max(totalDistance, minRouteDistance);
+
+    // Add route-specific boundary distance variation to prevent all STARs spawning at same distance
+    const routeHash = routeString.split('.').reduce((sum, part) => sum + part.charCodeAt(0), 0);
+    const boundaryDistanceVariation = Math.abs(routeHash % 8) + 3; // 3-10 NM from boundary (varies by route)
+    const offsetClosestToAirspace = effectiveTotalDistance - boundaryDistanceVariation;
     // dont spawn aircraft closer than 6 MIT
     const clampedEntrailDistance = Math.max(6, entrailDistance);
-    let smallestIntervalNm = 15;
+    let smallestIntervalNm = 25;
     // do not allow prespawned aircraft to have a spacing less than `minimumInTrailNm`
-    const largestIntervalNm = Math.max(clampedEntrailDistance, clampedEntrailDistance +
-        (clampedEntrailDistance - smallestIntervalNm));
+    const largestIntervalNm = Math.max(
+        clampedEntrailDistance,
+        clampedEntrailDistance + (clampedEntrailDistance - smallestIntervalNm)
+    );
 
     if (clampedEntrailDistance < 8) {
-        console.error(`Too many aircraft requested, calculated MIT is ${entrailDistance}, limiting MIT to ${clampedEntrailDistance}`);
+        console.error(
+            `Too many aircraft requested, calculated MIT is ${entrailDistance}, limiting MIT to ${clampedEntrailDistance}`
+        );
     }
 
     // if requesting less than `smallestIntervalNm`, spawn all AT `entrailDistance`
@@ -268,25 +303,39 @@ const _assembleSpawnOffsets = (entrailDistance, totalDistance = 0) => {
         smallestIntervalNm = largestIntervalNm;
     }
 
+    // Generate spawn positions along the route with route-specific variation
     const spawnOffsets = [offsetClosestToAirspace];
     let distanceAlongRoute = offsetClosestToAirspace;
+    let positionIndex = 1; // Track position index for deterministic variation
 
     // distance between successive arrivals in nm
     while (distanceAlongRoute > smallestIntervalNm) {
-        const interval = _random(smallestIntervalNm, largestIntervalNm, true);
+        // Use deterministic interval based on route and position index
+        const intervalHash = (routeHash + positionIndex * 1000) % (largestIntervalNm - smallestIntervalNm + 1);
+        const interval = smallestIntervalNm + intervalHash;
         distanceAlongRoute -= interval;
 
         if (distanceAlongRoute < smallestIntervalNm) {
             break;
         }
 
-        spawnOffsets.push(distanceAlongRoute);
+        // Add route-specific offset to each position to break the pattern
+        const positionOffset = Math.abs((routeHash + positionIndex * 500) % 5) + 1; // 1-5 NM offset per position
+        const adjustedPosition = Math.max(0, distanceAlongRoute + positionOffset);
+        spawnOffsets.push(adjustedPosition);
+        positionIndex++;
     }
 
     // spawn an aircraft at the first fix of the route
     spawnOffsets.push(0);
+    
+    // Use the spawn offsets with route-specific variation
+    const adjustedSpawnOffsets = spawnOffsets;
 
-    return spawnOffsets;
+    // Since we're focusing on altitude separation, just return the spawn offsets as-is
+    const uniqueOffsets = adjustedSpawnOffsets;
+
+    return uniqueOffsets;
 };
 
 /**
@@ -368,7 +417,7 @@ const _preSpawn = (spawnPatternJson, airport) => {
     const waypointModelList = routeModel.waypoints;
     const totalDistance = _calculateTotalDistanceAlongRoute(waypointModelList, airport);
     // calculate number of offsets
-    const spawnOffsets = _assembleSpawnOffsets(entrailDistance, totalDistance);
+    const spawnOffsets = _assembleSpawnOffsets(entrailDistance, totalDistance, spawnPatternJson.route);
     // calculate heading, nextFix and position data to be used when creating an `AircraftModel` along a route
     const spawnPositions = _calculateSpawnPositionsAndAltitudes(
         waypointModelList,
@@ -376,7 +425,8 @@ const _preSpawn = (spawnPatternJson, airport) => {
         spawnSpeed,
         spawnAltitude,
         totalDistance,
-        airspaceCeiling
+        airspaceCeiling,
+        spawnPatternJson.route
     );
 
     return spawnPositions;

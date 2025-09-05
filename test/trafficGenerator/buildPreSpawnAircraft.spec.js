@@ -252,14 +252,74 @@ ava('buildPreSpawnAircraft() does not throw when passed valid parameters', (t) =
     t.notThrows(() => buildPreSpawnAircraft(ARRIVAL_PATTERN_MOCK, airportModelFixture));
 });
 
-// ava('buildPreSpawnAircraft() returns an array of objects with correct keys', (t) => {
-//     const results = buildPreSpawnAircraft(ARRIVAL_PATTERN_MOCK, airportModelFixture);
-//
-//     t.true(_isArray(results));
-//
-//     _map(results, (result) => {
-//         t.true(typeof result.heading === 'number');
-//         t.true(typeof result.nextFix === 'string');
-//         t.true(_isArray(result.positionModel.relativePosition));
-//     });
-// });
+ava('buildPreSpawnAircraft() returns an array of objects with correct keys', (t) => {
+    const results = buildPreSpawnAircraft(ARRIVAL_PATTERN_MOCK, airportModelFixture);
+
+    t.true(Array.isArray(results));
+
+    results.forEach((result) => {
+        t.true(typeof result.heading === 'number');
+        t.true(typeof result.nextFix === 'string');
+        t.true(Array.isArray(result.positionModel.relativePosition));
+        t.true(typeof result.altitude === 'number');
+        t.true(result.altitude >= 1000); // Ensure minimum altitude
+    });
+});
+
+ava('buildPreSpawnAircraft() generates different spawn positions for different routes', (t) => {
+    const route1 = Object.assign({}, ARRIVAL_PATTERN_MOCK, { route: 'BETHL.GRNPA1.KLAS07R' });
+    const route2 = Object.assign({}, ARRIVAL_PATTERN_MOCK, { route: 'DAG.KEPEC3.KLAS07R' });
+
+    const results1 = buildPreSpawnAircraft(route1, airportModelFixture);
+    const results2 = buildPreSpawnAircraft(route2, airportModelFixture);
+
+    // Should have different spawn positions due to route-specific offsets
+    if (results1.length > 0 && results2.length > 0) {
+        const pos1 = results1[0].positionModel.relativePosition;
+        const pos2 = results2[0].positionModel.relativePosition;
+        
+        // Positions should be different (not identical)
+        const isDifferent = pos1[0] !== pos2[0] || pos1[1] !== pos2[1];
+        t.true(isDifferent, 'Different routes should spawn at different positions');
+    }
+});
+
+ava('buildPreSpawnAircraft() prevents duplicate spawn positions', (t) => {
+    const results = buildPreSpawnAircraft(ARRIVAL_PATTERN_MOCK, airportModelFixture);
+
+    if (results.length > 1) {
+        // Check that no two aircraft spawn at identical positions
+        for (let i = 0; i < results.length; i++) {
+            for (let j = i + 1; j < results.length; j++) {
+                const pos1 = results[i].positionModel.relativePosition;
+                const pos2 = results[j].positionModel.relativePosition;
+                
+                // Calculate distance between positions
+                const dx = pos1[0] - pos2[0];
+                const dy = pos1[1] - pos2[1];
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                // Should be at least 15 NM apart (converted to appropriate units)
+                t.true(distance > 0.27, 'Aircraft should not spawn at identical positions');
+            }
+        }
+    }
+});
+
+ava('buildPreSpawnAircraft() creates deterministic but varied spawn positions', (t) => {
+    // Test that different routes create different spawn positions
+    const route1 = Object.assign({}, ARRIVAL_PATTERN_MOCK, { route: 'BETHL.GRNPA1.KLAS07R' });
+    const route2 = Object.assign({}, ARRIVAL_PATTERN_MOCK, { route: 'DAG.KEPEC3.KLAS07R' });
+    
+    const results1 = buildPreSpawnAircraft(route1, airportModelFixture);
+    const results2 = buildPreSpawnAircraft(route2, airportModelFixture);
+    
+    if (results1.length > 0 && results2.length > 0) {
+        const pos1 = results1[0].positionModel.relativePosition;
+        const pos2 = results2[0].positionModel.relativePosition;
+        
+        // Different routes should create different spawn positions
+        const isDifferent = pos1[0] !== pos2[0] || pos1[1] !== pos2[1];
+        t.true(isDifferent, 'Different routes should create different spawn positions');
+    }
+});

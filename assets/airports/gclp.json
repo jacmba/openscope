@@ -738,7 +738,7 @@
             "altitude": 10000,
             "speed": 250,
             "method": "random",
-            "rate": 0.2,
+            "rate": 3,
             "airlines": [
                 ["ibb", 10],
                 ["swq", 5]
@@ -752,7 +752,7 @@
             "altitude": 11000,
             "speed": 280,
             "method": "random",
-            "rate": 0.2,
+            "rate": 2,
             "airlines": [
                 ["ibb", 1]
             ]
@@ -765,7 +765,7 @@
             "altitude": 15000,
             "speed": 280,
             "method": "random",
-            "rate": 0.1,
+            "rate": 1,
             "airlines": [
                 ["ibb", 1]
             ]
@@ -778,7 +778,7 @@
             "altitude": 11000,
             "speed": 280,
             "method": "random",
-            "rate": 0.5,
+            "rate": 4,
             "airlines": [
                 ["ibb", 1]
             ]
