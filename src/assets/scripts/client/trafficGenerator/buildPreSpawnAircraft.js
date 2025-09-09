@@ -234,13 +234,8 @@ function _calculateSpawnPositionsAndAltitudes(
         );
 
         // Add aggressive altitude variation to prevent identical altitudes
-        // Use deterministic variation based on route and spawn offset for consistency
-        const routeHash = routeString.split('.').reduce((sum, part) => sum + part.charCodeAt(0), 0);
-        const spawnOffsetHash = Math.abs(spawnOffset * 1000) % 1000;
-        const combinedHash = routeHash + spawnOffsetHash;
-        
-        // Create large altitude variation: ±2000 ft with 500 ft steps
-        const altitudeVariation = ((combinedHash % 9) - 4) * 500; // -2000, -1500, -1000, -500, 0, 500, 1000, 1500, 2000
+        // Use true random variation for more natural altitude distribution
+        const altitudeVariation = (Math.random() - 0.5) * 8000; // -4000 to +4000 ft
         altitude = Math.max(2000, altitude + altitudeVariation); // Ensure minimum 2000 ft
 
         spawnPositionsAndAltitudes.push({
@@ -278,11 +273,19 @@ const _assembleSpawnOffsets = (entrailDistance, totalDistance = 0, routeString =
     // Ensure minimum route distance to prevent aircraft spawning at same position
     const minRouteDistance = 30; // Minimum 30 NM route distance
     const effectiveTotalDistance = Math.max(totalDistance, minRouteDistance);
-
-    // Add route-specific boundary distance variation to prevent all STARs spawning at same distance
-    const routeHash = routeString.split('.').reduce((sum, part) => sum + part.charCodeAt(0), 0);
-    const boundaryDistanceVariation = Math.abs(routeHash % 8) + 3; // 3-10 NM from boundary (varies by route)
-    const offsetClosestToAirspace = effectiveTotalDistance - boundaryDistanceVariation;
+    
+    // For initial spawn (scenario start), use TRUE random chance and random distance to prevent approach overload
+    // 70% chance of spawning initial aircraft (to prevent approach overload with many STARs)
+    const spawnChance = Math.random() * 100;
+    
+    if (spawnChance > 70) {
+        // Don't spawn initial aircraft for this route
+        return [];
+    }
+    
+    // Random distance from 5-30 NM from boundary for those that do spawn
+    const distanceFromBoundary = Math.random() * 25 + 5; // 5-30 NM from boundary
+    const offsetClosestToAirspace = effectiveTotalDistance - distanceFromBoundary;
     // dont spawn aircraft closer than 6 MIT
     const clampedEntrailDistance = Math.max(6, entrailDistance);
     let smallestIntervalNm = 25;
@@ -310,17 +313,16 @@ const _assembleSpawnOffsets = (entrailDistance, totalDistance = 0, routeString =
 
     // distance between successive arrivals in nm
     while (distanceAlongRoute > smallestIntervalNm) {
-        // Use deterministic interval based on route and position index
-        const intervalHash = (routeHash + positionIndex * 1000) % (largestIntervalNm - smallestIntervalNm + 1);
-        const interval = smallestIntervalNm + intervalHash;
+        // Use random interval for more natural spacing
+        const interval = Math.random() * (largestIntervalNm - smallestIntervalNm) + smallestIntervalNm;
         distanceAlongRoute -= interval;
 
         if (distanceAlongRoute < smallestIntervalNm) {
             break;
         }
 
-        // Add route-specific offset to each position to break the pattern
-        const positionOffset = Math.abs((routeHash + positionIndex * 500) % 5) + 1; // 1-5 NM offset per position
+        // Add random offset to each position to break the pattern
+        const positionOffset = Math.random() * 10 + 2; // 2-12 NM offset per position
         const adjustedPosition = Math.max(0, distanceAlongRoute + positionOffset);
         spawnOffsets.push(adjustedPosition);
         positionIndex++;
