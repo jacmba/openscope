@@ -962,7 +962,7 @@ export default class CanvasController {
         const { fms, relativePosition } = aircraftModel;
         const oppositeOfRunwayHeading = fms.arrivalRunwayModel.oppositeAngle;
         const aircraftCanvasPosition = CanvasStageModel.calculateRoundedCanvasPositionFromRelativePosition(relativePosition);
-        cc.strokeStyle = this.theme.RADAR_TARGET.TRAILING_SEPARATION_INDICATOR;
+        cc.strokeStyle = this._getAircraftCategoryColor(aircraftModel);
         cc.lineWidth = 3;
 
         cc.translate(...aircraftCanvasPosition);
@@ -1042,6 +1042,26 @@ export default class CanvasController {
     }
 
     /**
+     * Get the color for an aircraft based on its category
+     *
+     * @for CanvasController
+     * @method _getAircraftCategoryColor
+     * @param aircraftModel {AircraftModel}
+     * @returns {string} color value
+     * @private
+     */
+    _getAircraftCategoryColor(aircraftModel) {
+        if (this.theme.RADAR_TARGET.RADAR_TARGET_ARRIVAL && aircraftModel.category === 'arrival') {
+            return this.theme.RADAR_TARGET.RADAR_TARGET_ARRIVAL;
+        } else if (this.theme.RADAR_TARGET.RADAR_TARGET_DEPARTURE && aircraftModel.category === 'departure') {
+            return this.theme.RADAR_TARGET.RADAR_TARGET_DEPARTURE;
+        } else if (this.theme.RADAR_TARGET.RADAR_TARGET_OVERFLIGHT && aircraftModel.category === 'overflight') {
+            return this.theme.RADAR_TARGET.RADAR_TARGET_OVERFLIGHT;
+        }
+        return this.theme.RADAR_TARGET.RADAR_TARGET;
+    }
+
+    /**
      * Draw the RADAR RETURN AND HISTORY DOTS ONLY of the specified radar target model
      *
      * POSITIONING: Before calling this method, translate to the AIRPORT CENTER
@@ -1064,11 +1084,7 @@ export default class CanvasController {
 
         // TODO: death to the `prop`!!!
         const match = prop.input.callsign.length > 0 && aircraftModel.matchCallsign(prop.input.callsign);
-        let fillStyle = this.theme.RADAR_TARGET.HISTORY_DOT_OUTSIDE_RANGE;
-
-        if (aircraftModel.isControllable) {
-            fillStyle = this.theme.RADAR_TARGET.HISTORY_DOT_INSIDE_RANGE;
-        }
+        const fillStyle = this._getAircraftCategoryColor(aircraftModel);
 
         cc.fillStyle = fillStyle;
 
@@ -1139,10 +1155,25 @@ export default class CanvasController {
         }
 
         // Draw the radar target (aka aircraft position dot)
-        cc.fillStyle = this.theme.RADAR_TARGET.RADAR_TARGET;
-        cc.beginPath();
-        cc.arc(0, 0, CanvasStageModel._translateKilometersToPixels(radarTargetRadiusKm), 0, tau());
-        cc.fill();
+        // Determine color based on aircraft category
+        const radarTargetColor = this._getAircraftCategoryColor(aircraftModel);
+
+        // Check if theme supports square shapes
+        if (this.theme.RADAR_TARGET.USE_SQUARE_SHAPES) {
+            // Draw square outline instead of filled circle
+            cc.strokeStyle = radarTargetColor;
+            cc.lineWidth = 2; // 2 pixel line width for the outline
+            cc.beginPath();
+            const size = CanvasStageModel._translateKilometersToPixels(radarTargetRadiusKm);
+            cc.rect(-size, -size, size * 2, size * 2);
+            cc.stroke();
+        } else {
+            // Draw circle (default behavior)
+            cc.fillStyle = radarTargetColor;
+            cc.beginPath();
+            cc.arc(0, 0, CanvasStageModel._translateKilometersToPixels(radarTargetRadiusKm), 0, tau());
+            cc.fill();
+        }
 
         cc.restore();
     }
@@ -1608,9 +1639,7 @@ export default class CanvasController {
             row2text = radarTargetModel.buildDataBlockRowTwoSecondaryInfo();
         }
 
-        const fillStyle = aircraftModel.isControllable ?
-            this.theme.DATA_BLOCK.TEXT_IN_RANGE :
-            this.theme.DATA_BLOCK.TEXT_OUT_OF_RANGE;
+        const fillStyle = this._getAircraftCategoryColor(aircraftModel);
 
         cc.fillStyle = fillStyle;
 
@@ -1694,7 +1723,7 @@ export default class CanvasController {
             cc.fillRect(-halfWidth, -halfHeight, width, height);
 
             // Draw colored bar
-            cc.fillStyle = (aircraftModel.category === FLIGHT_CATEGORY.DEPARTURE) ? blue : red;
+            cc.fillStyle = this._getAircraftCategoryColor(aircraftModel);
             cc.fillRect(-halfWidth - barWidth, -halfHeight, barWidth, height);
 
             return;
