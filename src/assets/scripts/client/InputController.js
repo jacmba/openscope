@@ -1070,6 +1070,8 @@ export default class InputController {
     _findDataBlockAtCanvasPosition(x, y) {
         const radarTargetModels = this._scopeModel.radarTargetCollection.items;
         
+        console.log(`Checking data block hit at (${x}, ${y}) for ${radarTargetModels.length} radar targets`);
+        
         for (let i = 0; i < radarTargetModels.length; i++) {
             const radarTargetModel = radarTargetModels[i];
             const aircraftModel = radarTargetModel.aircraftModel;
@@ -1081,6 +1083,7 @@ export default class InputController {
             // Calculate data block position
             const dataBlockPosition = this._calculateDataBlockPosition(radarTargetModel);
             if (!dataBlockPosition) {
+                console.log(`  ${aircraftModel.callsign}: No data block position calculated`);
                 continue;
             }
             
@@ -1095,11 +1098,15 @@ export default class InputController {
             const top = dataBlockPosition[1] - halfHeight;
             const bottom = dataBlockPosition[1] + halfHeight;
             
+            console.log(`  ${aircraftModel.callsign}: data block at (${dataBlockPosition[0]}, ${dataBlockPosition[1]}), bounds: left=${left}, right=${right}, top=${top}, bottom=${bottom}`);
+            
             if (x >= left && x <= right && y >= top && y <= bottom) {
+                console.log(`  HIT! Click is within data block bounds for ${aircraftModel.callsign}`);
                 return radarTargetModel;
             }
         }
         
+        console.log(`No data block hit detected`);
         return null;
     }
 
@@ -1197,9 +1204,10 @@ export default class InputController {
         // Check if there's a custom offset (dragged position)
         const customOffset = radarTargetModel.getDataBlockCustomOffset();
         if (customOffset) {
+            // Apply the same Y-axis inversion as mouse coordinates for consistency
             return [
                 aircraftCanvasPosition[0] + customOffset[0],
-                aircraftCanvasPosition[1] + customOffset[1]
+                -(aircraftCanvasPosition[1] + customOffset[1])  // Invert Y to match mouse coordinates
             ];
         }
         
@@ -1219,8 +1227,12 @@ export default class InputController {
             aircraftCanvasPosition[1] + offsetComponent[1] * leaderLength
         ];
         
-        // Use the same calculation as CanvasController
-        return radarTargetModel.calculateDataBlockCenter(leaderIntersectionWithBlock);
+        // Use the same calculation as CanvasController, but invert Y to match mouse coordinates
+        const dataBlockCenter = radarTargetModel.calculateDataBlockCenter(leaderIntersectionWithBlock);
+        return [
+            dataBlockCenter[0],
+            -dataBlockCenter[1]  // Invert Y to match mouse coordinates
+        ];
     }
 
     /**
@@ -1293,15 +1305,26 @@ export default class InputController {
 
         const mouseCanvasPos = CanvasStageModel.calculateCanvasPositionFromPagePosition(event.pageX, event.pageY);
         
-        // Use aircraft-based drag detection (simpler and more reliable)
+        // First, check if we clicked on a data block
+        const clickedDataBlock = this._findDataBlockAtCanvasPosition(...mouseCanvasPos);
+        if (clickedDataBlock) {
+            console.log(`Clicked on data block for aircraft: ${clickedDataBlock.aircraftModel.callsign}`);
+            // Start dragging the data block
+            this._startDataBlockDrag(clickedDataBlock, mouseCanvasPos);
+            // Also select the aircraft for immediate feedback
+            this.selectAircraft(clickedDataBlock.aircraftModel);
+            return;
+        }
+        
+        // If no data block was clicked, check for aircraft selection
         const [aircraftModel, distanceFromPosition] = this._findClosestAircraftAndDistanceToCanvasPosition(...mouseCanvasPos);
         const distanceInPixels = distanceFromPosition * CanvasStageModel.scale;
         
         console.log(`Aircraft selection check: nearest=${aircraftModel ? aircraftModel.callsign : 'none'}, ` +
-            `distance=${distanceInPixels.toFixed(1)}px, threshold=50px`);
+            `distance=${distanceInPixels.toFixed(1)}px, threshold=15px`);
 
-        if (distanceFromPosition > CanvasStageModel.translatePixelsToKilometers(50)) {
-            console.log('No aircraft within 50px, deselecting');
+        if (distanceFromPosition > CanvasStageModel.translatePixelsToKilometers(15)) {
+            console.log('No aircraft within 15px, deselecting');
             this.deselectAircraft();
             this._markMousePressed(event, MOUSE_BUTTON_NAMES.LEFT);
         } else if (this.commandBarContext === COMMAND_CONTEXT.SCOPE) {
@@ -1309,18 +1332,9 @@ export default class InputController {
             this.$commandInput.val(`${this.$commandInput.val()} ${aircraftModel.callsign}`);
             this.processCommand();
         } else if (aircraftModel) {
-            console.log(`Starting data block drag for aircraft: ${aircraftModel.callsign}`);
-            // Find the radar target model for this aircraft
-            const radarTargetModel = this._scopeModel.radarTargetCollection.findRadarTargetModelForAircraftModel(aircraftModel);
-            if (radarTargetModel) {
-                // Start dragging the data block
-                this._startDataBlockDrag(radarTargetModel, mouseCanvasPos);
-                // Also select the aircraft for immediate feedback
-                this.selectAircraft(aircraftModel);
-            } else {
-                console.log(`No radar target model found for ${aircraftModel.callsign}`);
-                this.selectAircraft(aircraftModel);
-            }
+            console.log(`Selecting aircraft: ${aircraftModel.callsign}`);
+            // Just select the aircraft, don't start dragging
+            this.selectAircraft(aircraftModel);
         }
     }
 
