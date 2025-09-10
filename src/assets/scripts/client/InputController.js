@@ -15,9 +15,11 @@ import EventTracker from './EventTracker';
 import MeasureTool from './measurement/MeasureTool';
 import FixCollection from './navigationLibrary/FixCollection';
 import { clamp } from './math/core';
+import { degreesToRadians } from './utilities/unitConverters';
 import { EVENT } from './constants/eventNames';
 import { GAME_OPTION_NAMES } from './constants/gameOptionConstants';
 import { INVALID_NUMBER } from './constants/globalConstants';
+import { THEME } from './constants/themes';
 import {
     COMMAND_CONTEXT,
     KEY_CODES,
@@ -54,6 +56,13 @@ export default class InputController {
         this._scopeModel = scopeModel;
         this._autocompleteController = new AutocompleteController(this.$element, this, this._aircraftController);
 
+        /**
+         * @property theme
+         * @type {object}
+         * @default null
+         */
+        this.theme = null;
+
         prop.input = input;
         this.input = input;
         this.input.callsign = '';
@@ -62,6 +71,11 @@ export default class InputController {
         this._mouseDownScreenPosition = [0, 0];
         this.input.isMouseDown = false;
         this.commandBarContext = COMMAND_CONTEXT.AIRCRAFT;
+
+        // Data block drag state
+        this._draggedDataBlock = null;
+        this._dragStartPosition = [0, 0];
+        this._isDraggingDataBlock = false;
 
         this._init();
     }
@@ -75,6 +89,9 @@ export default class InputController {
         this.$window = $(window);
         this.$commandInput = this.$element.find(SELECTORS.DOM_SELECTORS.COMMAND);
         this.$canvases = this.$element.find(SELECTORS.DOM_SELECTORS.CANVASES);
+
+        // Initialize theme
+        this._setTheme(GameController.getGameOption(GAME_OPTION_NAMES.THEME));
 
         return this.setupHandlers().enable();
     }
@@ -242,7 +259,7 @@ export default class InputController {
 
         if (MeasureTool.hasStarted && shouldReplaceLastPoint) {
             MeasureTool.updateLastPoint(relativePosition);
-        } else {
+        } else if (MeasureTool.isMeasuring) {
             MeasureTool.addPoint(relativePosition);
         }
 
@@ -329,9 +346,16 @@ export default class InputController {
      * @param event {jquery Event}
      */
     _onMouseClickAndDrag(event) {
-        if (MeasureTool.hasStarted) {
+        if (MeasureTool.isMeasuring) {
             this._addMeasurePoint(event, true);
 
+            return this;
+        }
+
+        // Handle data block dragging (check if we have a potential drag in progress)
+        if (this._draggedDataBlock) {
+            const mouseCanvasPos = CanvasStageModel.calculateCanvasPositionFromPagePosition(event.pageX, event.pageY);
+            this._updateDataBlockDrag(mouseCanvasPos, event);
             return this;
         }
 
@@ -351,6 +375,11 @@ export default class InputController {
      * @param event {jquery Event}
      */
     _onMouseUp(event) {
+        // Handle data block drag end (check if we have any drag in progress)
+        if (this._draggedDataBlock) {
+            this._endDataBlockDrag();
+        }
+        
         this.input.isMouseDown = false;
     }
 
@@ -408,9 +437,20 @@ export default class InputController {
      * @param aircraftModel {AircraftModel}
      */
     selectAircraft = (aircraftModel) => {
-        if (!aircraftModel || !aircraftModel.isControllable) {
+        if (!aircraftModel) {
             this.deselectAircraft();
+            return;
+        }
 
+        // For data block dragging, we allow selecting any visible aircraft
+        // For command input, we still check isControllable
+        if (!aircraftModel.isControllable) {
+            // Still select the aircraft for visual feedback, but don't allow commands
+            prop.input.callsign = aircraftModel.callsign;
+            this.input.callsign = aircraftModel.callsign;
+            this.$commandInput.val(''); // Don't put callsign in command input for non-controllable aircraft
+            
+            this._eventBus.trigger(EVENT.SELECT_AIRCRAFT, aircraftModel);
             return;
         }
 
@@ -1018,6 +1058,172 @@ export default class InputController {
     }
 
     /**
+     * Find if a data block is clicked at the given canvas position
+     *
+     * @for InputController
+     * @method _findDataBlockAtCanvasPosition
+     * @param x {number}
+     * @param y {number}
+     * @returns {RadarTargetModel|null}
+     * @private
+     */
+    _findDataBlockAtCanvasPosition(x, y) {
+        const radarTargetModels = this._scopeModel.radarTargetCollection.items;
+        
+        for (let i = 0; i < radarTargetModels.length; i++) {
+            const radarTargetModel = radarTargetModels[i];
+            const aircraftModel = radarTargetModel.aircraftModel;
+            
+            if (!aircraftModel.isVisible()) {
+                continue;
+            }
+            
+            // Calculate data block position
+            const dataBlockPosition = this._calculateDataBlockPosition(radarTargetModel);
+            if (!dataBlockPosition) {
+                continue;
+            }
+            
+            // Check if click is within data block bounds
+            const dataBlockWidth = 60; // From theme
+            const dataBlockHeight = 32; // From theme
+            const halfWidth = dataBlockWidth / 2;
+            const halfHeight = dataBlockHeight / 2;
+            
+            const left = dataBlockPosition[0] - halfWidth;
+            const right = dataBlockPosition[0] + halfWidth;
+            const top = dataBlockPosition[1] - halfHeight;
+            const bottom = dataBlockPosition[1] + halfHeight;
+            
+            if (x >= left && x <= right && y >= top && y <= bottom) {
+                return radarTargetModel;
+            }
+        }
+        
+        return null;
+    }
+
+    /**
+     * Find if a leader line is clicked at the given canvas position
+     *
+     * @for InputController
+     * @method _findLeaderLineAtCanvasPosition
+     * @param x {number}
+     * @param y {number}
+     * @returns {RadarTargetModel|null}
+     * @private
+     */
+    _findLeaderLineAtCanvasPosition(x, y) {
+        const radarTargetModels = this._scopeModel.radarTargetCollection.items;
+        
+        for (let i = 0; i < radarTargetModels.length; i++) {
+            const radarTargetModel = radarTargetModels[i];
+            const aircraftModel = radarTargetModel.aircraftModel;
+            
+            if (!aircraftModel.isVisible()) {
+                continue;
+            }
+            
+            // Get aircraft position on canvas
+            const aircraftCanvasPosition = CanvasStageModel.calculateRoundedCanvasPositionFromRelativePosition(
+                aircraftModel.relativePosition
+            );
+            
+            // Calculate data block position
+            const dataBlockPosition = this._calculateDataBlockPosition(radarTargetModel);
+            if (!dataBlockPosition) {
+                continue;
+            }
+            
+            // Check if click is within leader line bounds (simple line hit test)
+            const leaderStart = aircraftCanvasPosition;
+            const leaderEnd = dataBlockPosition;
+            
+            // Simple line hit test - check if point is within a few pixels of the line
+            const lineWidth = 10; // Hit test width in pixels
+            
+            // Calculate distance from point to line
+            const A = x - leaderStart[0];
+            const B = y - leaderStart[1];
+            const C = leaderEnd[0] - leaderStart[0];
+            const D = leaderEnd[1] - leaderStart[1];
+            
+            const dot = A * C + B * D;
+            const lenSq = C * C + D * D;
+            
+            if (lenSq === 0) continue; // Line has zero length
+            
+            const param = dot / lenSq;
+            
+            // Clamp param to line segment
+            const clampedParam = Math.max(0, Math.min(1, param));
+            
+            // Find closest point on line
+            const closestX = leaderStart[0] + clampedParam * C;
+            const closestY = leaderStart[1] + clampedParam * D;
+            
+            // Check if distance is within hit test width
+            const distance = Math.sqrt((x - closestX) * (x - closestX) + (y - closestY) * (y - closestY));
+            
+            if (distance <= lineWidth) {
+                return radarTargetModel;
+            }
+        }
+        
+        return null;
+    }
+
+    /**
+     * Calculate the position of a data block on the canvas
+     *
+     * @for InputController
+     * @method _calculateDataBlockPosition
+     * @param radarTargetModel {RadarTargetModel}
+     * @returns {array<number>|null} Canvas position [x, y] or null if not visible
+     * @private
+     */
+    _calculateDataBlockPosition(radarTargetModel) {
+        const aircraftModel = radarTargetModel.aircraftModel;
+        
+        if (!aircraftModel.isVisible()) {
+            return null;
+        }
+        
+        // Get aircraft position on canvas
+        const aircraftCanvasPosition = CanvasStageModel.calculateRoundedCanvasPositionFromRelativePosition(
+            aircraftModel.relativePosition
+        );
+        
+        // Check if there's a custom offset (dragged position)
+        const customOffset = radarTargetModel.getDataBlockCustomOffset();
+        if (customOffset) {
+            return [
+                aircraftCanvasPosition[0] + customOffset[0],
+                aircraftCanvasPosition[1] + customOffset[1]
+            ];
+        }
+        
+        // Use default positioning logic (same as CanvasController)
+        const dataBlockLeaderDirection = radarTargetModel.dataBlockLeaderDirection || 45;
+        const offsetComponent = [
+            Math.sin(degreesToRadians(dataBlockLeaderDirection)),
+            -Math.cos(degreesToRadians(dataBlockLeaderDirection))
+        ];
+        
+        // Calculate leader length using the same method as CanvasController
+        const leaderLength = this._calculateLeaderLength(radarTargetModel.dataBlockLeaderLength);
+        
+        // Calculate leader intersection point (same as CanvasController)
+        const leaderIntersectionWithBlock = [
+            aircraftCanvasPosition[0] + offsetComponent[0] * leaderLength,
+            aircraftCanvasPosition[1] + offsetComponent[1] * leaderLength
+        ];
+        
+        // Use the same calculation as CanvasController
+        return radarTargetModel.calculateDataBlockCenter(leaderIntersectionWithBlock);
+    }
+
+    /**
      * Log the provided lat/lon coordinates to the console, display in command log, and copy to clipboard
      *
      * @for InputController
@@ -1086,16 +1292,35 @@ export default class InputController {
         }
 
         const mouseCanvasPos = CanvasStageModel.calculateCanvasPositionFromPagePosition(event.pageX, event.pageY);
+        
+        // Use aircraft-based drag detection (simpler and more reliable)
         const [aircraftModel, distanceFromPosition] = this._findClosestAircraftAndDistanceToCanvasPosition(...mouseCanvasPos);
+        const distanceInPixels = distanceFromPosition * CanvasStageModel.scale;
+        
+        console.log(`Aircraft selection check: nearest=${aircraftModel ? aircraftModel.callsign : 'none'}, ` +
+            `distance=${distanceInPixels.toFixed(1)}px, threshold=50px`);
 
         if (distanceFromPosition > CanvasStageModel.translatePixelsToKilometers(50)) {
+            console.log('No aircraft within 50px, deselecting');
             this.deselectAircraft();
             this._markMousePressed(event, MOUSE_BUTTON_NAMES.LEFT);
         } else if (this.commandBarContext === COMMAND_CONTEXT.SCOPE) {
+            console.log(`Scope context: adding ${aircraftModel.callsign} to command`);
             this.$commandInput.val(`${this.$commandInput.val()} ${aircraftModel.callsign}`);
             this.processCommand();
         } else if (aircraftModel) {
-            this.selectAircraft(aircraftModel);
+            console.log(`Starting data block drag for aircraft: ${aircraftModel.callsign}`);
+            // Find the radar target model for this aircraft
+            const radarTargetModel = this._scopeModel.radarTargetCollection.findRadarTargetModelForAircraftModel(aircraftModel);
+            if (radarTargetModel) {
+                // Start dragging the data block
+                this._startDataBlockDrag(radarTargetModel, mouseCanvasPos);
+                // Also select the aircraft for immediate feedback
+                this.selectAircraft(aircraftModel);
+            } else {
+                console.log(`No radar target model found for ${aircraftModel.callsign}`);
+                this.selectAircraft(aircraftModel);
+            }
         }
     }
 
@@ -1126,5 +1351,141 @@ export default class InputController {
             mousePositionY
         ];
         this.input.isMouseDown = true;
+    }
+
+    /**
+     * Start dragging a data block
+     *
+     * @for InputController
+     * @method _startDataBlockDrag
+     * @param radarTargetModel {RadarTargetModel}
+     * @param mouseCanvasPos {array<number>}
+     * @private
+     */
+    _startDataBlockDrag(radarTargetModel, mouseCanvasPos) {
+        console.log(`Starting data block drag for ${radarTargetModel.aircraftModel.callsign} ` +
+            `at (${mouseCanvasPos[0]}, ${mouseCanvasPos[1]})`);
+        this._draggedDataBlock = radarTargetModel;
+        this._dragStartPosition = [...mouseCanvasPos];
+        this._isDraggingDataBlock = false; // Will be set to true on first mouse move
+    }
+
+    /**
+     * Update data block position during drag
+     *
+     * @for InputController
+     * @method _updateDataBlockDrag
+     * @param mouseCanvasPos {array<number>}
+     * @param event {jquery Event}
+     * @private
+     */
+    _updateDataBlockDrag(mouseCanvasPos, event) {
+        if (!this._draggedDataBlock) {
+            return;
+        }
+
+        // Start dragging immediately on first mouse move
+        if (!this._isDraggingDataBlock) {
+            console.log(`Starting actual drag for ${this._draggedDataBlock.aircraftModel.callsign}`);
+            this._isDraggingDataBlock = true;
+            this._draggedDataBlock.setDataBlockBeingDragged(true);
+        }
+
+        const { aircraftModel } = this._draggedDataBlock;
+        const aircraftCanvasPosition = CanvasStageModel.calculateRoundedCanvasPositionFromRelativePosition(
+            aircraftModel.relativePosition
+        );
+
+        // Simple approach: position the data block directly at the mouse cursor
+        // Note: mouseCanvasPos has Y-axis inverted, so we need to invert it back for proper positioning
+        const correctedMousePos = [
+            mouseCanvasPos[0],
+            -mouseCanvasPos[1]  // Invert Y back to match page coordinates
+        ];
+        
+        // Calculate offset from aircraft position to corrected mouse position
+        const offset = [
+            correctedMousePos[0] - aircraftCanvasPosition[0],
+            correctedMousePos[1] - aircraftCanvasPosition[1]
+        ];
+
+        console.log(`  Aircraft relative position: (${aircraftModel.relativePosition[0]}, ${aircraftModel.relativePosition[1]})`);
+        console.log(`  Canvas pan: (${CanvasStageModel._panX}, ${CanvasStageModel._panY})`);
+        console.log(`  Canvas scale: ${CanvasStageModel.scale}`);
+
+        console.log(`Updating drag position: aircraft at (${aircraftCanvasPosition[0]}, ${aircraftCanvasPosition[1]}), ` +
+            `mouse at (${mouseCanvasPos[0]}, ${mouseCanvasPos[1]})`);
+        console.log(`  Corrected mouse position: (${correctedMousePos[0]}, ${correctedMousePos[1]})`);
+        console.log(`  Offset from aircraft to corrected mouse: (${offset[0]}, ${offset[1]})`);
+
+        // Update the custom offset
+        this._draggedDataBlock.setDataBlockCustomOffset(offset);
+
+        // Trigger a redraw
+        this._eventBus.trigger(EVENT.MARK_SHALLOW_RENDER);
+    }
+
+    /**
+     * End data block drag
+     *
+     * @for InputController
+     * @method _endDataBlockDrag
+     * @private
+     */
+    _endDataBlockDrag() {
+        if (!this._draggedDataBlock) {
+            return;
+        }
+
+        console.log(`Ending data block drag for ${this._draggedDataBlock.aircraftModel.callsign}, ` +
+            `was dragging: ${this._isDraggingDataBlock}`);
+
+        // Mark the data block as no longer being dragged (if it was being dragged)
+        if (this._isDraggingDataBlock) {
+            this._draggedDataBlock.setDataBlockBeingDragged(false);
+        }
+
+        // Clear drag state completely
+        this._draggedDataBlock = null;
+        this._isDraggingDataBlock = false;
+        this._dragStartPosition = [0, 0];
+
+        // Trigger a redraw
+        this._eventBus.trigger(EVENT.MARK_SHALLOW_RENDER);
+    }
+
+    /**
+     * Change theme to the specified name
+     *
+     * @for InputController
+     * @method _setTheme
+     * @param themeName {string}
+     * @returns undefined
+     * @private
+     */
+    _setTheme(themeName) {
+        if (!_has(THEME, themeName)) {
+            console.error(`Expected valid theme to change to, but received '${themeName}'`);
+            return;
+        }
+
+        this.theme = THEME[themeName];
+    }
+
+    /**
+     * Calculate the length of the leader line connecting the target to the data block
+     *
+     * @for InputController
+     * @method _calculateLeaderLength
+     * @param dataBlockLeaderLength {number} from RadarTargetModel#dataBlockLeaderLength
+     * @return {number} length, in pixels
+     * @private
+     */
+    _calculateLeaderLength(dataBlockLeaderLength) {
+        return dataBlockLeaderLength *
+            this.theme.DATA_BLOCK.LEADER_LENGTH_INCREMENT_PIXELS +
+            this.theme.DATA_BLOCK.LEADER_LENGTH_ADJUSTMENT_PIXELS -
+            this.theme.DATA_BLOCK.LEADER_PADDING_FROM_BLOCK_PX -
+            this.theme.DATA_BLOCK.LEADER_PADDING_FROM_TARGET_PX;
     }
 }

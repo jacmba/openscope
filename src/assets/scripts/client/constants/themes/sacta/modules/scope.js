@@ -121,7 +121,7 @@ export const SCOPE_THEME = {
      * @memberof SCOPE_THEME
      * @property RANGE_RING_COLOR
      */
-    RANGE_RING_COLOR: COLOR.WHITE_02,
+    RANGE_RING_COLOR: COLOR.WHITE_01,
 
     /**
      * Color used to depict the restricted airspace areas

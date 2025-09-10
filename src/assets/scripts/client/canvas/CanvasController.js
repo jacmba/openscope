@@ -1083,6 +1083,7 @@ export default class CanvasController {
         cc.save();
 
         // TODO: death to the `prop`!!!
+        // eslint-disable-next-line no-undef
         const match = prop.input.callsign.length > 0 && aircraftModel.matchCallsign(prop.input.callsign);
         const fillStyle = this._getAircraftCategoryColor(aircraftModel);
 
@@ -1566,20 +1567,8 @@ export default class CanvasController {
         cc.save();
 
         const paddingLR = 5;
-        let match = false;
 
-        // Callsign Matching
-        if (prop.input.callsign.length > 0 && aircraftModel.matchCallsign(prop.input.callsign)) {
-            match = true;
-        }
-
-        let white = aircraftModel.isControllable ?
-            this.theme.DATA_BLOCK.TEXT_IN_RANGE :
-            this.theme.DATA_BLOCK.TEXT_OUT_OF_RANGE;
-
-        if (match) {
-            white = this.theme.DATA_BLOCK.TEXT_SELECTED;
-        }
+        // Note: Callsign matching and leader line color are handled elsewhere
 
         cc.textBaseline = 'middle';
 
@@ -1603,27 +1592,54 @@ export default class CanvasController {
         const radarTargetPosition = CanvasStageModel.calculateRoundedCanvasPositionFromRelativePosition(
             aircraftModel.relativePosition
         );
-        const leaderLength = this._calculateLeaderLength(radarTargetModel.dataBlockLeaderLength);
-        const leaderStart = [
-            radarTargetPosition[0] + (offsetComponent[0] * this.theme.DATA_BLOCK.LEADER_PADDING_FROM_TARGET_PX),
-            radarTargetPosition[1] + (offsetComponent[1] * this.theme.DATA_BLOCK.LEADER_PADDING_FROM_TARGET_PX)
-        ];
-        const leaderEnd = [
-            radarTargetPosition[0] + offsetComponent[0] * (leaderLength - this.theme.DATA_BLOCK.LEADER_PADDING_FROM_BLOCK_PX),
-            radarTargetPosition[1] + offsetComponent[1] * (leaderLength - this.theme.DATA_BLOCK.LEADER_PADDING_FROM_BLOCK_PX)
-        ];
-        const leaderIntersectionWithBlock = [
-            radarTargetPosition[0] + offsetComponent[0] * leaderLength,
-            radarTargetPosition[1] + offsetComponent[1] * leaderLength
-        ];
+
+        // Check if there's a custom offset (dragged position)
+        const customOffset = radarTargetModel.getDataBlockCustomOffset();
+        let leaderStart;
+        let leaderEnd;
+        let leaderIntersectionWithBlock;
+        let dataBlockCenterCanvasPosition;
+
+        if (customOffset) {
+            // Use custom offset for dragged data block
+            dataBlockCenterCanvasPosition = [
+                radarTargetPosition[0] + customOffset[0],
+                radarTargetPosition[1] + customOffset[1]
+            ];
+
+            // For dragged data blocks, draw leader line from aircraft to data block
+            leaderStart = [
+                radarTargetPosition[0] + (offsetComponent[0] * this.theme.DATA_BLOCK.LEADER_PADDING_FROM_TARGET_PX),
+                radarTargetPosition[1] + (offsetComponent[1] * this.theme.DATA_BLOCK.LEADER_PADDING_FROM_TARGET_PX)
+            ];
+            leaderEnd = [
+                dataBlockCenterCanvasPosition[0] - (offsetComponent[0] * this.theme.DATA_BLOCK.LEADER_PADDING_FROM_BLOCK_PX),
+                dataBlockCenterCanvasPosition[1] - (offsetComponent[1] * this.theme.DATA_BLOCK.LEADER_PADDING_FROM_BLOCK_PX)
+            ];
+            leaderIntersectionWithBlock = dataBlockCenterCanvasPosition;
+        } else {
+            // Use default positioning logic
+            const leaderLength = this._calculateLeaderLength(radarTargetModel.dataBlockLeaderLength);
+            leaderStart = [
+                radarTargetPosition[0] + (offsetComponent[0] * this.theme.DATA_BLOCK.LEADER_PADDING_FROM_TARGET_PX),
+                radarTargetPosition[1] + (offsetComponent[1] * this.theme.DATA_BLOCK.LEADER_PADDING_FROM_TARGET_PX)
+            ];
+            leaderEnd = [
+                radarTargetPosition[0] + offsetComponent[0] * (leaderLength - this.theme.DATA_BLOCK.LEADER_PADDING_FROM_BLOCK_PX),
+                radarTargetPosition[1] + offsetComponent[1] * (leaderLength - this.theme.DATA_BLOCK.LEADER_PADDING_FROM_BLOCK_PX)
+            ];
+            leaderIntersectionWithBlock = [
+                radarTargetPosition[0] + offsetComponent[0] * leaderLength,
+                radarTargetPosition[1] + offsetComponent[1] * leaderLength
+            ];
+            dataBlockCenterCanvasPosition = radarTargetModel.calculateDataBlockCenter(leaderIntersectionWithBlock);
+        }
 
         cc.beginPath();
         cc.moveTo(...leaderStart);
         cc.lineTo(...leaderEnd);
-        cc.strokeStyle = white;
+        cc.strokeStyle = this._getAircraftCategoryColor(aircraftModel);
         cc.stroke();
-
-        const dataBlockCenterCanvasPosition = radarTargetModel.calculateDataBlockCenter(leaderIntersectionWithBlock);
 
         cc.translate(...dataBlockCenterCanvasPosition);
 
@@ -1692,6 +1708,7 @@ export default class CanvasController {
         let match = false;
 
         // Callsign Matching
+        // eslint-disable-next-line no-undef
         if (prop.input.callsign.length > 0 && aircraftModel.matchCallsign(prop.input.callsign)) {
             match = true;
         }
@@ -1699,19 +1716,16 @@ export default class CanvasController {
         // set color, intensity, and style elements
         let red = this.theme.DATA_BLOCK.ARRIVAL_BAR_OUT_OF_RANGE;
         let green = this.theme.DATA_BLOCK.BACKGROUND_OUT_OF_RANGE;
-        let blue = this.theme.DATA_BLOCK.DEPARTURE_BAR_OUT_OF_RANGE;
         let white = this.theme.DATA_BLOCK.TEXT_OUT_OF_RANGE;
 
         if (aircraftModel.isControllable) {
             red = this.theme.DATA_BLOCK.ARRIVAL_BAR_IN_RANGE;
             green = this.theme.DATA_BLOCK.BACKGROUND_IN_RANGE;
-            blue = this.theme.DATA_BLOCK.DEPARTURE_BAR_IN_RANGE;
             white = this.theme.DATA_BLOCK.TEXT_IN_RANGE;
 
             if (match) {
                 red = this.theme.DATA_BLOCK.ARRIVAL_BAR_SELECTED;
                 green = this.theme.DATA_BLOCK.BACKGROUND_SELECTED;
-                blue = this.theme.DATA_BLOCK.DEPARTURE_BAR_SELECTED;
                 white = this.theme.DATA_BLOCK.TEXT_SELECTED;
             }
         }
@@ -2354,6 +2368,7 @@ export default class CanvasController {
             return;
         }
 
+        // eslint-disable-next-line no-undef
         const callsign = prop.input.callsign.toUpperCase();
 
         if (callsign.length === 0) {

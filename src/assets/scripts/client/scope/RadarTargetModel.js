@@ -70,6 +70,25 @@ export default class RadarTargetModel {
         this._dataBlockLeaderLength = theme.DATA_BLOCK.LEADER_LENGTH;
 
         /**
+         * Custom offset for draggable data blocks (in pixels from aircraft position)
+         * When set, overrides the default leader direction and length
+         *
+         * @for RadarTargetModel
+         * @property _dataBlockCustomOffset
+         * @type {array<number>|null}
+         */
+        this._dataBlockCustomOffset = null;
+
+        /**
+         * Whether this data block is currently being dragged
+         *
+         * @for RadarTargetModel
+         * @property _isDataBlockBeingDragged
+         * @type {boolean}
+         */
+        this._isDataBlockBeingDragged = false;
+
+        /**
          * Event Bus reference
          *
          * @for RadarTargetModel
@@ -554,6 +573,50 @@ export default class RadarTargetModel {
         this.scratchPadText = scratchPadText;
 
         return [true, 'SET SCRATCHPAD'];
+    }
+
+    /**
+     * Set custom offset for draggable data block
+     *
+     * @for RadarTargetModel
+     * @method setDataBlockCustomOffset
+     * @param offset {array<number>|null} Custom offset in pixels [x, y] from aircraft position
+     */
+    setDataBlockCustomOffset(offset) {
+        this._dataBlockCustomOffset = offset;
+    }
+
+    /**
+     * Get custom offset for draggable data block
+     *
+     * @for RadarTargetModel
+     * @method getDataBlockCustomOffset
+     * @return {array<number>|null} Custom offset in pixels [x, y] from aircraft position
+     */
+    getDataBlockCustomOffset() {
+        return this._dataBlockCustomOffset;
+    }
+
+    /**
+     * Set whether this data block is being dragged
+     *
+     * @for RadarTargetModel
+     * @method setDataBlockBeingDragged
+     * @param isDragging {boolean}
+     */
+    setDataBlockBeingDragged(isDragging) {
+        this._isDataBlockBeingDragged = isDragging;
+    }
+
+    /**
+     * Get whether this data block is being dragged
+     *
+     * @for RadarTargetModel
+     * @method isDataBlockBeingDragged
+     * @return {boolean}
+     */
+    isDataBlockBeingDragged() {
+        return this._isDataBlockBeingDragged;
     }
 
     /**
