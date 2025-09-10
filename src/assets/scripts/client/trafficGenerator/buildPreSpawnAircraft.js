@@ -13,6 +13,18 @@ import { distance2d } from '../math/distance';
 import { ENVIRONMENT } from '../constants/environmentConstants';
 import { avg } from '../math/core';
 
+// Track which STAR routes have already spawned initial aircraft
+// This prevents multiple entry points of the same STAR from spawning simultaneously
+let spawnedStarRoutes = new Set();
+
+/**
+ * Reset the STAR route tracking for a new scenario
+ * This should be called when starting a new airport/scenario
+ */
+export const resetStarRouteTracking = () => {
+    spawnedStarRoutes.clear();
+};
+
 /**
  * Return an array whose indices directly mirror those of `waypointModelList`, except it
  * contains the distances along the route at which each waypoint lies from the spawn point
@@ -275,13 +287,39 @@ const _assembleSpawnOffsets = (entrailDistance, totalDistance = 0, routeString =
     const minRouteDistance = 30; // Minimum 30 NM route distance
     const effectiveTotalDistance = Math.max(totalDistance, minRouteDistance);
 
-    // For initial spawn (scenario start), use TRUE random chance and random distance to prevent approach overload
+    // Extract STAR name from route string (e.g., "HIE.HIE3C.GCLP" -> "HIE3C")
+    const extractStarName = (route) => {
+        const parts = route.split('.');
+        // Look for STAR pattern (usually the middle part that ends with a number)
+        for (let i = 1; i < parts.length - 1; i++) {
+            const part = parts[i];
+            // Check if this looks like a STAR name (contains letters and ends with number)
+            if (/^[A-Z]+\d+[A-Z]*$/.test(part)) {
+                return part;
+            }
+        }
+        return null;
+    };
+
+    const starName = extractStarName(routeString);
+
+    // For initial spawn (scenario start), limit to 1 aircraft per STAR route
+    if (starName && spawnedStarRoutes.has(starName)) {
+        // This STAR has already spawned an initial aircraft, don't spawn another
+        return [];
+    }
+
     // 70% chance of spawning initial aircraft (to prevent approach overload with many STARs)
     const spawnChance = Math.random() * 100;
 
     if (spawnChance > 70) {
         // Don't spawn initial aircraft for this route
         return [];
+    }
+
+    // Mark this STAR as having spawned an initial aircraft
+    if (starName) {
+        spawnedStarRoutes.add(starName);
     }
 
     // Random distance from 5-30 NM from boundary for those that do spawn

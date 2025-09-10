@@ -263,7 +263,7 @@ export const DATA_BLOCK_THEME = {
      * @memberof DATA_BLOCK_THEME
      * @property LEADER_PADDING_FROM_BLOCK_PX
      */
-    LEADER_PADDING_FROM_BLOCK_PX: 5,
+    LEADER_PADDING_FROM_BLOCK_PX: 0,
 
     /**
      * Distance from radar target before which the leader line is drawn

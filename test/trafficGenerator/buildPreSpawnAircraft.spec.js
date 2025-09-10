@@ -7,7 +7,8 @@ import {
     _calculateAltitudeOffsets,
     _calculateAltitudeAtOffset,
     _calculateIdealSpawnAltitudeAtOffset,
-    buildPreSpawnAircraft
+    buildPreSpawnAircraft,
+    resetStarRouteTracking
 } from '../../src/assets/scripts/client/trafficGenerator/buildPreSpawnAircraft';
 import { airportModelFixture } from '../fixtures/airportFixtures';
 import {
@@ -21,6 +22,7 @@ let sandbox;
 ava.beforeEach(() => {
     sandbox = sinon.createSandbox();
     createNavigationLibraryFixture();
+    resetStarRouteTracking(); // Reset STAR tracking for each test
 });
 
 ava.afterEach(() => {
@@ -273,6 +275,7 @@ ava('buildPreSpawnAircraft() generates different spawn positions for different r
     // Test multiple times to account for randomness
     let foundDifferent = false;
     for (let i = 0; i < 10; i++) {
+        resetStarRouteTracking(); // Reset for each iteration
         const results1 = buildPreSpawnAircraft(route1, airportModelFixture);
         const results2 = buildPreSpawnAircraft(route2, airportModelFixture);
 
@@ -298,6 +301,7 @@ ava('buildPreSpawnAircraft() prevents duplicate spawn positions', (t) => {
     // Test multiple times to account for randomness
     let foundGoodSpacing = false;
     for (let attempt = 0; attempt < 10; attempt++) {
+        resetStarRouteTracking(); // Reset for each iteration
         const results = buildPreSpawnAircraft(ARRIVAL_PATTERN_MOCK, airportModelFixture);
 
         if (results.length > 1) {
@@ -341,6 +345,7 @@ ava('buildPreSpawnAircraft() creates random but varied spawn positions', (t) => 
     const positions = [];
 
     for (let i = 0; i < 20; i++) {
+        resetStarRouteTracking(); // Reset for each iteration
         const results = buildPreSpawnAircraft(route1, airportModelFixture);
         if (results.length > 0) {
             const pos = results[0].positionModel.relativePosition;

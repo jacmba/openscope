@@ -3,6 +3,7 @@ import SpawnPatternCollection from './SpawnPatternCollection';
 import TimeKeeper from '../engine/TimeKeeper';
 import GameController from '../game/GameController';
 import { INVALID_NUMBER } from '../constants/globalConstants';
+import { resetStarRouteTracking } from './buildPreSpawnAircraft';
 
 /**
  * Used to create a game_timer for a `SpawnPatternModel` and provide
@@ -67,6 +68,9 @@ class SpawnScheduler {
      * @method createSchedulesFromList
      */
     createSchedulesFromList() {
+        // Reset STAR route tracking for new scenario
+        resetStarRouteTracking();
+        
         _forEach(SpawnPatternCollection.spawnPatternModels, (spawnPatternModel) => {
             // set the #cycleStartTime for this `spawnPatternModel` with current game time
             spawnPatternModel.cycleStart(TimeKeeper.accumulatedDeltaTime);
@@ -84,6 +88,9 @@ class SpawnScheduler {
      * @method resetAirborneTraffic
      */
     resetAirborneTraffic() {
+        // Reset STAR route tracking for new scenario
+        resetStarRouteTracking();
+        
         SpawnPatternCollection.spawnPatternModels.filter((s) => s.isAirborneAtSpawn()).forEach((spawnPatternModel) => {
             spawnPatternModel.preSpawnAircraftList = [];
             spawnPatternModel.createPreSpawnAircraft(this._aircraftController);
