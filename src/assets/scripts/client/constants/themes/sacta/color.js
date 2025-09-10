@@ -26,13 +26,13 @@ export const COLOR = {
 
     // Sacta-specific colors
     // Orange for arrivals (incoming traffic)
-    ORANGE: 'rgba(255, 165, 0, 1.0)',        // Pure orange
+    ORANGE: 'rgba(255, 165, 0, 1.0)', // Pure orange
     ORANGE_02: 'rgba(255, 165, 0, 0.2)',
     ORANGE_05: 'rgba(255, 165, 0, 0.5)',
     ORANGE_08: 'rgba(255, 165, 0, 0.8)',
 
     // Green for departures (outgoing traffic)
-    GREEN: 'rgba(0, 255, 0, 1.0)',           // Pure green
+    GREEN: 'rgba(0, 255, 0, 1.0)', // Pure green
     GREEN_02: 'rgba(0, 255, 0, 0.2)',
     GREEN_05: 'rgba(0, 255, 0, 0.5)',
     GREEN_08: 'rgba(0, 255, 0, 0.8)',
