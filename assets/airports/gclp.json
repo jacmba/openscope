@@ -31,38 +31,70 @@
             "ceiling": 150,
             "airspace_class": "B",
             "poly": [
-                ["N28.47833333", "W15.57138889"],
-                ["N28.46872597", "W15.46093436"],
-                ["N28.44027310", "W15.35472454"],
-                ["N28.39406814", "W15.25684101"],
-                ["N28.33188672", "W15.17104538"],
-                ["N28.25611845", "W15.10063472"],
-                ["N28.16967505", "W15.04831488"],
-                ["N28.07587849", "W15.01609648"],
-                ["N27.97833333", "W15.00521766"],
-                ["N27.88078817", "W15.01609648"],
-                ["N27.78699162", "W15.04831488"],
-                ["N27.70054822", "W15.10063472"],
-                ["N27.62477994", "W15.17104538"],
-                ["N27.56259853", "W15.25684101"],
-                ["N27.51639357", "W15.35472454"],
-                ["N27.48794069", "W15.46093436"],
-                ["N27.47833333", "W15.57138889"],
-                ["N27.48794069", "W15.68184342"],
-                ["N27.51639357", "W15.78805324"],
-                ["N27.56259853", "W15.88593677"],
-                ["N27.62477994", "W15.97173240"],
-                ["N27.70054822", "W16.04214306"],
-                ["N27.78699162", "W16.09446290"],
-                ["N27.88078817", "W16.12668129"],
-                ["N27.97833333", "W16.13756012"],
-                ["N28.07587849", "W16.12668129"],
-                ["N28.16967505", "W16.09446290"],
-                ["N28.25611845", "W16.04214306"],
-                ["N28.33188672", "W15.97173240"],
-                ["N28.39406814", "W15.88593677"],
-                ["N28.44027310", "W15.78805324"],
-                ["N28.46872597", "W15.68184342"]
+                ["N28.64455078", "W15.57138889"],
+                ["N28.64132272", "W15.49698542"],
+                ["N28.63167024", "W15.42331199"],
+                ["N28.61568804", "W15.35109109"],
+                ["N28.59353289", "W15.28103014"],
+                ["N28.56542196", "W15.21381425"],
+                ["N28.53163064", "W15.15009918"],
+                ["N28.49248962", "W15.09050472"],
+                ["N28.44838156", "W15.03560848"],
+                ["N28.39973715", "W14.98594017"],
+                ["N28.34703074", "W14.94197651"],
+                ["N28.29077552", "W14.90413669"],
+                ["N28.23151840", "W14.87277851"],
+                ["N28.16983450", "W14.84819523"],
+                ["N28.10632147", "W14.83061308"],
+                ["N28.04159360", "W14.82018952"],
+                ["N27.97627579", "W14.81701219"],
+                ["N27.91099752", "W14.82109853"],
+                ["N27.84638672", "W14.83239616"],
+                ["N27.78306380", "W14.85078389"],
+                ["N27.72163575", "W14.87607330"],
+                ["N27.66269039", "W14.90801101"],
+                ["N27.60679087", "W14.94628151"],
+                ["N27.55447042", "W14.99051042"],
+                ["N27.50622741", "W15.04026836"],
+                ["N27.46252077", "W15.09507516"],
+                ["N27.42376574", "W15.15440452"],
+                ["N27.39033017", "W15.21768902"],
+                ["N27.36253106", "W15.28432542"],
+                ["N27.34063182", "W15.35368021"],
+                ["N27.32483978", "W15.42509543"],
+                ["N27.31530440", "W15.49789461"],
+                ["N27.31211589", "W15.57138889"],
+                ["N27.31530440", "W15.64488317"],
+                ["N27.32483978", "W15.71768235"],
+                ["N27.34063182", "W15.78909757"],
+                ["N27.36253106", "W15.85845236"],
+                ["N27.39033017", "W15.92508875"],
+                ["N27.42376574", "W15.98837326"],
+                ["N27.46252077", "W16.04770262"],
+                ["N27.50622741", "W16.10250942"],
+                ["N27.55447042", "W16.15226736"],
+                ["N27.60679087", "W16.19649627"],
+                ["N27.66269039", "W16.23476677"],
+                ["N27.72163575", "W16.26670448"],
+                ["N27.78306380", "W16.29199389"],
+                ["N27.84638672", "W16.31038161"],
+                ["N27.91099752", "W16.32167925"],
+                ["N27.97627579", "W16.32576559"],
+                ["N28.04159360", "W16.32258826"],
+                ["N28.10632147", "W16.31216470"],
+                ["N28.16983450", "W16.29458255"],
+                ["N28.23151840", "W16.26999927"],
+                ["N28.29077552", "W16.23864109"],
+                ["N28.34703074", "W16.20080127"],
+                ["N28.39973715", "W16.15683761"],
+                ["N28.44838156", "W16.10716930"],
+                ["N28.49248962", "W16.05227306"],
+                ["N28.53163064", "W15.99267860"],
+                ["N28.56542196", "W15.92896353"],
+                ["N28.59353289", "W15.86174764"],
+                ["N28.61568804", "W15.79168669"],
+                ["N28.63167024", "W15.71946578"],
+                ["N28.64132272", "W15.64579236"]
             ]
         }
     ],
@@ -78,7 +110,7 @@
         "GDV": ["N28d04.37m5", "W15d25.44m4"],
         "TFN": ["N28d32.12m6", "W16d16.07m6"],
         "TFS": ["N28d00m08.8", "W16d41m16.5"],
-        "MOVAS" : ["N27d44m12.9", "W16d42m01.8"],
+        "MOVAS": ["N27d44m12.9", "W16d42m01.8"],
         "ODEGI": ["N26d53m40.5", "W16d17m24.4"],
         "REMGI": ["N27d05m24.7", "W15d16m10.6"],
         "SARWO": ["N27d31m08.2", "W16d14m36.8"],
@@ -111,7 +143,6 @@
         "MATUD": ["N27d28m45.1", "W15d52m01.9"],
         "LACOR": ["N27d40m15.0", "W15d15m17.2"],
         "TISCA": ["N27d43m55.9", "W15d25m46.4"],
-        "ILP39": ["N27d47m25.7", "W15d19m23.5"],
         "CANIS": ["N27d59m59.4", "W14d38m53.4"],
         "BAFEM": ["N27d49m51.6", "W15d09m09.0"],
         "LORPO": ["N28d12m57.0", "W14d39m06.0"],
@@ -122,7 +153,6 @@
         "DELAP": ["N28d17m49.6", "W15d33m51.1"],
         "ORTIS": ["N31d24m25.0", "W16d33m24.9"],
         "PELIN": ["N28d07m02.3", "W16d01m22.7"],
-        "LP415": ["N27d47m25.7", "W15d19m23.5"],
         "YELBE": ["N27d50m12.0", "W17d23m30.6"],
         "ZUCRU": ["N27d37m07.4", "W15d58m38.0"],
         "FTV": ["N28d20m50.7", "W13d52m04.0"],
@@ -174,7 +204,7 @@
             ]
         }
     ],
-    "runways":[
+    "runways": [
         {
             "name": ["03L", "21R"],
             "end": [
@@ -205,9 +235,7 @@
             "exitPoints": {
                 "KOPUD": []
             },
-            "draw": [
-                ["ECKOS", "_GDV090017", "KOPUD"]
-            ]
+            "draw": [["ECKOS", "_GDV090017", "KOPUD"]]
         },
         "COSTI4A": {
             "icao": "COSTI4A",
@@ -221,24 +249,38 @@
             "exitPoints": {
                 "COSTI": []
             },
-            "draw": [
-                ["ECKOS", "_GDV119023", "COSTI"]
-            ]
+            "draw": [["ECKOS", "_GDV119023", "COSTI"]]
         },
         "BIMBO7A": {
             "icao": "BIMBO7A",
             "name": "Bimbo Seven Alpha",
             "altitude": 6000,
             "rwy": {
-                "GCLP03L": [["ECKOS", "A11+"], ["ISLET", "A50+"], "COLON", "THAIS", "NERVO", "KASAS", "BIMBO"],
-                "GCLP03R": [["ECKOS", "A11+"], ["ISLET", "A50+"], "COLON", "THAIS", "NERVO", "KASAS", "BIMBO"]
+                "GCLP03L": [
+                    ["ECKOS", "A11+"],
+                    ["ISLET", "A50+"],
+                    "COLON",
+                    "THAIS",
+                    "NERVO",
+                    "KASAS",
+                    "BIMBO"
+                ],
+                "GCLP03R": [
+                    ["ECKOS", "A11+"],
+                    ["ISLET", "A50+"],
+                    "COLON",
+                    "THAIS",
+                    "NERVO",
+                    "KASAS",
+                    "BIMBO"
+                ]
             },
             "body": [],
             "exitPoints": {
                 "BIMBO": []
             },
             "draw": [
-                ["ECKOS", "ISLET", "COLON","THAIS", "NERVO", "KASAS", "BIMBO"]
+                ["ECKOS", "ISLET", "COLON", "THAIS", "NERVO", "KASAS", "BIMBO"]
             ]
         },
         "KONBA6A": {
@@ -246,15 +288,31 @@
             "name": "Konba Six Alpha",
             "altitude": 6000,
             "rwy": {
-                "GCLP03L": [["ECKOS", "A11+"], ["ISLET", "A50+"], "COLON", "THAIS", "NERVO", "KASAS", "KONBA"],
-                "GCLP03R": [["ECKOS", "A11+"], ["ISLET", "A50+"], "COLON", "THAIS", "NERVO", "KASAS", "KONBA"]
+                "GCLP03L": [
+                    ["ECKOS", "A11+"],
+                    ["ISLET", "A50+"],
+                    "COLON",
+                    "THAIS",
+                    "NERVO",
+                    "KASAS",
+                    "KONBA"
+                ],
+                "GCLP03R": [
+                    ["ECKOS", "A11+"],
+                    ["ISLET", "A50+"],
+                    "COLON",
+                    "THAIS",
+                    "NERVO",
+                    "KASAS",
+                    "KONBA"
+                ]
             },
             "body": [],
             "exitPoints": {
                 "KONBA": []
             },
             "draw": [
-                ["ECKOS", "ISLET", "COLON","THAIS", "NERVO", "KASAS", "KONBA"]
+                ["ECKOS", "ISLET", "COLON", "THAIS", "NERVO", "KASAS", "KONBA"]
             ]
         },
         "SARAY2A": {
@@ -262,48 +320,82 @@
             "name": "Saray Two Alpha",
             "altitude": 6000,
             "rwy": {
-                "GCLP03L": [["ECKOS", "A11+"], ["ISLET", "A50+"], "COLON", "LARYS", "SARAY"],
-                "GCLP03R": [["ECKOS", "A11+"], ["ISLET", "A50+"], "COLON", "LARYS", "SARAY"]
+                "GCLP03L": [
+                    ["ECKOS", "A11+"],
+                    ["ISLET", "A50+"],
+                    "COLON",
+                    "LARYS",
+                    "SARAY"
+                ],
+                "GCLP03R": [
+                    ["ECKOS", "A11+"],
+                    ["ISLET", "A50+"],
+                    "COLON",
+                    "LARYS",
+                    "SARAY"
+                ]
             },
             "body": [],
             "exitPoints": {
                 "SARAY": []
             },
-            "draw": [
-                ["ECKOS", "ISLET", "COLON", "LARYS", "SARAY"]
-            ]
+            "draw": [["ECKOS", "ISLET", "COLON", "LARYS", "SARAY"]]
         },
         "SAMAR8A": {
             "icao": "SAMAR8A",
             "name": "Samar Eight Alpha",
             "altitude": 6000,
             "rwy": {
-                "GCLP03L": [["ECKOS", "A11+"], ["ISLET", "A50+"], "COLON", "LARYS", "SARAY", "SAMAR"],
-                "GCLP03R": [["ECKOS", "A11+"], ["ISLET", "A50+"], "COLON", "LARYS", "SARAY", "SAMAR"]
+                "GCLP03L": [
+                    ["ECKOS", "A11+"],
+                    ["ISLET", "A50+"],
+                    "COLON",
+                    "LARYS",
+                    "SARAY",
+                    "SAMAR"
+                ],
+                "GCLP03R": [
+                    ["ECKOS", "A11+"],
+                    ["ISLET", "A50+"],
+                    "COLON",
+                    "LARYS",
+                    "SARAY",
+                    "SAMAR"
+                ]
             },
             "body": [],
             "exitPoints": {
                 "SAMAR": []
             },
-            "draw": [
-                ["ECKOS", "ISLET", "COLON", "LARYS", "SARAY", "SAMAR"]
-            ]
+            "draw": [["ECKOS", "ISLET", "COLON", "LARYS", "SARAY", "SAMAR"]]
         },
         "VASTO8A": {
             "icao": "VASTO8A",
             "name": "Vasto Eight Alpha",
             "altitude": 6000,
             "rwy": {
-                "GCLP03L": [["ECKOS", "A11+"], ["ISLET", "A50+"], "COLON", "LARYS", "SARAY", "VASTO"],
-                "GCLP03R": [["ECKOS", "A11+"], ["ISLET", "A50+"], "COLON", "LARYS", "SARAY", "VASTO"]
+                "GCLP03L": [
+                    ["ECKOS", "A11+"],
+                    ["ISLET", "A50+"],
+                    "COLON",
+                    "LARYS",
+                    "SARAY",
+                    "VASTO"
+                ],
+                "GCLP03R": [
+                    ["ECKOS", "A11+"],
+                    ["ISLET", "A50+"],
+                    "COLON",
+                    "LARYS",
+                    "SARAY",
+                    "VASTO"
+                ]
             },
             "body": [],
             "exitPoints": {
                 "VASTO": []
             },
-            "draw": [
-                ["ECKOS", "ISLET", "COLON", "LARYS", "SARAY", "VASTO"]
-            ]
+            "draw": [["ECKOS", "ISLET", "COLON", "LARYS", "SARAY", "VASTO"]]
         },
         "RASEP2A": {
             "icao": "RASEP2A",
@@ -317,40 +409,67 @@
             "exitPoints": {
                 "RASEP": []
             },
-            "draw": [
-                ["ECKOS", "ISLET", "RASEP"]
-            ]
+            "draw": [["ECKOS", "ISLET", "RASEP"]]
         },
         "KORAL9A": {
             "icao": "KORAL9A",
             "name": "Koral Niner Alpha",
             "altitude": 6000,
             "rwy": {
-                "GCLP03L": [["ECKOS", "A11+"], ["ISLET", "A50+"], "LZR", "KORAL"],
-                "GCLP03R": [["ECKOS", "A11+"], ["ISLET", "A50+"], "LZR", "KORAL"]
+                "GCLP03L": [
+                    ["ECKOS", "A11+"],
+                    ["ISLET", "A50+"],
+                    "LZR",
+                    "KORAL"
+                ],
+                "GCLP03R": [
+                    ["ECKOS", "A11+"],
+                    ["ISLET", "A50+"],
+                    "LZR",
+                    "KORAL"
+                ]
             },
             "body": [],
             "exitPoints": {
                 "KORAL": []
             },
-            "draw": [
-                ["ECKOS", "ISLET", "LZR", "KORAL"]
-            ]
+            "draw": [["ECKOS", "ISLET", "LZR", "KORAL"]]
         },
         "ODEGI2A": {
             "icao": "ODEGI2A",
             "name": "Odegi Two Alpha",
             "altitude": 6000,
             "rwy": {
-                "GCLP03L": [["ECKOS", "A11+"], "_GDV119023", "_GDV176023", "DRANO", "_GDV218023", "ODEGI"],
-                "GCLP03R": [["ECKOS", "A11+"], "_GDV119023", "_GDV176023", "DRANO", "_GDV218023", "ODEGI"]
+                "GCLP03L": [
+                    ["ECKOS", "A11+"],
+                    "_GDV119023",
+                    "_GDV176023",
+                    "DRANO",
+                    "_GDV218023",
+                    "ODEGI"
+                ],
+                "GCLP03R": [
+                    ["ECKOS", "A11+"],
+                    "_GDV119023",
+                    "_GDV176023",
+                    "DRANO",
+                    "_GDV218023",
+                    "ODEGI"
+                ]
             },
             "body": [],
             "exitPoints": {
                 "ODEGI": []
             },
             "draw": [
-                ["ECKOS", "_GDV119023", "_GDV176023", "DRANO", "_GDV218023", "ODEGI"]
+                [
+                    "ECKOS",
+                    "_GDV119023",
+                    "_GDV176023",
+                    "DRANO",
+                    "_GDV218023",
+                    "ODEGI"
+                ]
             ]
         },
         "REMGI2A": {
@@ -358,40 +477,72 @@
             "name": "Remgi Two Alpha",
             "altitude": 6000,
             "rwy": {
-                "GCLP03L": [["ECKOS", "A11+"], "_GDV119023", "_GDV176023", "REMGI"],
-                "GCLP03R": [["ECKOS", "A11+"], "_GDV119023", "_GDV176023", "REMGI"]
+                "GCLP03L": [
+                    ["ECKOS", "A11+"],
+                    "_GDV119023",
+                    "_GDV176023",
+                    "REMGI"
+                ],
+                "GCLP03R": [
+                    ["ECKOS", "A11+"],
+                    "_GDV119023",
+                    "_GDV176023",
+                    "REMGI"
+                ]
             },
             "body": [],
             "exitPoints": {
                 "REMGI": []
             },
-            "draw": [
-                ["ECKOS", "_GDV119023", "_GDV176023", "REMGI"]
-            ]
+            "draw": [["ECKOS", "_GDV119023", "_GDV176023", "REMGI"]]
         },
         "HIE5A": {
             "icao": "HIE5A",
             "name": "Hierro Five Alpha",
             "altitude": 6000,
             "rwy": {
-                "GCLP03L": [["ECKOS", "A11+"], "_GDV119023", "_GDV176023", "DRANO", "HIE"],
-                "GCLP03R": [["ECKOS", "A11+"], "_GDV119023", "_GDV176023", "DRANO", "HIE"]
+                "GCLP03L": [
+                    ["ECKOS", "A11+"],
+                    "_GDV119023",
+                    "_GDV176023",
+                    "DRANO",
+                    "HIE"
+                ],
+                "GCLP03R": [
+                    ["ECKOS", "A11+"],
+                    "_GDV119023",
+                    "_GDV176023",
+                    "DRANO",
+                    "HIE"
+                ]
             },
             "body": [],
             "exitPoints": {
                 "HIE": []
             },
-            "draw": [
-                ["ECKOS", "_GDV119023", "_GDV176023", "DRANO", "HIE"]
-            ]
+            "draw": [["ECKOS", "_GDV119023", "_GDV176023", "DRANO", "HIE"]]
         },
         "MOVAS1A": {
             "icao": "MOVAS1A",
             "name": "Movas One Alpha",
             "altitude": 6000,
             "rwy": {
-                "GCLP03L": [["ECKOS", "A11+"], "_GDV119023", "_GDV176023", "DRANO", "SARWO", "MOVAS"],
-                "GCLP03R": [["ECKOS", "A11+"], "_GDV119023", "_GDV176023", "DRANO", "SARWO", "MOVAS"]
+                "GCLP03L": [
+                    ["ECKOS", "A11+"],
+                    "_GDV119023",
+                    "_GDV176023",
+                    "DRANO",
+                    "SARWO",
+                    "MOVAS"
+                ],
+                "GCLP03R": [
+                    ["ECKOS", "A11+"],
+                    "_GDV119023",
+                    "_GDV176023",
+                    "DRANO",
+                    "SARWO",
+                    "MOVAS"
+                ]
             },
             "body": [],
             "exitPoints": {
@@ -413,41 +564,61 @@
             "exitPoints": {
                 "TFN": []
             },
-            "draw": [
-                ["ECKOS", "GDV", "ARTEM", "TFN"]
-            ]
+            "draw": [["ECKOS", "GDV", "ARTEM", "TFN"]]
         },
         "ARACO4A": {
             "icao": "ARACO4A",
             "name": "Araco One Alpha",
             "altitude": 6000,
             "rwy": {
-                "GCLP03L": [["ECKOS", "A14+"], ["GDV", "A30-"], "ARTEM", "TFN", "TESEL", "ARACO"],
-                "GCLP03R": [["ECKOS", "A14+"], ["GDV", "A30-"], "ARTEM", "TFN", "TESEL", "ARACO"]
+                "GCLP03L": [
+                    ["ECKOS", "A14+"],
+                    ["GDV", "A30-"],
+                    "ARTEM",
+                    "TFN",
+                    "TESEL",
+                    "ARACO"
+                ],
+                "GCLP03R": [
+                    ["ECKOS", "A14+"],
+                    ["GDV", "A30-"],
+                    "ARTEM",
+                    "TFN",
+                    "TESEL",
+                    "ARACO"
+                ]
             },
             "body": [],
             "exitPoints": {
                 "ARACO": []
             },
-            "draw": [
-                ["ECKOS", "GDV", "ARTEM", "TFN", "TESEL", "ARACO"]
-            ]
+            "draw": [["ECKOS", "GDV", "ARTEM", "TFN", "TESEL", "ARACO"]]
         },
         "LOMAS1A": {
             "icao": "LOMAS1A",
             "name": "Lomas One Alpha",
             "altitude": 6000,
             "rwy": {
-                "GCLP03L": [["ECKOS", "A11+"], "_GDV119023", "_GDV176023", "DRANO", "LOMAS"],
-                "GCLP03R": [["ECKOS", "A11+"], "_GDV119023", "_GDV176023", "DRANO", "LOMAS"]
+                "GCLP03L": [
+                    ["ECKOS", "A11+"],
+                    "_GDV119023",
+                    "_GDV176023",
+                    "DRANO",
+                    "LOMAS"
+                ],
+                "GCLP03R": [
+                    ["ECKOS", "A11+"],
+                    "_GDV119023",
+                    "_GDV176023",
+                    "DRANO",
+                    "LOMAS"
+                ]
             },
             "body": [],
             "exitPoints": {
                 "LOMAS": []
             },
-            "draw": [
-                ["ECKOS", "_GDV119023", "_GDV176023", "DRANO", "LOMAS"]
-            ]
+            "draw": [["ECKOS", "_GDV119023", "_GDV176023", "DRANO", "LOMAS"]]
         }
     },
     "stars": {
@@ -456,93 +627,157 @@
             "name": "Remgi Three Charlie",
             "altitude": 10000,
             "rwy": {
-                "GCLP03L": [["REMGI", "A100+"], ["TOMOS", "A50+|S220"], "DRANO", ["FALPU", "A25|S190"], "LPC"],
-                "GCLP03R": [["REMGI", "A100+"], ["TOMOS", "A50+|S220"], "DRANO", ["FALPU", "A25|S190"], "LPC"]
+                "GCLP03L": [
+                    ["REMGI", "A100+"],
+                    ["TOMOS", "A50+|S220"],
+                    "DRANO",
+                    ["FALPU", "A25|S190"],
+                    "LPC"
+                ],
+                "GCLP03R": [
+                    ["REMGI", "A100+"],
+                    ["TOMOS", "A50+|S220"],
+                    "DRANO",
+                    ["FALPU", "A25|S190"],
+                    "LPC"
+                ]
             },
             "body": [],
             "entryPoints": {
                 "REMGI": ["REMGI"]
             },
-            "draw": [
-                ["REMGI", "TOMOS", "DRANO", "FALPU"]
-            ]
+            "draw": [["REMGI", "TOMOS", "DRANO", "FALPU"]]
         },
         "ODEGI3C": {
             "icao": "ODEGI3C",
             "name": "Odegi Three Charlie",
             "altitude": 11000,
             "rwy": {
-                "GCLP03L": [["ODEGI", "A110+"], ["MATUD", "A90+"], ["TOMOS", "A50+|S220"], "DRANO", ["FALPU", "A25|S190"], "LPC"],
-                "GCLP03R": [["ODEGI", "A110+"], ["MATUD", "A90+"], ["TOMOS", "A50+|S220"], "DRANO", ["FALPU", "A25|S190"], "LPC"]
+                "GCLP03L": [
+                    ["ODEGI", "A110+"],
+                    ["MATUD", "A90+"],
+                    ["TOMOS", "A50+|S220"],
+                    "DRANO",
+                    ["FALPU", "A25|S190"],
+                    "LPC"
+                ],
+                "GCLP03R": [
+                    ["ODEGI", "A110+"],
+                    ["MATUD", "A90+"],
+                    ["TOMOS", "A50+|S220"],
+                    "DRANO",
+                    ["FALPU", "A25|S190"],
+                    "LPC"
+                ]
             },
             "body": [],
             "entryPoints": {
                 "ODEGI": ["ODEGI"]
             },
-            "draw": [
-                ["ODEGI", "MATUD", "TOMOS", "DRANO", "FALPU"]
-            ]
+            "draw": [["ODEGI", "MATUD", "TOMOS", "DRANO", "FALPU"]]
         },
         "HIE3C": {
             "icao": "HIE3C",
             "name": "Hierro Three Charlie",
             "altitude": 15000,
             "rwy": {
-                "GCLP03L": ["HIE", "TFS", ["TOMOS", "A50+|S220"], "DRANO", ["FALPU", "A25|S190"], "LPC"],
-                "GCLP03R": ["HIE", "TFS", ["TOMOS", "A50+|S220"], "DRANO", ["FALPU", "A25|S190"], "LPC"]
+                "GCLP03L": [
+                    "HIE",
+                    "TFS",
+                    ["TOMOS", "A50+|S220"],
+                    "DRANO",
+                    ["FALPU", "A25|S190"],
+                    "LPC"
+                ],
+                "GCLP03R": [
+                    "HIE",
+                    "TFS",
+                    ["TOMOS", "A50+|S220"],
+                    "DRANO",
+                    ["FALPU", "A25|S190"],
+                    "LPC"
+                ]
             },
             "body": [],
             "entryPoints": {
                 "HIE": ["HIE"],
                 "TFS": ["TFS", "TOMOS", "DRANO", "FALPU"]
             },
-            "draw": [
-                ["HIE", "TFS", "TOMOS", "DRANO", "FALPU"]
-            ]
+            "draw": [["HIE", "TFS", "TOMOS", "DRANO", "FALPU"]]
         },
         "COSTI1Z": {
             "icao": "COSTI1Z",
             "name": "Costi One Zulu",
             "altitude": 10000,
             "rwy": {
-                "GCLP03L": ["COSTI", "LALTO", "LACOR", "TISCA", "FALPU", "ILP39"]
+                "GCLP03L": [
+                    ["COSTI", "A100+"],
+                    "LALTO",
+                    "LACOR",
+                    ["TISCA", "A50+|S220"],
+                    ["FALPU", "A25|S190"],
+                    "LPC"
+                ]
             },
             "body": [],
             "entryPoints": {
                 "COSTI": ["COSTI"]
             },
-            "draw": [
-                ["COSTI", "LALTO", "LACOR", "TISCA", "FALPU"]
-            ]
+            "draw": [["COSTI", "LALTO", "LACOR", "TISCA", "FALPU"]]
         },
         "LORPO2Z": {
             "icao": "LORPO2Z",
             "name": "Lorpo Two Zulu",
             "altitude": 10000,
             "rwy": {
-                "GCLP03L": ["LORPO", "CANIS", "LALTO", "LACOR", "TISCA", "FALPU", "ILP39"]
+                "GCLP03L": [
+                    ["LORPO", "A100+"],
+                    "CANIS",
+                    "LALTO",
+                    "LACOR",
+                    ["TISCA", "A50+|S220"],
+                    ["FALPU", "A25|S190"],
+                    "LPC"
+                ]
             },
             "body": [],
             "entryPoints": {
                 "LORPO": ["LORPO"]
             },
-            "draw": [
-                ["LORPO", "CANIS", "LALTO", "LACOR", "TISCA", "FALPU"]
-            ]
+            "draw": [["LORPO", "CANIS", "LALTO", "LACOR", "TISCA", "FALPU"]]
         },
         "RUSIK7Z": {
             "icao": "RUSIK7Z",
             "name": "Rusik Seven Zulu",
             "altitude": 10000,
             "rwy": {
-                "GCLP03L": ["RUSIK", "FTV", "FAYTA", "CANIS", "LALTO", "LACOR", "TISCA", "FALPU", "ILP39"]
+                "GCLP03L": [
+                    ["RUSIK", "A100+"],
+                    "FTV",
+                    "FAYTA",
+                    "CANIS",
+                    "LALTO",
+                    "LACOR",
+                    ["TISCA", "A50+|S220"],
+                    ["FALPU", "A25|S190"],
+                    "LPC"
+                ]
             },
             "body": [],
             "entryPoints": {
                 "RUSIK": ["RUSIK"]
             },
             "draw": [
-                ["RUSIK", "FTV", "FAYTA", "CANIS", "LALTO", "LACOR", "TISCA", "FALPU"]
+                [
+                    "RUSIK",
+                    "FTV",
+                    "FAYTA",
+                    "CANIS",
+                    "LALTO",
+                    "LACOR",
+                    "TISCA",
+                    "FALPU"
+                ]
             ]
         },
         "TERTO9Z": {
@@ -550,14 +785,33 @@
             "name": "Terto Nine Zulu",
             "altitude": 10000,
             "rwy": {
-                "GCLP03L": ["TERTO", "LZR", "BETAN", "CANIS", "LALTO", "LACOR", "TISCA", "FALPU", "ILP39"]
+                "GCLP03L": [
+                    ["TERTO", "A100+"],
+                    "LZR",
+                    "BETAN",
+                    "CANIS",
+                    "LALTO",
+                    "LACOR",
+                    ["TISCA", "A50+|S220"],
+                    ["FALPU", "A25|S190"],
+                    "LPC"
+                ]
             },
             "body": [],
             "entryPoints": {
                 "TERTO": ["TERTO"]
             },
             "draw": [
-                ["TERTO", "LZR", "BETAN", "CANIS", "LALTO", "LACOR", "TISCA", "FALPU"]
+                [
+                    "TERTO",
+                    "LZR",
+                    "BETAN",
+                    "CANIS",
+                    "LALTO",
+                    "LACOR",
+                    "TISCA",
+                    "FALPU"
+                ]
             ]
         },
         "ESIQE1C": {
@@ -565,29 +819,55 @@
             "name": "Esiqe One Charlie",
             "altitude": 10000,
             "rwy": {
-                "GCLP03L": ["ESIQE", "SARWO", "TOMOS", "DRANO", "FALPU", "ILP39"]
+                "GCLP03L": [
+                    ["ESIQE", "A100+"],
+                    "SARWO",
+                    ["TOMOS", "A50+|S220"],
+                    "DRANO",
+                    ["FALPU", "A25|S190"],
+                    "LPC"
+                ]
             },
             "body": [],
             "entryPoints": {
                 "ESIQE": ["ESIQE"]
             },
-            "draw": [
-                ["ESIQE", "SARWO", "TOMOS", "DRANO", "FALPU"]
-            ]
+            "draw": [["ESIQE", "SARWO", "TOMOS", "DRANO", "FALPU"]]
         },
         "KONBA6C": {
             "icao": "KONBA6C",
             "name": "Konba Six Charlie",
             "altitude": 10000,
             "rwy": {
-                "GCLP03L": ["KONBA", "BRICK", "DELAP", "GDV", "BAFEM", "LALTO", "LACOR", "TISCA", "FALPU", "ILP39"]
+                "GCLP03L": [
+                    ["KONBA", "A100+"],
+                    "BRICK",
+                    "DELAP",
+                    "GDV",
+                    "BAFEM",
+                    "LALTO",
+                    "LACOR",
+                    ["TISCA", "A50+|S220"],
+                    ["FALPU", "A25|S190"],
+                    "LPC"
+                ]
             },
             "body": [],
             "entryPoints": {
                 "KONBA": ["KONBA"]
             },
             "draw": [
-                ["KONBA", "BRICK", "DELAP", "GDV", "BAFEM", "LALTO", "LACOR", "TISCA", "FALPU"]
+                [
+                    "KONBA",
+                    "BRICK",
+                    "DELAP",
+                    "GDV",
+                    "BAFEM",
+                    "LALTO",
+                    "LACOR",
+                    "TISCA",
+                    "FALPU"
+                ]
             ]
         },
         "ORTIS6C": {
@@ -595,14 +875,35 @@
             "name": "Ortis Six Charlie",
             "altitude": 10000,
             "rwy": {
-                "GCLP03L": ["ORTIS", "BRICK", "DELAP", "GDV", "BAFEM", "LALTO", "LACOR", "TISCA", "FALPU", "ILP39"]
+                "GCLP03L": [
+                    ["ORTIS", "A100+"],
+                    "BRICK",
+                    "DELAP",
+                    "GDV",
+                    "BAFEM",
+                    "LALTO",
+                    "LACOR",
+                    ["TISCA", "A50+|S220"],
+                    ["FALPU", "A25|S190"],
+                    "LPC"
+                ]
             },
             "body": [],
             "entryPoints": {
                 "ORTIS": ["ORTIS"]
             },
             "draw": [
-                ["ORTIS", "BRICK", "DELAP", "GDV", "BAFEM", "LALTO", "LACOR", "TISCA", "FALPU"]
+                [
+                    "ORTIS",
+                    "BRICK",
+                    "DELAP",
+                    "GDV",
+                    "BAFEM",
+                    "LALTO",
+                    "LACOR",
+                    "TISCA",
+                    "FALPU"
+                ]
             ]
         },
         "PELIN1C": {
@@ -610,22 +911,35 @@
             "name": "Pelin One Charlie",
             "altitude": 10000,
             "rwy": {
-                "GCLP03L": ["PELIN", "TOMOS", "DRANO", "FALPU", "ILP39"]
+                "GCLP03L": [
+                    ["PELIN", "A100+"],
+                    ["TOMOS", "A50+|S220"],
+                    "DRANO",
+                    ["FALPU", "A25|S190"],
+                    "LPC"
+                ]
             },
             "body": [],
             "entryPoints": {
                 "PELIN": ["PELIN"]
             },
-            "draw": [
-                ["PELIN", "TOMOS", "DRANO", "FALPU"]
-            ]
+            "draw": [["PELIN", "TOMOS", "DRANO", "FALPU"]]
         },
         "SAMAR6C": {
             "icao": "SAMAR6C",
             "name": "Samar Six Charlie",
             "altitude": 10000,
             "rwy": {
-                "GCLP03L": ["SAMAR", "GDV", "BAFEM", "LALTO", "LACOR", "TISCA", "FALPU", "ILP39"]
+                "GCLP03L": [
+                    ["SAMAR", "A100+"],
+                    "GDV",
+                    "BAFEM",
+                    "LALTO",
+                    "LACOR",
+                    ["TISCA", "A50+|S220"],
+                    ["FALPU", "A25|S190"],
+                    "LPC"
+                ]
             },
             "body": [],
             "entryPoints": {
@@ -635,50 +949,26 @@
                 ["SAMAR", "GDV", "BAFEM", "LALTO", "LACOR", "TISCA", "FALPU"]
             ]
         },
-        "TOMOS1C": {
-            "icao": "TOMOS1C",
-            "name": "Tomos One Charlie",
-            "altitude": 10000,
-            "rwy": {
-                "GCLP03L": ["TOMOS", "LPC", "LP415", "TISCA", "FALPU", "ILP39"]
-            },
-            "body": [],
-            "entryPoints": {
-                "TOMOS": ["TOMOS"]
-            },
-            "draw": [
-                ["TOMOS", "LPC", "LP415", "TISCA", "FALPU"]
-            ]
-        },
-        "URQUI2C": {
-            "icao": "URQUI2C",
-            "name": "Urqui Two Charlie",
-            "altitude": 10000,
-            "rwy": {
-                "GCLP03L": ["URQUI", "MATUD", "TOMOS", "DRANO", "FALPU", "ILP39"]
-            },
-            "body": [],
-            "entryPoints": {
-                "URQUI": ["URQUI"]
-            },
-            "draw": [
-                ["URQUI", "MATUD", "TOMOS", "DRANO", "FALPU"]
-            ]
-        },
         "YELBE2C": {
             "icao": "YELBE2C",
             "name": "Yelbe Two Charlie",
             "altitude": 10000,
             "rwy": {
-                "GCLP03L": ["YELBE", "MOVAS", "ZUCRU", "TOMOS", "DRANO", "FALPU", "ILP39"]
+                "GCLP03L": [
+                    ["YELBE", "A100+"],
+                    "MOVAS",
+                    "ZUCRU",
+                    ["TOMOS", "A50+|S220"],
+                    "DRANO",
+                    ["FALPU", "A25|S190"],
+                    "LPC"
+                ]
             },
             "body": [],
             "entryPoints": {
                 "YELBE": ["YELBE"]
             },
-            "draw": [
-                ["YELBE", "MOVAS", "ZUCRU", "TOMOS", "DRANO", "FALPU"]
-            ]
+            "draw": [["YELBE", "MOVAS", "ZUCRU", "TOMOS", "DRANO", "FALPU"]]
         }
     },
     "spawnPatterns": [
@@ -691,9 +981,7 @@
             "speed": "",
             "method": "random",
             "rate": 2,
-            "airlines": [
-                ["ibb", 10]
-            ]
+            "airlines": [["ibb", 10]]
         },
         {
             "origin": "GCLP",
@@ -704,9 +992,7 @@
             "speed": "",
             "method": "random",
             "rate": 1,
-            "airlines": [
-                ["ibb", 10]
-            ]
+            "airlines": [["ibb", 10]]
         },
         {
             "origin": "GCLP",
@@ -717,9 +1003,7 @@
             "speed": "",
             "method": "random",
             "rate": 1,
-            "airlines": [
-                ["ibb", 10]
-            ]
+            "airlines": [["ibb", 10]]
         },
         {
             "origin": "GCLP",
@@ -730,9 +1014,7 @@
             "speed": "",
             "method": "random",
             "rate": 2,
-            "airlines": [
-                ["ibb", 10]
-            ]
+            "airlines": [["ibb", 10]]
         },
         {
             "origin": "GCLP",
@@ -743,9 +1025,7 @@
             "speed": "",
             "method": "random",
             "rate": 1,
-            "airlines": [
-                ["ibb", 10]
-            ]
+            "airlines": [["ibb", 10]]
         },
         {
             "origin": "GCLP",
@@ -756,9 +1036,7 @@
             "speed": "",
             "method": "random",
             "rate": 1,
-            "airlines": [
-                ["ibb", 10]
-            ]
+            "airlines": [["ibb", 10]]
         },
         {
             "origin": "GCLP",
@@ -769,9 +1047,7 @@
             "speed": "",
             "method": "random",
             "rate": 1,
-            "airlines": [
-                ["ibb", 10]
-            ]
+            "airlines": [["ibb", 10]]
         },
         {
             "origin": "GCLP",
@@ -782,9 +1058,7 @@
             "speed": "",
             "method": "random",
             "rate": 1,
-            "airlines": [
-                ["ibb", 10]
-            ]
+            "airlines": [["ibb", 10]]
         },
         {
             "origin": "GCLP",
@@ -824,7 +1098,8 @@
             "method": "random",
             "rate": 6,
             "airlines": [
-                ["ibb", 3],
+                ["ibb", 8],
+                ["aea", 12],
                 ["vlg", 10],
                 ["ryr", 15],
                 ["ibs", 8],
@@ -850,7 +1125,8 @@
             "method": "random",
             "rate": 6,
             "airlines": [
-                ["ibb", 4],
+                ["ibb", 10],
+                ["aea", 15],
                 ["vlg", 12],
                 ["ryr", 15],
                 ["ibs", 8],
@@ -913,9 +1189,7 @@
             "speed": "",
             "method": "random",
             "rate": 1,
-            "airlines": [
-                ["ibb", 10]
-            ]
+            "airlines": [["ibb", 10]]
         },
         {
             "origin": "GCLP",
@@ -954,9 +1228,7 @@
             "speed": 280,
             "method": "random",
             "rate": 2,
-            "airlines": [
-                ["ibb", 1]
-            ]
+            "airlines": [["ibb", 1]]
         },
         {
             "origin": "",
@@ -967,9 +1239,7 @@
             "speed": 280,
             "method": "random",
             "rate": 1,
-            "airlines": [
-                ["ibb", 1]
-            ]
+            "airlines": [["ibb", 1]]
         },
         {
             "origin": "",
@@ -980,8 +1250,164 @@
             "speed": 280,
             "method": "random",
             "rate": 4,
+            "airlines": [["ibb", 1]]
+        },
+        {
+            "origin": "",
+            "destination": "GCLP",
+            "category": "arrival",
+            "route": "COSTI.COSTI1Z.GCLP03L",
+            "altitude": 10000,
+            "speed": 250,
+            "method": "random",
+            "rate": 3,
             "airlines": [
-                ["ibb", 1]
+                ["ibb", 8],
+                ["swq", 3]
+            ]
+        },
+        {
+            "origin": "",
+            "destination": "GCLP",
+            "category": "arrival",
+            "route": "LORPO.LORPO2Z.GCLP03L",
+            "altitude": 10000,
+            "speed": 250,
+            "method": "random",
+            "rate": 2,
+            "airlines": [
+                ["ibb", 6],
+                ["swq", 2]
+            ]
+        },
+        {
+            "origin": "",
+            "destination": "GCLP",
+            "category": "arrival",
+            "route": "RUSIK.RUSIK7Z.GCLP03L",
+            "altitude": 10000,
+            "speed": 250,
+            "method": "random",
+            "rate": 4,
+            "airlines": [
+                ["ibb", 6],
+                ["aea", 8],
+                ["vlg", 8],
+                ["ryr", 6],
+                ["ezy", 5],
+                ["swq", 2]
+            ]
+        },
+        {
+            "origin": "",
+            "destination": "GCLP",
+            "category": "arrival",
+            "route": "TERTO.TERTO9Z.GCLP03L",
+            "altitude": 10000,
+            "speed": 250,
+            "method": "random",
+            "rate": 3,
+            "airlines": [
+                ["ibb", 5],
+                ["aea", 6],
+                ["vlg", 6],
+                ["ryr", 5],
+                ["ezy", 4],
+                ["vir", 3]
+            ]
+        },
+        {
+            "origin": "",
+            "destination": "GCLP",
+            "category": "arrival",
+            "route": "ESIQE.ESIQE1C.GCLP03L",
+            "altitude": 10000,
+            "speed": 250,
+            "method": "random",
+            "rate": 2,
+            "airlines": [
+                ["ibb", 6],
+                ["swq", 1]
+            ]
+        },
+        {
+            "origin": "",
+            "destination": "GCLP",
+            "category": "arrival",
+            "route": "KONBA.KONBA6C.GCLP03L",
+            "altitude": 10000,
+            "speed": 250,
+            "method": "random",
+            "rate": 3,
+            "airlines": [
+                ["ibb", 2],
+                ["ryr", 8],
+                ["ezy", 7],
+                ["vlg", 4],
+                ["swq", 2]
+            ]
+        },
+        {
+            "origin": "",
+            "destination": "GCLP",
+            "category": "arrival",
+            "route": "ORTIS.ORTIS6C.GCLP03L",
+            "altitude": 10000,
+            "speed": 250,
+            "method": "random",
+            "rate": 3,
+            "airlines": [
+                ["ibb", 2],
+                ["vlg", 7],
+                ["ryr", 6],
+                ["ezy", 5],
+                ["vir", 3]
+            ]
+        },
+        {
+            "origin": "",
+            "destination": "GCLP",
+            "category": "arrival",
+            "route": "PELIN.PELIN1C.GCLP03L",
+            "altitude": 10000,
+            "speed": 250,
+            "method": "random",
+            "rate": 2,
+            "airlines": [
+                ["ibb", 5],
+                ["swq", 1]
+            ]
+        },
+        {
+            "origin": "",
+            "destination": "GCLP",
+            "category": "arrival",
+            "route": "SAMAR.SAMAR6C.GCLP03L",
+            "altitude": 10000,
+            "speed": 250,
+            "method": "random",
+            "rate": 4,
+            "airlines": [
+                ["ibb", 5],
+                ["aea", 8],
+                ["ryr", 9],
+                ["ezy", 8],
+                ["vlg", 4],
+                ["vir", 2]
+            ]
+        },
+        {
+            "origin": "",
+            "destination": "GCLP",
+            "category": "arrival",
+            "route": "YELBE.YELBE2C.GCLP03L",
+            "altitude": 10000,
+            "speed": 250,
+            "method": "random",
+            "rate": 2,
+            "airlines": [
+                ["ibb", 5],
+                ["swq", 1]
             ]
         }
     ],
@@ -989,10 +1415,30 @@
         {
             "name": "Base Map",
             "lines": [
-                ["N29.00000000", "W017.00000000", "N29.00000000", "W013.00000000"],
-                ["N29.00000000", "W013.00000000", "N27.00000000", "W013.00000000"],
-                ["N27.00000000", "W013.00000000", "N27.00000000", "W017.00000000"],
-                ["N27.00000000", "W017.00000000", "N29.00000000", "W017.00000000"]
+                [
+                    "N29.00000000",
+                    "W017.00000000",
+                    "N29.00000000",
+                    "W013.00000000"
+                ],
+                [
+                    "N29.00000000",
+                    "W013.00000000",
+                    "N27.00000000",
+                    "W013.00000000"
+                ],
+                [
+                    "N27.00000000",
+                    "W013.00000000",
+                    "N27.00000000",
+                    "W017.00000000"
+                ],
+                [
+                    "N27.00000000",
+                    "W017.00000000",
+                    "N29.00000000",
+                    "W017.00000000"
+                ]
             ]
         }
     ]
