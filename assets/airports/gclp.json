@@ -108,7 +108,28 @@
         "TOMOS": ["N27d32m51.0", "W15d33m11.7"],
         "FALPU": ["N27d46m43.8", "W15d27m14.9"],
         "LPC": ["N27d49m42.7", "W15d25m56.1"],
-        "MATUD": ["N27d28m45.1", "W15d52m01.9"]
+        "MATUD": ["N27d28m45.1", "W15d52m01.9"],
+        "LACOR": ["N27d40m15.0", "W15d15m17.2"],
+        "TISCA": ["N27d43m55.9", "W15d25m46.4"],
+        "ILP39": ["N27d47m25.7", "W15d19m23.5"],
+        "CANIS": ["N27d59m59.4", "W14d38m53.4"],
+        "BAFEM": ["N27d49m51.6", "W15d09m09.0"],
+        "LORPO": ["N28d12m57.0", "W14d39m06.0"],
+        "RUSIK": ["N28d54m22.0", "W12d48m59.0"],
+        "TERTO": ["N30d06m15.0", "W12d43m02.0"],
+        "ESIQE": ["N27d43m30.4", "W17d08m54.8"],
+        "BRICK": ["N29d35m28.9", "W16d22m22.4"],
+        "DELAP": ["N28d17m49.6", "W15d33m51.1"],
+        "ORTIS": ["N31d24m25.0", "W16d33m24.9"],
+        "PELIN": ["N28d07m02.3", "W16d01m22.7"],
+        "LP415": ["N27d47m25.7", "W15d19m23.5"],
+        "YELBE": ["N27d50m12.0", "W17d23m30.6"],
+        "ZUCRU": ["N27d37m07.4", "W15d58m38.0"],
+        "FTV": ["N28d20m50.7", "W13d52m04.0"],
+        "FAYTA": ["N28d06m30.8", "W14d08m17.2"],
+        "BETAN": ["N28d24m37.0", "W14d15m06.9"],
+        "COCTO": ["N27d47m42.2", "W15d12m47.0"],
+        "LIFBI": ["N27d45m42.0", "W15d16m09.1"]
     },
     "restricted": [
         {
@@ -477,6 +498,186 @@
             },
             "draw": [
                 ["HIE", "TFS", "TOMOS", "DRANO", "FALPU"]
+            ]
+        },
+        "COSTI1Z": {
+            "icao": "COSTI1Z",
+            "name": "Costi One Zulu",
+            "altitude": 10000,
+            "rwy": {
+                "GCLP03L": ["COSTI", "LALTO", "LACOR", "TISCA", "FALPU", "ILP39"]
+            },
+            "body": [],
+            "entryPoints": {
+                "COSTI": ["COSTI"]
+            },
+            "draw": [
+                ["COSTI", "LALTO", "LACOR", "TISCA", "FALPU"]
+            ]
+        },
+        "LORPO2Z": {
+            "icao": "LORPO2Z",
+            "name": "Lorpo Two Zulu",
+            "altitude": 10000,
+            "rwy": {
+                "GCLP03L": ["LORPO", "CANIS", "LALTO", "LACOR", "TISCA", "FALPU", "ILP39"]
+            },
+            "body": [],
+            "entryPoints": {
+                "LORPO": ["LORPO"]
+            },
+            "draw": [
+                ["LORPO", "CANIS", "LALTO", "LACOR", "TISCA", "FALPU"]
+            ]
+        },
+        "RUSIK7Z": {
+            "icao": "RUSIK7Z",
+            "name": "Rusik Seven Zulu",
+            "altitude": 10000,
+            "rwy": {
+                "GCLP03L": ["RUSIK", "FTV", "FAYTA", "CANIS", "LALTO", "LACOR", "TISCA", "FALPU", "ILP39"]
+            },
+            "body": [],
+            "entryPoints": {
+                "RUSIK": ["RUSIK"]
+            },
+            "draw": [
+                ["RUSIK", "FTV", "FAYTA", "CANIS", "LALTO", "LACOR", "TISCA", "FALPU"]
+            ]
+        },
+        "TERTO9Z": {
+            "icao": "TERTO9Z",
+            "name": "Terto Nine Zulu",
+            "altitude": 10000,
+            "rwy": {
+                "GCLP03L": ["TERTO", "LZR", "BETAN", "CANIS", "LALTO", "LACOR", "TISCA", "FALPU", "ILP39"]
+            },
+            "body": [],
+            "entryPoints": {
+                "TERTO": ["TERTO"]
+            },
+            "draw": [
+                ["TERTO", "LZR", "BETAN", "CANIS", "LALTO", "LACOR", "TISCA", "FALPU"]
+            ]
+        },
+        "ESIQE1C": {
+            "icao": "ESIQE1C",
+            "name": "Esiqe One Charlie",
+            "altitude": 10000,
+            "rwy": {
+                "GCLP03L": ["ESIQE", "SARWO", "TOMOS", "DRANO", "FALPU", "ILP39"]
+            },
+            "body": [],
+            "entryPoints": {
+                "ESIQE": ["ESIQE"]
+            },
+            "draw": [
+                ["ESIQE", "SARWO", "TOMOS", "DRANO", "FALPU"]
+            ]
+        },
+        "KONBA6C": {
+            "icao": "KONBA6C",
+            "name": "Konba Six Charlie",
+            "altitude": 10000,
+            "rwy": {
+                "GCLP03L": ["KONBA", "BRICK", "DELAP", "GDV", "BAFEM", "LALTO", "LACOR", "TISCA", "FALPU", "ILP39"]
+            },
+            "body": [],
+            "entryPoints": {
+                "KONBA": ["KONBA"]
+            },
+            "draw": [
+                ["KONBA", "BRICK", "DELAP", "GDV", "BAFEM", "LALTO", "LACOR", "TISCA", "FALPU"]
+            ]
+        },
+        "ORTIS6C": {
+            "icao": "ORTIS6C",
+            "name": "Ortis Six Charlie",
+            "altitude": 10000,
+            "rwy": {
+                "GCLP03L": ["ORTIS", "BRICK", "DELAP", "GDV", "BAFEM", "LALTO", "LACOR", "TISCA", "FALPU", "ILP39"]
+            },
+            "body": [],
+            "entryPoints": {
+                "ORTIS": ["ORTIS"]
+            },
+            "draw": [
+                ["ORTIS", "BRICK", "DELAP", "GDV", "BAFEM", "LALTO", "LACOR", "TISCA", "FALPU"]
+            ]
+        },
+        "PELIN1C": {
+            "icao": "PELIN1C",
+            "name": "Pelin One Charlie",
+            "altitude": 10000,
+            "rwy": {
+                "GCLP03L": ["PELIN", "TOMOS", "DRANO", "FALPU", "ILP39"]
+            },
+            "body": [],
+            "entryPoints": {
+                "PELIN": ["PELIN"]
+            },
+            "draw": [
+                ["PELIN", "TOMOS", "DRANO", "FALPU"]
+            ]
+        },
+        "SAMAR6C": {
+            "icao": "SAMAR6C",
+            "name": "Samar Six Charlie",
+            "altitude": 10000,
+            "rwy": {
+                "GCLP03L": ["SAMAR", "GDV", "BAFEM", "LALTO", "LACOR", "TISCA", "FALPU", "ILP39"]
+            },
+            "body": [],
+            "entryPoints": {
+                "SAMAR": ["SAMAR"]
+            },
+            "draw": [
+                ["SAMAR", "GDV", "BAFEM", "LALTO", "LACOR", "TISCA", "FALPU"]
+            ]
+        },
+        "TOMOS1C": {
+            "icao": "TOMOS1C",
+            "name": "Tomos One Charlie",
+            "altitude": 10000,
+            "rwy": {
+                "GCLP03L": ["TOMOS", "LPC", "LP415", "TISCA", "FALPU", "ILP39"]
+            },
+            "body": [],
+            "entryPoints": {
+                "TOMOS": ["TOMOS"]
+            },
+            "draw": [
+                ["TOMOS", "LPC", "LP415", "TISCA", "FALPU"]
+            ]
+        },
+        "URQUI2C": {
+            "icao": "URQUI2C",
+            "name": "Urqui Two Charlie",
+            "altitude": 10000,
+            "rwy": {
+                "GCLP03L": ["URQUI", "MATUD", "TOMOS", "DRANO", "FALPU", "ILP39"]
+            },
+            "body": [],
+            "entryPoints": {
+                "URQUI": ["URQUI"]
+            },
+            "draw": [
+                ["URQUI", "MATUD", "TOMOS", "DRANO", "FALPU"]
+            ]
+        },
+        "YELBE2C": {
+            "icao": "YELBE2C",
+            "name": "Yelbe Two Charlie",
+            "altitude": 10000,
+            "rwy": {
+                "GCLP03L": ["YELBE", "MOVAS", "ZUCRU", "TOMOS", "DRANO", "FALPU", "ILP39"]
+            },
+            "body": [],
+            "entryPoints": {
+                "YELBE": ["YELBE"]
+            },
+            "draw": [
+                ["YELBE", "MOVAS", "ZUCRU", "TOMOS", "DRANO", "FALPU"]
             ]
         }
     },
