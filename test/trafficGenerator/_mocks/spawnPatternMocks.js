@@ -193,3 +193,36 @@ export const SPAWN_PATTERN_MODEL_FOR_DEPARTURE_FIXTURE = {
         ['ual', 2]
     ]
 };
+
+// Mock data for testing fleet restrictions
+export const SPAWN_PATTERN_WITH_FLEET_RESTRICTIONS_MOCK = {
+    origin: '',
+    destination: 'KLAS',
+    category: 'arrival',
+    route: 'BETHL.GRNPA1.KLAS07R',
+    altitude: [30000, 40000],
+    speed: 320,
+    method: 'random',
+    rate: 10,
+    airlines: [
+        ['aal', 5],
+        ['ibb', 3, ['AT76']],
+        ['swq', 2, ['CRJ9', 'E190']]
+    ]
+};
+
+export const SPAWN_PATTERN_PERFORMANCE_BASED_MOCK = {
+    origin: '',
+    destination: 'KLAS',
+    category: 'arrival',
+    route: 'BETHL.GRNPA1.KLAS07R',
+    altitude: 35000,
+    speed: 320,
+    method: 'random',
+    rate: 10,
+    airlines: [
+        ['aal', 5],
+        ['ibb', 3],
+        ['swq', 2]
+    ]
+};

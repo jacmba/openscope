@@ -1,5 +1,5 @@
 import ava from 'ava';
-// import sinon from 'sinon';
+import sinon from 'sinon';
 
 import AircraftController from '../../src/assets/scripts/client/aircraft/AircraftController';
 import { AIRCRAFT_DEFINITION_LIST_MOCK } from './_mocks/aircraftMocks';
@@ -154,3 +154,45 @@ ava('does not throw when passed valid parameters', (t) => {
 //
 //     t.true(removeFlightNumberFromListSpy.calledOnce);
 // });
+
+// Tests for new aircraft selection functionality
+ava('._getRandomAircraftTypeDefinitionForAirlineId() accepts new optional parameters', (t) => {
+    const controller = new AircraftController(AIRCRAFT_DEFINITION_LIST_MOCK, airlineControllerFixture, scopeModelFixture);
+    
+    // Mock airline model
+    const mockAirlineModel = {
+        icao: 'aal',
+        getRandomAircraftType: () => 'B737',
+        getAircraftTypesForFleet: () => ['B737', 'A320']
+    };
+    
+    // Should not throw when called with new parameters
+    t.notThrows(() => {
+        controller._getRandomAircraftTypeDefinitionForAirlineId('aal', mockAirlineModel, ['B737'], 30000);
+    });
+    
+    t.notThrows(() => {
+        controller._getRandomAircraftTypeDefinitionForAirlineId('aal', mockAirlineModel, null, null);
+    });
+    
+    t.notThrows(() => {
+        controller._getRandomAircraftTypeDefinitionForAirlineId('aal', mockAirlineModel);
+    });
+});
+
+ava('._getRandomAircraftTypeDefinitionForAirlineId() passes parameters to collection correctly', (t) => {
+    const controller = new AircraftController(AIRCRAFT_DEFINITION_LIST_MOCK, airlineControllerFixture, scopeModelFixture);
+    const getAircraftDefinitionForAirlineIdSpy = sinon.spy(controller.aircraftTypeDefinitionCollection, 'getAircraftDefinitionForAirlineId');
+    
+    const mockAirlineModel = {
+        icao: 'aal',
+        getRandomAircraftType: () => 'B737',
+        getAircraftTypesForFleet: () => ['B737', 'A320']
+    };
+    
+    controller._getRandomAircraftTypeDefinitionForAirlineId('aal', mockAirlineModel, ['B737'], 30000);
+    
+    t.true(getAircraftDefinitionForAirlineIdSpy.calledWithExactly('aal', mockAirlineModel, ['B737'], 30000));
+    
+    getAircraftDefinitionForAirlineIdSpy.restore();
+});

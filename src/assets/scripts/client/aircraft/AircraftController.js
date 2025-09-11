@@ -604,7 +604,7 @@ export default class AircraftController {
      * @private
      */
     _buildAircraftProps(spawnPatternModel, isPreSpawn = false) {
-        const airlineId = spawnPatternModel.getRandomAirlineForSpawn();
+        const { airlineId, fleetRestriction } = spawnPatternModel.getRandomAirlineForSpawn();
         // TODO: update `airlineNameAndFleetHelper` to accept a string
         const { name, fleet } = airlineNameAndFleetHelper([airlineId]);
         let airlineModel = this._airlineController.findAirlineById(name);
@@ -619,7 +619,7 @@ export default class AircraftController {
         // this seems inefficient to find the model here and then pass it back to the controller but
         // since we already have it, it makes little sense to look for it again in the controller
         const flightNumber = this._airlineController.generateFlightNumberWithAirlineModel(airlineModel);
-        const aircraftTypeDefinition = this._getRandomAircraftTypeDefinitionForAirlineId(airlineId, airlineModel);
+        const aircraftTypeDefinition = this._getRandomAircraftTypeDefinitionForAirlineId(airlineId, airlineModel, fleetRestriction, spawnPatternModel.altitude);
         // TODO: this may need to be reworked.
         // if we are building a preSpawn aircraft, cap the altitude at 18000 so aircraft that spawn closer to
         // airspace can safely enter controlled airspace properly
@@ -685,11 +685,13 @@ export default class AircraftController {
      * @method _getRandomAircraftTypeDefinitionForAirlineId
      * @param airlineId {string}
      * @param airlineModel {AirlineModel}
+     * @param fleetRestriction {array|null} Optional array of allowed aircraft types
+     * @param spawnAltitude {number|array} Altitude for performance-based selection
      * @return aircraftDefinition {AircraftTypeDefinitionModel}
      * @private
      */
-    _getRandomAircraftTypeDefinitionForAirlineId(airlineId, airlineModel) {
-        return this.aircraftTypeDefinitionCollection.getAircraftDefinitionForAirlineId(airlineId, airlineModel);
+    _getRandomAircraftTypeDefinitionForAirlineId(airlineId, airlineModel, fleetRestriction = null, spawnAltitude = null) {
+        return this.aircraftTypeDefinitionCollection.getAircraftDefinitionForAirlineId(airlineId, airlineModel, fleetRestriction, spawnAltitude);
     }
 
     /**

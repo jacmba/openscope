@@ -262,6 +262,25 @@ export default class AirlineModel extends BaseModel {
     }
 
     /**
+     * Get all aircraft types for a specific fleet
+     *
+     * @for AirlineModel
+     * @method getAircraftTypesForFleet
+     * @param fleetName {string}
+     * @return {array<string>} Array of aircraft types in the fleet
+     */
+    getAircraftTypesForFleet(fleetName) {
+        if (!this._hasFleet(fleetName)) {
+            // eslint-disable-next-line max-len
+            throw new Error(`Invalid fleetName passed to AirlineModel. ${fleetName} is not a fleet defined in ${this.icao}`);
+        }
+
+        const fleet = this.fleets[fleetName];
+        // entries in `fleets[fleetName]` are of the shape `[TYPE, WEIGHT]` we only need the type here
+        return fleet.map(aircraftEntry => _head(aircraftEntry));
+    }
+
+    /**
      * Remove flight number from `activeFlightNumbers` list allowing
      * it to be reused by another aircraft some time in the future
      *

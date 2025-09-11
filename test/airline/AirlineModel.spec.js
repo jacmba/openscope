@@ -159,3 +159,50 @@ ava('._isActiveFlightNumber() returns true if a given flightNumber is present in
 
     t.true(model._isActiveFlightNumber(flightNumberMock));
 });
+
+// Tests for new getAircraftTypesForFleet method
+ava('.getAircraftTypesForFleet() returns array of aircraft types for valid fleet', (t) => {
+    const model = new AirlineModel(AIRLINE_DEFINITION_MOCK);
+    const result = model.getAircraftTypesForFleet('90long');
+
+    t.true(_isArray(result));
+    t.true(result.length > 0);
+    
+    // Check that all returned values are aircraft types (strings)
+    result.forEach(aircraftType => {
+        t.true(typeof aircraftType === 'string');
+    });
+});
+
+ava('.getAircraftTypesForFleet() returns correct aircraft types for default fleet', (t) => {
+    const model = new AirlineModel(AIRLINE_DEFINITION_SIMPLE_FLEET_MOCK);
+    const result = model.getAircraftTypesForFleet('default');
+
+    t.true(_isArray(result));
+    t.true(result.length === 2);
+    t.true(result.includes('a319'));
+    t.true(result.includes('b738'));
+});
+
+ava('.getAircraftTypesForFleet() throws error for invalid fleet name', (t) => {
+    const model = new AirlineModel(AIRLINE_DEFINITION_MOCK);
+    const expectedMessage = /Invalid fleetName passed to AirlineModel\. threeve is not a fleet defined in .*/;
+
+    t.throws(() => model.getAircraftTypesForFleet('threeve'), {
+        instanceOf: Error,
+        message: expectedMessage
+    });
+});
+
+ava('.getAircraftTypesForFleet() returns all aircraft types from fleet regardless of weight', (t) => {
+    const model = new AirlineModel(AIRLINE_DEFINITION_MOCK);
+    const result = model.getAircraftTypesForFleet('90long');
+    
+    // Should return all aircraft types from the fleet, not just one
+    const expectedAircraftTypes = _map(AIRLINE_DEFINITION_MOCK.fleets['90long'], (aircraft) => aircraft[0]);
+    
+    t.true(result.length === expectedAircraftTypes.length);
+    expectedAircraftTypes.forEach(expectedType => {
+        t.true(result.includes(expectedType));
+    });
+});

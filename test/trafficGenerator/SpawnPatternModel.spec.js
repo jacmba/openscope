@@ -298,3 +298,69 @@ ava('._calculateSpawnHeading() returns bearing between route\'s first and second
 
     t.true(result === expectedResult);
 });
+
+// Tests for new fleet restriction functionality
+ava('.getRandomAirlineForSpawn() returns object with airlineId and fleetRestriction', (t) => {
+    const mock = Object.assign({}, ARRIVAL_PATTERN_MOCK, {
+        airlines: [
+            ['aal', 5],
+            ['ibb', 3, ['AT76']]
+        ]
+    });
+    const model = new SpawnPatternModel(mock);
+    const result = model.getRandomAirlineForSpawn();
+
+    t.true(typeof result === 'object');
+    t.true(typeof result.airlineId === 'string');
+    t.true(typeof result.fleetRestriction === 'object' || result.fleetRestriction === null);
+});
+
+ava('.getRandomAirlineForSpawn() returns fleetRestriction when provided', (t) => {
+    const mock = Object.assign({}, ARRIVAL_PATTERN_MOCK, {
+        airlines: [
+            ['ibb', 3, ['AT76', 'CRJ9']]
+        ]
+    });
+    const model = new SpawnPatternModel(mock);
+    const result = model.getRandomAirlineForSpawn();
+
+    t.true(result.airlineId === 'ibb');
+    t.true(Array.isArray(result.fleetRestriction));
+    t.true(result.fleetRestriction.length === 2);
+    t.true(result.fleetRestriction.includes('AT76'));
+    t.true(result.fleetRestriction.includes('CRJ9'));
+});
+
+ava('.getRandomAirlineForSpawn() returns null fleetRestriction when not provided', (t) => {
+    const mock = Object.assign({}, ARRIVAL_PATTERN_MOCK, {
+        airlines: [
+            ['aal', 5]
+        ]
+    });
+    const model = new SpawnPatternModel(mock);
+    const result = model.getRandomAirlineForSpawn();
+
+    t.true(result.airlineId === 'aal');
+    t.true(result.fleetRestriction === null);
+});
+
+ava('._assembleAirlineNamesAndFrequencyForSpawn() handles fleet restrictions correctly', (t) => {
+    const mock = Object.assign({}, ARRIVAL_PATTERN_MOCK, {
+        airlines: [
+            ['aal', 5],
+            ['ibb', 3, ['AT76']],
+            ['swq', 2, ['CRJ9', 'E190']]
+        ]
+    });
+    const model = new SpawnPatternModel(mock);
+
+    t.true(model.airlines.length === 3);
+    t.true(model.airlines[0].fleetRestriction === null);
+    t.true(Array.isArray(model.airlines[1].fleetRestriction));
+    t.true(model.airlines[1].fleetRestriction.length === 1);
+    t.true(model.airlines[1].fleetRestriction[0] === 'AT76');
+    t.true(Array.isArray(model.airlines[2].fleetRestriction));
+    t.true(model.airlines[2].fleetRestriction.length === 2);
+    t.true(model.airlines[2].fleetRestriction.includes('CRJ9'));
+    t.true(model.airlines[2].fleetRestriction.includes('E190'));
+});

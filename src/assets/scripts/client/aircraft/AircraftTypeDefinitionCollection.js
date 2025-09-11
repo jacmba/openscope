@@ -77,18 +77,34 @@ export default class AircraftTypeDefinitionCollection extends BaseCollection {
      * @method getAircraftDefinitionForAirlineId
      * @param airlineId {string}
      * @param airlineModel {AirlineModel}
+     * @param fleetRestriction {array|null} Optional array of allowed aircraft types
+     * @param spawnAltitude {number|array} Altitude for performance-based selection
      * @return aircraftDefinition {AircraftTypeDefinitionModel}
      */
-    getAircraftDefinitionForAirlineId(airlineId, airlineModel) {
+    getAircraftDefinitionForAirlineId(airlineId, airlineModel, fleetRestriction = null, spawnAltitude = null) {
         const { fleet } = airlineNameAndFleetHelper([airlineId]);
-        const aircraftType = airlineModel.getRandomAircraftType(fleet).toUpperCase();
+        let aircraftType;
+        
+        if (fleetRestriction && fleetRestriction.length > 0) {
+            // Use fleet restriction if provided
+            aircraftType = this._getRandomAircraftTypeFromRestriction(fleetRestriction);
+        } else {
+            // Use performance-based selection if altitude is provided
+            if (spawnAltitude !== null) {
+                aircraftType = this._getPerformanceBasedAircraftType(airlineModel, fleet, spawnAltitude);
+            } else {
+                // Default behavior
+                aircraftType = airlineModel.getRandomAircraftType(fleet).toUpperCase();
+            }
+        }
+        
         const aircraftDefinition = _find(this.definitionList, { icao: aircraftType });
 
         if (typeof aircraftDefinition === 'undefined') {
             console.error(`Undefined aircraftDefinition found for ${aircraftType}`);
 
             // recurse through this method if an error is encountered
-            return this.getAircraftDefinitionForAirlineId(airlineId, airlineModel);
+            return this.getAircraftDefinitionForAirlineId(airlineId, airlineModel, fleetRestriction, spawnAltitude);
         }
 
         return aircraftDefinition;
@@ -111,5 +127,54 @@ export default class AircraftTypeDefinitionCollection extends BaseCollection {
         });
 
         return definitionList;
+    }
+
+    /**
+     * Get a random aircraft type from a fleet restriction list
+     *
+     * @for AircraftTypeDefinitionCollection
+     * @method _getRandomAircraftTypeFromRestriction
+     * @param fleetRestriction {array} Array of allowed aircraft types
+     * @return {string} Random aircraft type from restriction list
+     * @private
+     */
+    _getRandomAircraftTypeFromRestriction(fleetRestriction) {
+        const randomIndex = Math.floor(Math.random() * fleetRestriction.length);
+        return fleetRestriction[randomIndex].toUpperCase();
+    }
+
+    /**
+     * Get an aircraft type based on performance characteristics (ceiling vs altitude)
+     *
+     * @for AircraftTypeDefinitionCollection
+     * @method _getPerformanceBasedAircraftType
+     * @param airlineModel {AirlineModel}
+     * @param fleet {string}
+     * @param spawnAltitude {number|array} Spawn altitude
+     * @return {string} Appropriate aircraft type based on performance
+     * @private
+     */
+    _getPerformanceBasedAircraftType(airlineModel, fleet, spawnAltitude) {
+        // Handle altitude range (take the higher value for safety)
+        const targetAltitude = Array.isArray(spawnAltitude) ? Math.max(...spawnAltitude) : spawnAltitude;
+        
+        // Get all available aircraft types for this airline/fleet
+        const availableAircraft = airlineModel.getAircraftTypesForFleet(fleet);
+        
+        // Filter aircraft that can handle the target altitude (ceiling >= target altitude)
+        const suitableAircraft = availableAircraft.filter(aircraftType => {
+            const aircraftDefinition = _find(this.definitionList, { icao: aircraftType.toUpperCase() });
+            return aircraftDefinition && aircraftDefinition.ceiling >= targetAltitude;
+        });
+        
+        // If no suitable aircraft found, fall back to default selection
+        if (suitableAircraft.length === 0) {
+            console.warn(`No aircraft suitable for altitude ${targetAltitude}ft found for fleet ${fleet}, using default selection`);
+            return airlineModel.getRandomAircraftType(fleet).toUpperCase();
+        }
+        
+        // Return a random aircraft from the suitable ones
+        const randomIndex = Math.floor(Math.random() * suitableAircraft.length);
+        return suitableAircraft[randomIndex].toUpperCase();
     }
 }

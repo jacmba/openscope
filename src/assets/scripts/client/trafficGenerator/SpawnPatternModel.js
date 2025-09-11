@@ -58,7 +58,8 @@ const SPAWN_METHOD = {
  *    "airlines": [
  *        ["aal", 10],
  *        ["ual", 10],
- *        ["ual/long", 3]
+ *        ["ual/long", 3],
+ *        ["ibb", 5, ["AT76"]]
  *    ]
  * }
  *
@@ -77,7 +78,8 @@ const SPAWN_METHOD = {
  *   "airlines": [
  *       ["aal", 10],
  *       ["ual", 10],
- *       ["ual/long", 3]
+ *       ["ual/long", 3],
+ *       ["ibb", 5, ["AT76"]]
  *   ]
  * }
  * ```
@@ -593,13 +595,20 @@ export default class SpawnPatternModel extends BaseModel {
      *
      * @for SpawnPatternModel
      * @method getRandomAirlineForSpawn
-     * @return {string}
+     * @return {object} Object containing airlineId and fleetRestriction
      */
     getRandomAirlineForSpawn() {
         const index = this._findRandomIndexForList(this._weightedAirlineList);
         const airlineId = this._weightedAirlineList[index];
+        
+        // Find the corresponding airline object to get fleet restriction
+        const airlineObject = this.airlines.find(airline => airline.name === airlineId);
+        const fleetRestriction = airlineObject ? airlineObject.fleetRestriction : null;
 
-        return airlineId;
+        return {
+            airlineId,
+            fleetRestriction
+        };
     }
 
     /**
@@ -1019,7 +1028,8 @@ export default class SpawnPatternModel extends BaseModel {
     _assembleAirlineNamesAndFrequencyForSpawn(spawnPatternAirlines) {
         const spawnPatternAirlineModels = _map(spawnPatternAirlines, (spawnPatternAirline) => ({
             name: spawnPatternAirline[0],
-            rate: spawnPatternAirline[1]
+            rate: spawnPatternAirline[1],
+            fleetRestriction: spawnPatternAirline[2] || null
         }));
 
         return spawnPatternAirlineModels;

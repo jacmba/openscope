@@ -981,7 +981,7 @@
             "speed": "",
             "method": "random",
             "rate": 2,
-            "airlines": [["ibb", 10]]
+            "airlines": [["ibb", 10, ["AT72", "AT76"]]]
         },
         {
             "origin": "GCLP",
@@ -992,7 +992,7 @@
             "speed": "",
             "method": "random",
             "rate": 1,
-            "airlines": [["ibb", 10]]
+            "airlines": [["ibb", 10, ["AT72", "AT76"]]]
         },
         {
             "origin": "GCLP",
@@ -1003,7 +1003,7 @@
             "speed": "",
             "method": "random",
             "rate": 1,
-            "airlines": [["ibb", 10]]
+            "airlines": [["ibb", 10, ["AT72", "AT76"]]]
         },
         {
             "origin": "GCLP",
@@ -1014,7 +1014,7 @@
             "speed": "",
             "method": "random",
             "rate": 2,
-            "airlines": [["ibb", 10]]
+            "airlines": [["ibb", 10, ["AT72", "AT76"]]]
         },
         {
             "origin": "GCLP",
@@ -1025,7 +1025,7 @@
             "speed": "",
             "method": "random",
             "rate": 1,
-            "airlines": [["ibb", 10]]
+            "airlines": [["ibb", 10, ["AT72", "AT76"]]]
         },
         {
             "origin": "GCLP",
@@ -1036,7 +1036,7 @@
             "speed": "",
             "method": "random",
             "rate": 1,
-            "airlines": [["ibb", 10]]
+            "airlines": [["ibb", 10, ["AT72", "AT76"]]]
         },
         {
             "origin": "GCLP",
@@ -1047,7 +1047,7 @@
             "speed": "",
             "method": "random",
             "rate": 1,
-            "airlines": [["ibb", 10]]
+            "airlines": [["ibb", 10, ["AT72", "AT76"]]]
         },
         {
             "origin": "GCLP",
@@ -1058,7 +1058,7 @@
             "speed": "",
             "method": "random",
             "rate": 1,
-            "airlines": [["ibb", 10]]
+            "airlines": [["ibb", 10, ["CRJX", "E190"]]]
         },
         {
             "origin": "GCLP",
@@ -1070,7 +1070,7 @@
             "method": "random",
             "rate": 1,
             "airlines": [
-                ["ibb", 10],
+                ["ibb", 10, ["CRJX", "E190"]],
                 ["swq", 5]
             ]
         },
@@ -1084,7 +1084,7 @@
             "method": "random",
             "rate": 1,
             "airlines": [
-                ["ibb", 10],
+                ["ibb", 10, ["CRJX", "E190"]],
                 ["ram", 5]
             ]
         },
@@ -1098,7 +1098,7 @@
             "method": "random",
             "rate": 6,
             "airlines": [
-                ["ibb", 8],
+                ["ibb", 8, ["CRJX", "E190"]],
                 ["aea", 12],
                 ["vlg", 10],
                 ["ryr", 15],
@@ -1125,7 +1125,7 @@
             "method": "random",
             "rate": 6,
             "airlines": [
-                ["ibb", 10],
+                ["ibb", 10, ["CRJX", "E190"]],
                 ["aea", 15],
                 ["vlg", 12],
                 ["ryr", 15],
@@ -1189,7 +1189,7 @@
             "speed": "",
             "method": "random",
             "rate": 1,
-            "airlines": [["ibb", 10]]
+            "airlines": [["ibb", 10, ["AT72", "AT76"]]]
         },
         {
             "origin": "GCLP",
@@ -1215,7 +1215,7 @@
             "method": "random",
             "rate": 3,
             "airlines": [
-                ["ibb", 10],
+                ["ibb", 10, ["CRJX", "E190"]],
                 ["swq", 5]
             ]
         },
@@ -1228,7 +1228,7 @@
             "speed": 280,
             "method": "random",
             "rate": 2,
-            "airlines": [["ibb", 1]]
+            "airlines": [["ibb", 1, ["CRJX", "E190"]]]
         },
         {
             "origin": "",
@@ -1239,7 +1239,7 @@
             "speed": 280,
             "method": "random",
             "rate": 1,
-            "airlines": [["ibb", 1]]
+            "airlines": [["ibb", 1, ["AT72", "AT76"]]]
         },
         {
             "origin": "",
@@ -1250,7 +1250,7 @@
             "speed": 280,
             "method": "random",
             "rate": 4,
-            "airlines": [["ibb", 1]]
+            "airlines": [["ibb", 1, ["CRJX", "E190"]]]
         },
         {
             "origin": "",
@@ -1262,7 +1262,7 @@
             "method": "random",
             "rate": 3,
             "airlines": [
-                ["ibb", 8],
+                ["ibb", 8, ["CRJX", "E190"]],
                 ["swq", 3]
             ]
         },
@@ -1276,7 +1276,7 @@
             "method": "random",
             "rate": 2,
             "airlines": [
-                ["ibb", 6],
+                ["ibb", 6, ["AT72", "AT76"]],
                 ["swq", 2]
             ]
         },
@@ -1290,7 +1290,7 @@
             "method": "random",
             "rate": 4,
             "airlines": [
-                ["ibb", 6],
+                ["ibb", 6, ["CRJX", "E190"]],
                 ["aea", 8],
                 ["vlg", 8],
                 ["ryr", 6],
@@ -1308,7 +1308,7 @@
             "method": "random",
             "rate": 3,
             "airlines": [
-                ["ibb", 5],
+                ["ibb", 5, ["CRJX", "E190"]],
                 ["aea", 6],
                 ["vlg", 6],
                 ["ryr", 5],
@@ -1326,7 +1326,7 @@
             "method": "random",
             "rate": 2,
             "airlines": [
-                ["ibb", 6],
+                ["ibb", 6, ["AT72", "AT76"]],
                 ["swq", 1]
             ]
         },
@@ -1340,7 +1340,7 @@
             "method": "random",
             "rate": 3,
             "airlines": [
-                ["ibb", 2],
+                ["ibb", 2, ["CRJX", "E190"]],
                 ["ryr", 8],
                 ["ezy", 7],
                 ["vlg", 4],
@@ -1357,7 +1357,7 @@
             "method": "random",
             "rate": 3,
             "airlines": [
-                ["ibb", 2],
+                ["ibb", 2, ["CRJX", "E190"]],
                 ["vlg", 7],
                 ["ryr", 6],
                 ["ezy", 5],
@@ -1374,7 +1374,7 @@
             "method": "random",
             "rate": 2,
             "airlines": [
-                ["ibb", 5],
+                ["ibb", 5, ["AT72", "AT76"]],
                 ["swq", 1]
             ]
         },
@@ -1388,7 +1388,7 @@
             "method": "random",
             "rate": 4,
             "airlines": [
-                ["ibb", 5],
+                ["ibb", 5, ["CRJX", "E190"]],
                 ["aea", 8],
                 ["ryr", 9],
                 ["ezy", 8],
@@ -1406,7 +1406,7 @@
             "method": "random",
             "rate": 2,
             "airlines": [
-                ["ibb", 5],
+                ["ibb", 5, ["CRJX", "E190"]],
                 ["swq", 1]
             ]
         }

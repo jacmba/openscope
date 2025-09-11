@@ -22,7 +22,8 @@ Lets look at some examples before we continue:
      "airlines": [
          ["aal", 10],
          ["ual", 10],
-         ["ual/long", 3]
+         ["ual/long", 3],
+         ["ibb", 5, ["AT76"]]
      ]
  }
 
@@ -45,7 +46,8 @@ Lets look at some examples before we continue:
     "airlines": [
         ["aal", 10],
         ["ual", 10],
-        ["ual/long", 3]
+        ["ual/long", 3],
+        ["ibb", 5, ["AT76"]]
     ]
 }
 
@@ -62,7 +64,8 @@ Lets look at some examples before we continue:
     "airlines": [
         ["aal", 10],
         ["ual", 10],
-        ["ual/long", 3]
+        ["ual/long", 3],
+        ["ibb", 5, ["AT76"]]
     ]
 }
 ```
@@ -80,6 +83,23 @@ List of airlines, and their spawn weight. A higher weight will increase the freq
 * Should always have a shape of either:
   * `[AIRLINE_ID, FREQUENCY_WEIGHT]`
   * `[AIRLINE_ID/AIRLINE_FLEET, FREQUENCY_WEIGHT]`
+  * `[AIRLINE_ID, FREQUENCY_WEIGHT, FLEET_RESTRICTION]` - Optional third parameter for fleet restrictions
+
+#### Fleet Restrictions
+
+The optional third parameter allows you to restrict which aircraft types can be used for a specific spawn pattern. This is useful for scenarios where certain routes should only use specific aircraft types.
+
+**Examples:**
+```json
+"airlines": [
+    ["ibb", 5, ["AT76"]],           // Only ATR-72 aircraft
+    ["ibb", 3, ["CRJ9", "E190"]],   // Only CRJ-900 or Embraer 190
+    ["aal", 10]                     // Default behavior (all aircraft in fleet)
+]
+```
+
+**Performance-Based Selection:**
+When no fleet restriction is provided, the system will automatically select aircraft based on performance characteristics. For example, if a spawn pattern has a high altitude (e.g., FL300), the system will prefer aircraft with higher service ceilings over turboprops like ATRs.
 
 ### origin (* _for departures only_)
 
