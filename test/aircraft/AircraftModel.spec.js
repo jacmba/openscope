@@ -203,13 +203,13 @@ ava('.cancelLanding() configures MCP correctly when landing cancelled below the 
     t.true(radioCallStub.calledWithExactly(expectedRadioTranscript, 'app', true));
 });
 
-ava('.getViewModel() includes an altitude that has not been rounded beyond the nearest foot', (t) => {
+ava('.getViewModel() includes an altitude that has been rounded to the nearest 500 feet (5 flight levels)', (t) => {
     const model = new AircraftModel(ARRIVAL_AIRCRAFT_INIT_PROPS_MOCK);
     model.mcp.altitude = 7777.1234567;
 
     const { assignedAltitude: result } = model.getViewModel();
 
-    t.true(result === 77.77);
+    t.true(result === 80);
 });
 
 ava('.isAboveGlidepath() returns false when aircraft altitude is below glideslope altitude', (t) => {

@@ -692,11 +692,11 @@ export default class AircraftModel {
         let flightPlanAltitude = '-';
 
         if (this.mcp.altitude !== INVALID_NUMBER) {
-            assignedAltitude = Math.round(this.mcp.altitude) * UNIT_CONVERSION_CONSTANTS.FT_FL;
+            assignedAltitude = Math.round(this.mcp.altitude / 500) * 500 * UNIT_CONVERSION_CONSTANTS.FT_FL;
         }
 
         if (this.fms.flightPlanAltitude !== INVALID_NUMBER) {
-            flightPlanAltitude = this.fms.flightPlanAltitude * UNIT_CONVERSION_CONSTANTS.FT_FL;
+            flightPlanAltitude = Math.round(this.fms.flightPlanAltitude / 500) * 500 * UNIT_CONVERSION_CONSTANTS.FT_FL;
         }
 
         return {
