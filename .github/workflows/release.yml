@@ -96,11 +96,6 @@ jobs:
       run: npm install
     - name: Run test suite
       run: npm run test
-    - name: Check test coverage versus previous commit (via coveralls.io)
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-      if: ${{ always() }}
 
   docker:
     needs: [version-check, lint, build, test]

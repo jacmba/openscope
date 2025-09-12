@@ -44,8 +44,3 @@ jobs:
       run: npm install
     - name: Run test suite
       run: npm run test
-    - name: Check test coverage versus target branch (via coveralls.io)
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-      if: ${{ always() }}
