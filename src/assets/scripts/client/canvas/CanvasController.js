@@ -9,6 +9,7 @@ import EventBus from '../lib/EventBus';
 import GameController from '../game/GameController';
 import MeasureTool from '../measurement/MeasureTool';
 import NavigationLibrary from '../navigationLibrary/NavigationLibrary';
+import UiStateManager from '../ui/UiStateManager';
 import TimeKeeper from '../engine/TimeKeeper';
 import { tau } from '../math/circle';
 import {
@@ -37,6 +38,7 @@ import {
     INVALID_NUMBER,
     TIME
 } from '../constants/globalConstants';
+import { STORAGE_KEY } from '../constants/storageKeys';
 import { GAME_OPTION_NAMES } from '../constants/gameOptionConstants';
 import { PROCEDURE_TYPE } from '../constants/routeConstants';
 import { leftPad } from '../utilities/generalUtilities';
@@ -224,6 +226,7 @@ export default class CanvasController {
      */
     _init() {
         this._setTheme(GameController.getGameOption(GAME_OPTION_NAMES.THEME));
+        this._loadUiStates();
 
         return this;
     }
@@ -2604,6 +2607,7 @@ export default class CanvasController {
      */
     _onToggleAirspace() {
         this._shouldDrawAirspace = !this._shouldDrawAirspace;
+        UiStateManager.setState(STORAGE_KEY.UI_DISPLAY_AIRSPACE, this._shouldDrawAirspace);
 
         this._markDeepRender();
     }
@@ -2621,6 +2625,7 @@ export default class CanvasController {
      */
     _onToggleLabels() {
         this._shouldDrawFixLabels = !this._shouldDrawFixLabels;
+        UiStateManager.setState(STORAGE_KEY.UI_DISPLAY_LABELS, this._shouldDrawFixLabels);
 
         this._markDeepRender();
     }
@@ -2638,6 +2643,7 @@ export default class CanvasController {
      */
     _onToggleRestrictedAreas() {
         this._shouldDrawRestrictedAreas = !this._shouldDrawRestrictedAreas;
+        UiStateManager.setState(STORAGE_KEY.UI_DISPLAY_RESTRICTED_AREAS, this._shouldDrawRestrictedAreas);
 
         this._markDeepRender();
     }
@@ -2655,6 +2661,7 @@ export default class CanvasController {
      */
     _onToggleSidMap() {
         this._shouldDrawSidMap = !this._shouldDrawSidMap;
+        UiStateManager.setState(STORAGE_KEY.UI_DISPLAY_SID_MAP, this._shouldDrawSidMap);
 
         this._markDeepRender();
     }
@@ -2672,6 +2679,7 @@ export default class CanvasController {
      */
     _onToggleStarMap() {
         this._shouldDrawStarMap = !this._shouldDrawStarMap;
+        UiStateManager.setState(STORAGE_KEY.UI_DISPLAY_STAR_MAP, this._shouldDrawStarMap);
 
         this._markDeepRender();
     }
@@ -2689,6 +2697,7 @@ export default class CanvasController {
      */
     _onToggleTerrain() {
         this._shouldDrawTerrain = !this._shouldDrawTerrain;
+        UiStateManager.setState(STORAGE_KEY.UI_DISPLAY_TERRAIN, this._shouldDrawTerrain);
 
         this._markDeepRender();
     }
@@ -2706,6 +2715,8 @@ export default class CanvasController {
      */
     _onToggleVideoMap(mapNames) {
         AirportController.airport_get().mapCollection.setVisibleMaps(mapNames);
+        this._shouldDrawVideoMap = mapNames.length > 0;
+        UiStateManager.setState(STORAGE_KEY.UI_DISPLAY_VIDEO_MAP, this._shouldDrawVideoMap);
 
         this._markDeepRender();
     }
@@ -2820,6 +2831,26 @@ export default class CanvasController {
      */
     _onAirportChange() {
         this._markDeepRender();
+    }
+
+    /**
+     * Load UI states from localStorage
+     *
+     * @for CanvasController
+     * @method _loadUiStates
+     * @returns undefined
+     * @private
+     */
+    _loadUiStates() {
+        const states = UiStateManager.getAllDisplayStates();
+
+        this._shouldDrawAirspace = states.airspace;
+        this._shouldDrawFixLabels = states.labels;
+        this._shouldDrawRestrictedAreas = states.restrictedAreas;
+        this._shouldDrawSidMap = states.sidMap;
+        this._shouldDrawStarMap = states.starMap;
+        this._shouldDrawTerrain = states.terrain;
+        this._shouldDrawVideoMap = states.videoMap;
     }
 
     /**

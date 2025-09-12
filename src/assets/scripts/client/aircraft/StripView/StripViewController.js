@@ -3,8 +3,10 @@ import _random from 'lodash/random';
 import _without from 'lodash/without';
 import StripViewCollection from './StripViewCollection';
 import StripViewModel from './StripViewModel';
+import UiStateManager from '../../ui/UiStateManager';
 import { INVALID_INDEX } from '../../constants/globalConstants';
 import { SELECTORS } from '../../constants/selectors';
+import { STORAGE_KEY } from '../../constants/storageKeys';
 
 /**
  * The highest number allowed for a cid value
@@ -90,6 +92,7 @@ export default class StripViewController {
      */
     _init() {
         this._collection = new StripViewCollection();
+        this._loadStripViewState();
 
         return this;
     }
@@ -324,6 +327,11 @@ export default class StripViewController {
     // eslint-disable-next-line no-unused-vars
     _onStripListToggle = (event) => {
         this.$stripView.toggleClass(SELECTORS.CLASSNAMES.STRIP_VIEW_IS_HIDDEN);
+        const isHidden = this.$stripView.hasClass(SELECTORS.CLASSNAMES.STRIP_VIEW_IS_HIDDEN);
+        const isExpanded = !isHidden;
+        
+        UiStateManager.setStripViewState(isExpanded);
+        this._updateToggleButtonState(isExpanded);
     };
 
     /**
@@ -378,5 +386,41 @@ export default class StripViewController {
         }
 
         this._cidNumbersInUse = _without(this._cidNumbersInUse, cid);
+    }
+
+    /**
+     * Load strip view state from localStorage
+     *
+     * @for StripViewController
+     * @method _loadStripViewState
+     * @private
+     */
+    _loadStripViewState() {
+        const isExpanded = UiStateManager.getStripViewState();
+        
+        if (!isExpanded) {
+            this.$stripView.addClass(SELECTORS.CLASSNAMES.STRIP_VIEW_IS_HIDDEN);
+        } else {
+            this.$stripView.removeClass(SELECTORS.CLASSNAMES.STRIP_VIEW_IS_HIDDEN);
+        }
+        
+        // Update the toggle button state to match the loaded state
+        this._updateToggleButtonState(isExpanded);
+    }
+
+    /**
+     * Update the toggle button visual state
+     *
+     * @for StripViewController
+     * @method _updateToggleButtonState
+     * @param isExpanded {boolean}
+     * @private
+     */
+    _updateToggleButtonState(isExpanded) {
+        if (isExpanded) {
+            this.$stripListTrigger.removeClass(SELECTORS.CLASSNAMES.ACTIVE);
+        } else {
+            this.$stripListTrigger.addClass(SELECTORS.CLASSNAMES.ACTIVE);
+        }
     }
 }

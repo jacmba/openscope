@@ -8,6 +8,7 @@ import SettingsController from './SettingsController';
 import TrafficRateController from './TrafficRateController';
 import VideoMapController from './VideoMapController';
 import TutorialView from './TutorialView';
+import UiStateManager from './UiStateManager';
 import { speech_toggle } from '../speech';
 import { EVENT } from '../constants/eventNames';
 import { SELECTORS } from '../constants/selectors';
@@ -382,7 +383,8 @@ class UiController {
         this.chatLogDuration = GameController.game.option.getOptionByName('chatLogDuration');
 
         return this.setupHandlers()
-            .enable();
+            .enable()
+            ._loadDisplayStates();
     }
 
     /**
@@ -999,6 +1001,45 @@ class UiController {
      */
     onClickGithubLink(event) {
         EventTracker.recordClickOnOutboundLink(event.target.href);
+    }
+
+    /**
+     * Load display states from localStorage and update UI toggles
+     *
+     * @for UiController
+     * @method _loadDisplayStates
+     * @private
+     */
+    _loadDisplayStates() {
+        const states = UiStateManager.getAllDisplayStates();
+
+        // Update toggle button states to match loaded states
+        this._updateToggleState(this.$toggleAirspace, states.airspace);
+        this._updateToggleState(this.$toggleLabels, states.labels);
+        this._updateToggleState(this.$toggleRestrictedAreas, states.restrictedAreas);
+        this._updateToggleState(this.$toggleSids, states.sidMap);
+        this._updateToggleState(this.$toggleStars, states.starMap);
+        this._updateToggleState(this.$toggleTerrain, states.terrain);
+        this._updateToggleState(this.$toggleVideoMap, states.videoMap);
+
+        return this;
+    }
+
+    /**
+     * Update a toggle button's visual state
+     *
+     * @for UiController
+     * @method _updateToggleState
+     * @param $element {jQuery} The toggle button element
+     * @param isActive {boolean} Whether the toggle should be active
+     * @private
+     */
+    _updateToggleState($element, isActive) {
+        if (isActive) {
+            $element.addClass(SELECTORS.CLASSNAMES.ACTIVE);
+        } else {
+            $element.removeClass(SELECTORS.CLASSNAMES.ACTIVE);
+        }
     }
 }
 
