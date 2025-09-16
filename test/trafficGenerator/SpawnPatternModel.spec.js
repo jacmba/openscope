@@ -199,6 +199,16 @@ ava('.getNextDelayValue() calls ._calculateNextWaveDelayPeriod() if SPAWN_METHOD
     t.true(_calculateNextWaveDelayPeriodSpy.calledWithExactly(gameTimeMock));
 });
 
+ava('.getNextDelayValue() calls ._calculateSustainedDelayPeriod() if SPAWN_METHOD.SUSTAINED', (t) => {
+    const model = new SpawnPatternModel(ARRIVAL_PATTERN_MOCK);
+    const _calculateSustainedDelayPeriodSpy = sinon.spy(model, '_calculateSustainedDelayPeriod');
+    model.method = 'sustained';
+
+    model.getNextDelayValue();
+
+    t.true(_calculateSustainedDelayPeriodSpy.calledOnce);
+});
+
 ava('._calculateNextCyclicDelayPeriod() returns 360 when gameTime is 0', (t) => {
     const gameTimeMock = 0;
     const model = new SpawnPatternModel(ARRIVAL_PATTERN_CYCLIC_MOCK);

@@ -32,6 +32,7 @@ import {
 const SPAWN_METHOD = {
     RANDOM: 'random',
     CYCLIC: 'cyclic',
+    SUSTAINED: 'sustained',
     SURGE: 'surge',
     WAVE: 'wave'
 };
@@ -627,6 +628,8 @@ export default class SpawnPatternModel extends BaseModel {
         switch (this.method) {
             case SPAWN_METHOD.RANDOM:
                 return this._calculateRandomDelayPeriod();
+            case SPAWN_METHOD.SUSTAINED:
+                return this._calculateSustainedDelayPeriod();
             case SPAWN_METHOD.CYCLIC:
                 return this._calculateNextCyclicDelayPeriod(gameTime);
             case SPAWN_METHOD.SURGE:
@@ -691,7 +694,12 @@ export default class SpawnPatternModel extends BaseModel {
      */
     createPreSpawnAircraft(aircraftController) {
         if (this.preSpawnAircraftList.length === 0) {
-            this.preSpawnAircraftList = this._buildPreSpawnAircraft(this);
+            // Rebuild with aircraft controller for proximity checks
+            this.preSpawnAircraftList = buildPreSpawnAircraft(
+                this,
+                AirportController.current,
+                aircraftController
+            );
         }
 
         if (this.isAirborneAtSpawn() && this.preSpawnAircraftList.length > 0) {
@@ -816,6 +824,34 @@ export default class SpawnPatternModel extends BaseModel {
         const maximumDelay = averageDelay + delayVariation;
 
         return _random(minimumDelay, maximumDelay);
+    }
+
+    /**
+     * Calculate a consistent delay period for sustained spawn patterns
+     * Similar to random but with less variation for more predictable timing
+     *
+     * @for SpawnPatternModel
+     * @method _calculateSustainedDelayPeriod
+     * @return {number}
+     * @private
+     */
+    _calculateSustainedDelayPeriod() {
+        const minimumDelay = this._calculateMinimumDelayFromSpeed();
+        const averageDelay = TIME.ONE_HOUR_IN_SECONDS / this.rate;
+
+        if (averageDelay < minimumDelay) {
+            console.error(`Too many aircraft requested on spawn pattern "${this.routeString}"`);
+
+            return minimumDelay;
+        }
+
+        // For sustained patterns, use less variation than random
+        // Add small random variation to prevent exact timing but keep it consistent
+        const delayVariation = (averageDelay - minimumDelay) * 0.3; // 30% of random variation
+        const minimumSustainedDelay = averageDelay - delayVariation;
+        const maximumSustainedDelay = averageDelay + delayVariation;
+
+        return _random(minimumSustainedDelay, maximumSustainedDelay);
     }
 
     /**
@@ -1078,7 +1114,8 @@ export default class SpawnPatternModel extends BaseModel {
 
         const preSpawnArrivalAircraftList = buildPreSpawnAircraft(
             spawnPatternJson,
-            AirportController.current
+            AirportController.current,
+            null // aircraftController will be passed when createPreSpawnAircraft is called
         );
 
         return preSpawnArrivalAircraftList;

@@ -15,7 +15,94 @@ import { avg } from '../math/core';
 
 // Track which STAR routes have already spawned initial aircraft
 // This prevents multiple entry points of the same STAR from spawning simultaneously
-let spawnedStarRoutes = new Set();
+const spawnedStarRoutes = new Set();
+
+/**
+ * Check if there are any aircraft within the specified distance of the given position
+ *
+ * @function _checkAircraftProximity
+ * @param position {array<number>} Position to check (x, y in km)
+ * @param aircraftController {AircraftController} Controller to check aircraft
+ * @param minDistanceNm {number} Minimum distance in nautical miles
+ * @return {boolean} True if aircraft is too close to spawn
+ */
+const _checkAircraftProximity = (position, aircraftController, minDistanceNm = 15) => {
+    if (!aircraftController || !aircraftController.aircraft || !aircraftController.aircraft.list) {
+        return false; // No aircraft controller available, allow spawn
+    }
+
+    if (!position || !Array.isArray(position) || position.length < 2) {
+        return false; // Invalid position, allow spawn
+    }
+
+    const minDistanceKm = minDistanceNm * 1.852; // Convert nm to km
+
+    for (let i = 0; i < aircraftController.aircraft.list.length; i++) {
+        const aircraft = aircraftController.aircraft.list[i];
+        if (aircraft && aircraft.relativePosition && Array.isArray(aircraft.relativePosition) &&
+            aircraft.relativePosition.length >= 2) {
+            // Check if aircraft is visible (if method exists)
+            const isVisible = aircraft.isVisible ? aircraft.isVisible() : true;
+
+            if (isVisible) {
+                const distance = distance2d(aircraft.relativePosition, position);
+                if (distance < minDistanceKm) {
+                    return true; // Too close to another aircraft
+                }
+            }
+        }
+    }
+
+    return false; // Safe to spawn
+};
+
+/**
+ * Calculate position along a route at a given offset distance
+ *
+ * @function _calculatePositionAlongRoute
+ * @param waypointModelList {array<WaypointModel>} List of waypoints along the route
+ * @param offsetNm {number} Distance along route in nautical miles
+ * @return {array<number>|null} Position [x, y] in km, or null if invalid
+ */
+const _calculatePositionAlongRoute = (waypointModelList, offsetNm) => {
+    if (!waypointModelList || waypointModelList.length === 0) {
+        return null;
+    }
+
+    const offsetKm = offsetNm * 1.852; // Convert nm to km
+    let distanceTraveled = 0;
+
+    for (let i = 1; i < waypointModelList.length; i++) {
+        const currentWaypoint = waypointModelList[i];
+        const previousWaypoint = waypointModelList[i - 1];
+
+        if (currentWaypoint.isVectorWaypoint || previousWaypoint.isVectorWaypoint) {
+            continue;
+        }
+
+        const segmentDistance = distance2d(previousWaypoint.relativePosition, currentWaypoint.relativePosition);
+
+        if (distanceTraveled + segmentDistance >= offsetKm) {
+            // Position is on this segment
+            const remainingDistance = offsetKm - distanceTraveled;
+            const ratio = remainingDistance / segmentDistance;
+
+            // Interpolate between waypoints
+            const x = previousWaypoint.relativePosition[0] +
+                     (currentWaypoint.relativePosition[0] - previousWaypoint.relativePosition[0]) * ratio;
+            const y = previousWaypoint.relativePosition[1] +
+                     (currentWaypoint.relativePosition[1] - previousWaypoint.relativePosition[1]) * ratio;
+
+            return [x, y];
+        }
+
+        distanceTraveled += segmentDistance;
+    }
+
+    // If offset is beyond the route, return the last waypoint position
+    const lastWaypoint = waypointModelList[waypointModelList.length - 1];
+    return lastWaypoint.relativePosition;
+};
 
 /**
  * Reset the STAR route tracking for a new scenario
@@ -279,9 +366,20 @@ function _calculateSpawnPositionsAndAltitudes(
  * @function _assembleSpawnOffsets
  * @param entrailDistance {number}
  * @param totalDistance {number}
+ * @param routeString {string}
+ * @param aircraftController {AircraftController}
+ * @param waypointModelList {array<WaypointModel>}
+ * @param airport {AirportModel}
  * @return spawnOffsets {array<number>} distances along route, in nm
  */
-const _assembleSpawnOffsets = (entrailDistance, totalDistance = 0, routeString = '') => { // eslint-disable-line no-unused-vars
+const _assembleSpawnOffsets = (
+    entrailDistance,
+    totalDistance = 0,
+    routeString = '', // eslint-disable-line no-unused-vars
+    aircraftController = null,
+    waypointModelList = [],
+    airport = null // eslint-disable-line no-unused-vars
+) => {
     // routeString parameter is currently unused but kept for future use
     // Ensure minimum route distance to prevent aircraft spawning at same position
     const minRouteDistance = 30; // Minimum 30 NM route distance
@@ -303,24 +401,32 @@ const _assembleSpawnOffsets = (entrailDistance, totalDistance = 0, routeString =
 
     const starName = extractStarName(routeString);
 
-    // For initial spawn (scenario start), limit to 1 aircraft per STAR route
-    if (starName && spawnedStarRoutes.has(starName)) {
-        // This STAR has already spawned an initial aircraft, don't spawn another
-        return [];
-    }
+    // Only apply STAR-specific logic to arrival routes (STARs)
+    // Check if this is an arrival route by seeing if it ends with an airport ICAO
+    // Arrival routes typically end with airport ICAO (e.g., "BETHL.GRNPA1.KLAS07R" ends with airport)
+    const isArrivalRoute = starName && !routeString.includes('..') && routeString.includes('.');
+    if (starName && isArrivalRoute) {
+        // For initial spawn (scenario start), limit to 1 aircraft per STAR route
+        if (spawnedStarRoutes.has(starName)) {
+            // This STAR has already spawned an initial aircraft, don't spawn another
+            return [];
+        }
 
-    // 70% chance of spawning initial aircraft (to prevent approach overload with many STARs)
-    const spawnChance = Math.random() * 100;
+        // 50% chance of spawning initial aircraft (to prevent approach overload with many STARs)
+        const spawnChance = Math.random() * 100;
 
-    if (spawnChance > 70) {
-        // Don't spawn initial aircraft for this route
-        return [];
-    }
+        if (spawnChance > 50) {
+            // Don't spawn initial aircraft for this route
+            return [];
+        }
 
-    // Mark this STAR as having spawned an initial aircraft
-    if (starName) {
+        // Mark this STAR as having spawned an initial aircraft
         spawnedStarRoutes.add(starName);
     }
+
+    // Check if STAR is too close to ATC boundary (< 30nm)
+    // If so, only spawn at the first fix, not along the route
+    const isCloseToBoundary = effectiveTotalDistance < 30;
 
     // Random distance from 5-30 NM from boundary for those that do spawn
     const distanceFromBoundary = Math.random() * 25 + 5; // 5-30 NM from boundary
@@ -345,35 +451,67 @@ const _assembleSpawnOffsets = (entrailDistance, totalDistance = 0, routeString =
         smallestIntervalNm = largestIntervalNm;
     }
 
-    // Generate spawn positions along the route with route-specific variation
-    const spawnOffsets = [offsetClosestToAirspace];
-    let distanceAlongRoute = offsetClosestToAirspace;
+    // Generate spawn positions along the route with proximity-aware spacing
+    const spawnOffsets = [];
 
-    // distance between successive arrivals in nm
-    while (distanceAlongRoute > smallestIntervalNm) {
-        // Use random interval for more natural spacing
-        const interval = Math.random() * (largestIntervalNm - smallestIntervalNm) + smallestIntervalNm;
-        distanceAlongRoute -= interval;
-
-        if (distanceAlongRoute < smallestIntervalNm) {
-            break;
+    // Helper function to check if a position is safe to spawn at
+    const isSafeToSpawn = (offset) => {
+        if (!waypointModelList || waypointModelList.length === 0 || !aircraftController) {
+            return true; // If we can't check proximity, allow spawn
         }
 
-        // Add random offset to each position to break the pattern
-        const positionOffset = Math.random() * 10 + 2; // 2-12 NM offset per position
-        const adjustedPosition = Math.max(0, distanceAlongRoute + positionOffset);
-        spawnOffsets.push(adjustedPosition);
+        const position = _calculatePositionAlongRoute(waypointModelList, offset);
+        if (!position) {
+            return false; // Invalid position
+        }
+
+        return !_checkAircraftProximity(position, aircraftController, 15);
+    };
+
+    // If STAR is too close to boundary, only spawn at the first fix
+    if (isCloseToBoundary) {
+        if (isSafeToSpawn(0)) {
+            spawnOffsets.push(0); // Only at the first fix
+        }
+    } else {
+        // Try to spawn at boundary first
+        if (isSafeToSpawn(offsetClosestToAirspace)) {
+            spawnOffsets.push(offsetClosestToAirspace);
+        }
+
+        let distanceAlongRoute = offsetClosestToAirspace;
+        let attempts = 0;
+        const maxAttempts = 10; // Prevent infinite loops
+
+        // distance between successive arrivals in nm
+        while (distanceAlongRoute > smallestIntervalNm && attempts < maxAttempts) {
+            attempts += 1;
+
+            // Use random interval for more natural spacing
+            const interval = Math.random() * (largestIntervalNm - smallestIntervalNm) + smallestIntervalNm;
+            distanceAlongRoute -= interval;
+
+            if (distanceAlongRoute < smallestIntervalNm) {
+                break;
+            }
+
+            // Add random offset to each position to break the pattern
+            const positionOffset = Math.random() * 10 + 2; // 2-12 NM offset per position
+            const adjustedPosition = Math.max(0, distanceAlongRoute + positionOffset);
+
+            // Only add if it's safe to spawn there
+            if (isSafeToSpawn(adjustedPosition)) {
+                spawnOffsets.push(adjustedPosition);
+            }
+        }
+
+        // Try to spawn an aircraft at the first fix of the route
+        if (isSafeToSpawn(0)) {
+            spawnOffsets.push(0);
+        }
     }
 
-    // spawn an aircraft at the first fix of the route
-    spawnOffsets.push(0);
-    // Use the spawn offsets with route-specific variation
-    const adjustedSpawnOffsets = spawnOffsets;
-
-    // Since we're focusing on altitude separation, just return the spawn offsets as-is
-    const uniqueOffsets = adjustedSpawnOffsets;
-
-    return uniqueOffsets;
+    return spawnOffsets;
 };
 
 /**
@@ -433,9 +571,10 @@ const _calculateTotalDistanceAlongRoute = (waypointModelList, airport) => {
  * @function _preSpawn
  * @param spawnPatternJson {object|SpawnPatternModel}
  * @param airport {AirportModel}
+ * @param aircraftController {AircraftController}
  * @return {array<object>}
  */
-const _preSpawn = (spawnPatternJson, airport) => {
+const _preSpawn = (spawnPatternJson, airport, aircraftController = null) => {
     const spawnRate = spawnPatternJson.rate;
 
     if (spawnRate <= 0) {
@@ -455,7 +594,14 @@ const _preSpawn = (spawnPatternJson, airport) => {
     const waypointModelList = routeModel.waypoints;
     const totalDistance = _calculateTotalDistanceAlongRoute(waypointModelList, airport);
     // calculate number of offsets
-    const spawnOffsets = _assembleSpawnOffsets(entrailDistance, totalDistance, spawnPatternJson.route);
+    const spawnOffsets = _assembleSpawnOffsets(
+        entrailDistance,
+        totalDistance,
+        spawnPatternJson.route,
+        aircraftController,
+        waypointModelList,
+        airport
+    );
     // calculate heading, nextFix and position data to be used when creating an `AircraftModel` along a route
     const spawnPositions = _calculateSpawnPositionsAndAltitudes(
         waypointModelList,
@@ -484,9 +630,10 @@ const _preSpawn = (spawnPatternJson, airport) => {
  * @function buildPreSpawnAircraft
  * @param spawnPatternJson {object|SpawnPatternModel}
  * @param currentAirport {AirportModel}
+ * @param aircraftController {AircraftController}
  * @return {array<object>}
  */
-export const buildPreSpawnAircraft = (spawnPatternJson, currentAirport) => {
+export const buildPreSpawnAircraft = (spawnPatternJson, currentAirport, aircraftController = null) => {
     if (_isNil(spawnPatternJson) || _isNil(currentAirport)) {
         throw new TypeError('Invalid parameter(s) passed to buildPreSpawnAircraft. ' +
             'Expected spawnPatternJson and currentAirport to be defined, ' +
@@ -503,5 +650,5 @@ export const buildPreSpawnAircraft = (spawnPatternJson, currentAirport) => {
             `Expected instance of AirportModel, but received ${typeof currentAirport}`);
     }
 
-    return _preSpawn(spawnPatternJson, currentAirport);
+    return _preSpawn(spawnPatternJson, currentAirport, aircraftController);
 };

@@ -633,13 +633,6 @@
                     "DRANO",
                     ["FALPU", "A25|S190"],
                     "LPC"
-                ],
-                "GCLP03R": [
-                    ["REMGI", "A100+"],
-                    ["TOMOS", "A50+|S220"],
-                    "DRANO",
-                    ["FALPU", "A25|S190"],
-                    "LPC"
                 ]
             },
             "body": [],
@@ -654,14 +647,6 @@
             "altitude": 11000,
             "rwy": {
                 "GCLP03L": [
-                    ["ODEGI", "A110+"],
-                    ["MATUD", "A90+"],
-                    ["TOMOS", "A50+|S220"],
-                    "DRANO",
-                    ["FALPU", "A25|S190"],
-                    "LPC"
-                ],
-                "GCLP03R": [
                     ["ODEGI", "A110+"],
                     ["MATUD", "A90+"],
                     ["TOMOS", "A50+|S220"],
@@ -688,20 +673,11 @@
                     "DRANO",
                     ["FALPU", "A25|S190"],
                     "LPC"
-                ],
-                "GCLP03R": [
-                    "HIE",
-                    "TFS",
-                    ["TOMOS", "A50+|S220"],
-                    "DRANO",
-                    ["FALPU", "A25|S190"],
-                    "LPC"
                 ]
             },
             "body": [],
             "entryPoints": {
-                "HIE": ["HIE"],
-                "TFS": ["TFS", "TOMOS", "DRANO", "FALPU"]
+                "HIE": ["HIE"]
             },
             "draw": [["HIE", "TFS", "TOMOS", "DRANO", "FALPU"]]
         },
@@ -906,25 +882,6 @@
                 ]
             ]
         },
-        "PELIN1C": {
-            "icao": "PELIN1C",
-            "name": "Pelin One Charlie",
-            "altitude": 10000,
-            "rwy": {
-                "GCLP03L": [
-                    ["PELIN", "A100+"],
-                    ["TOMOS", "A50+|S220"],
-                    "DRANO",
-                    ["FALPU", "A25|S190"],
-                    "LPC"
-                ]
-            },
-            "body": [],
-            "entryPoints": {
-                "PELIN": ["PELIN"]
-            },
-            "draw": [["PELIN", "TOMOS", "DRANO", "FALPU"]]
-        },
         "SAMAR6C": {
             "icao": "SAMAR6C",
             "name": "Samar Six Charlie",
@@ -979,8 +936,8 @@
             "route": "GCLP03R.RASEP2A.RASEP",
             "altitude": 13000,
             "speed": "",
-            "method": "random",
-            "rate": 2,
+            "method": "sustained",
+            "rate": 1,
             "airlines": [["ibb", 10, ["AT72", "AT76"]]]
         },
         {
@@ -990,7 +947,7 @@
             "route": "GCLP03R.KOPUD1A.KOPUD",
             "altitude": 11000,
             "speed": "",
-            "method": "random",
+            "method": "sustained",
             "rate": 1,
             "airlines": [["ibb", 10, ["AT72", "AT76"]]]
         },
@@ -1001,7 +958,7 @@
             "route": "GCLP03R.ARACO4A.ARACO",
             "altitude": 10000,
             "speed": "",
-            "method": "random",
+            "method": "sustained",
             "rate": 1,
             "airlines": [["ibb", 10, ["AT72", "AT76"]]]
         },
@@ -1012,8 +969,8 @@
             "route": "GCLP03R.TFN4A.TFN",
             "altitude": 10000,
             "speed": "",
-            "method": "random",
-            "rate": 2,
+            "method": "sustained",
+            "rate": 1,
             "airlines": [["ibb", 10, ["AT72", "AT76"]]]
         },
         {
@@ -1023,7 +980,7 @@
             "route": "GCLP03R.LOMAS1A.LOMAS..TFS",
             "altitude": 10000,
             "speed": "",
-            "method": "random",
+            "method": "sustained",
             "rate": 1,
             "airlines": [["ibb", 10, ["AT72", "AT76"]]]
         },
@@ -1034,7 +991,7 @@
             "route": "GCLP03R.MOVAS1A.MOVAS",
             "altitude": 12000,
             "speed": "",
-            "method": "random",
+            "method": "sustained",
             "rate": 1,
             "airlines": [["ibb", 10, ["AT72", "AT76"]]]
         },
@@ -1045,7 +1002,7 @@
             "route": "GCLP03R.HIE5A.HIE",
             "altitude": 14000,
             "speed": "",
-            "method": "random",
+            "method": "sustained",
             "rate": 1,
             "airlines": [["ibb", 10, ["AT72", "AT76"]]]
         },
@@ -1056,7 +1013,7 @@
             "route": "GCLP03R.ODEGI2A.ODEGI",
             "altitude": 30000,
             "speed": "",
-            "method": "random",
+            "method": "sustained",
             "rate": 1,
             "airlines": [["ibb", 10, ["CRJX", "E190"]]]
         },
@@ -1067,7 +1024,7 @@
             "route": "GCLP03R.REMGI2A.REMGI",
             "altitude": [31000, 33000],
             "speed": "",
-            "method": "random",
+            "method": "sustained",
             "rate": 1,
             "airlines": [
                 ["ibb", 10, ["CRJX", "E190"]],
@@ -1081,7 +1038,7 @@
             "route": "GCLP03R.COSTI4A.COSTI",
             "altitude": [31000, 33000],
             "speed": "",
-            "method": "random",
+            "method": "sustained",
             "rate": 1,
             "airlines": [
                 ["ibb", 10, ["CRJX", "E190"]],
@@ -1095,8 +1052,8 @@
             "route": "GCLP03R.KORAL9A.KORAL",
             "altitude": [30000, 32000, 34000, 36000, 38000],
             "speed": "",
-            "method": "random",
-            "rate": 6,
+            "method": "sustained",
+            "rate": 2,
             "airlines": [
                 ["ibb", 8, ["CRJX", "E190"]],
                 ["aea", 12],
@@ -1122,8 +1079,8 @@
             "route": "GCLP03R.VASTO8A.VASTO",
             "altitude": [30000, 32000, 34000, 36000, 38000],
             "speed": "",
-            "method": "random",
-            "rate": 6,
+            "method": "sustained",
+            "rate": 2,
             "airlines": [
                 ["ibb", 10, ["CRJX", "E190"]],
                 ["aea", 15],
@@ -1152,8 +1109,8 @@
             "route": "GCLP03R.SAMAR8A.SAMAR",
             "altitude": [30000, 32000, 34000, 36000, 38000],
             "speed": "",
-            "method": "random",
-            "rate": 4,
+            "method": "sustained",
+            "rate": 1,
             "airlines": [
                 ["ryr", 10],
                 ["ezy", 9],
@@ -1169,8 +1126,8 @@
             "route": "GCLP03R.KONBA6A.KONBA",
             "altitude": [30000, 32000, 34000, 36000, 38000],
             "speed": "",
-            "method": "random",
-            "rate": 3,
+            "method": "sustained",
+            "rate": 1,
             "airlines": [
                 ["ryr", 10],
                 ["ezy", 9],
@@ -1212,8 +1169,9 @@
             "route": "REMGI.REMGI3C.GCLP03L",
             "altitude": 10000,
             "speed": 250,
-            "method": "random",
-            "rate": 3,
+            "method": "sustained",
+            "rate": 1,
+            "offset": 5,
             "airlines": [
                 ["ibb", 10, ["CRJX", "E190"]],
                 ["swq", 5]
@@ -1226,8 +1184,9 @@
             "route": "ODEGI.ODEGI3C.GCLP03L",
             "altitude": 11000,
             "speed": 280,
-            "method": "random",
-            "rate": 2,
+            "method": "sustained",
+            "rate": 1,
+            "offset": 10,
             "airlines": [["ibb", 1, ["CRJX", "E190"]]]
         },
         {
@@ -1237,20 +1196,10 @@
             "route": "HIE.HIE3C.GCLP03L",
             "altitude": 15000,
             "speed": 280,
-            "method": "random",
-            "rate": 1,
+            "method": "sustained",
+            "rate": 0.5,
+            "offset": 0,
             "airlines": [["ibb", 1, ["AT72", "AT76"]]]
-        },
-        {
-            "origin": "",
-            "destination": "GCLP",
-            "category": "arrival",
-            "route": "TFS.HIE3C.GCLP03L",
-            "altitude": 11000,
-            "speed": 280,
-            "method": "random",
-            "rate": 4,
-            "airlines": [["ibb", 1, ["CRJX", "E190"]]]
         },
         {
             "origin": "",
@@ -1259,8 +1208,9 @@
             "route": "COSTI.COSTI1Z.GCLP03L",
             "altitude": 10000,
             "speed": 250,
-            "method": "random",
-            "rate": 3,
+            "method": "sustained",
+            "rate": 1,
+            "offset": 20,
             "airlines": [
                 ["ibb", 8, ["CRJX", "E190"]],
                 ["swq", 3]
@@ -1273,8 +1223,9 @@
             "route": "LORPO.LORPO2Z.GCLP03L",
             "altitude": 10000,
             "speed": 250,
-            "method": "random",
-            "rate": 2,
+            "method": "sustained",
+            "rate": 1,
+            "offset": 25,
             "airlines": [
                 ["ibb", 6, ["AT72", "AT76"]],
                 ["swq", 2]
@@ -1287,8 +1238,9 @@
             "route": "RUSIK.RUSIK7Z.GCLP03L",
             "altitude": 10000,
             "speed": 250,
-            "method": "random",
-            "rate": 4,
+            "method": "sustained",
+            "rate": 1.5,
+            "offset": 35,
             "airlines": [
                 ["ibb", 6, ["CRJX", "E190"]],
                 ["aea", 8],
@@ -1305,8 +1257,9 @@
             "route": "TERTO.TERTO9Z.GCLP03L",
             "altitude": 10000,
             "speed": 250,
-            "method": "random",
-            "rate": 3,
+            "method": "sustained",
+            "rate": 1,
+            "offset": 40,
             "airlines": [
                 ["ibb", 5, ["CRJX", "E190"]],
                 ["aea", 6],
@@ -1323,8 +1276,9 @@
             "route": "ESIQE.ESIQE1C.GCLP03L",
             "altitude": 10000,
             "speed": 250,
-            "method": "random",
-            "rate": 2,
+            "method": "sustained",
+            "rate": 1,
+            "offset": 45,
             "airlines": [
                 ["ibb", 6, ["AT72", "AT76"]],
                 ["swq", 1]
@@ -1337,8 +1291,9 @@
             "route": "KONBA.KONBA6C.GCLP03L",
             "altitude": 10000,
             "speed": 250,
-            "method": "random",
-            "rate": 3,
+            "method": "sustained",
+            "rate": 1,
+            "offset": 50,
             "airlines": [
                 ["ibb", 2, ["CRJX", "E190"]],
                 ["ryr", 8],
@@ -1354,8 +1309,9 @@
             "route": "ORTIS.ORTIS6C.GCLP03L",
             "altitude": 10000,
             "speed": 250,
-            "method": "random",
-            "rate": 3,
+            "method": "sustained",
+            "rate": 1,
+            "offset": 55,
             "airlines": [
                 ["ibb", 2, ["CRJX", "E190"]],
                 ["vlg", 7],
@@ -1368,25 +1324,12 @@
             "origin": "",
             "destination": "GCLP",
             "category": "arrival",
-            "route": "PELIN.PELIN1C.GCLP03L",
-            "altitude": 10000,
-            "speed": 250,
-            "method": "random",
-            "rate": 2,
-            "airlines": [
-                ["ibb", 5, ["AT72", "AT76"]],
-                ["swq", 1]
-            ]
-        },
-        {
-            "origin": "",
-            "destination": "GCLP",
-            "category": "arrival",
             "route": "SAMAR.SAMAR6C.GCLP03L",
             "altitude": 10000,
             "speed": 250,
-            "method": "random",
-            "rate": 4,
+            "method": "sustained",
+            "rate": 1.5,
+            "offset": 60,
             "airlines": [
                 ["ibb", 5, ["CRJX", "E190"]],
                 ["aea", 8],
@@ -1403,8 +1346,9 @@
             "route": "YELBE.YELBE2C.GCLP03L",
             "altitude": 10000,
             "speed": 250,
-            "method": "random",
-            "rate": 2,
+            "method": "sustained",
+            "rate": 1,
+            "offset": 65,
             "airlines": [
                 ["ibb", 5, ["CRJX", "E190"]],
                 ["swq", 1]
