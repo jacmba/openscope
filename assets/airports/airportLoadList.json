@@ -137,8 +137,15 @@
     },
     {
         "icao": "gclp",
-        "level": "medium",
+        "level": "hard",
         "name": "Gran Canaria Gando International Airport",
+        "premium": false,
+        "disabled": false        
+    },
+    {
+        "icao": "gchi",
+        "level": "beginner",
+        "name": "El Hierro 'Los Cangrejos'Airport",
         "premium": false,
         "disabled": false        
     },

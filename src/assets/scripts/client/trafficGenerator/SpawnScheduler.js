@@ -129,7 +129,14 @@ class SpawnScheduler {
      * @return {array}
      */
     createNextSchedule(spawnPatternModel) {
+        console.log(`[SCHEDULER DEBUG] Creating schedule for route: ${spawnPatternModel.routeString}, method: ${spawnPatternModel.method}, rate: ${spawnPatternModel.rate}`);
         const delay = spawnPatternModel.getNextDelayValue(TimeKeeper.accumulatedDeltaTime);
+        console.log(`[SCHEDULER DEBUG] Calculated delay: ${delay} seconds`);
+
+        if (delay === undefined || delay === null || delay <= 0) {
+            console.error(`[SCHEDULER DEBUG] Invalid delay value: ${delay} for route: ${spawnPatternModel.routeString}`);
+            return null;
+        }
 
         return this._createTimeout(spawnPatternModel, delay);
     }

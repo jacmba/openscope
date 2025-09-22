@@ -839,6 +839,9 @@ export default class SpawnPatternModel extends BaseModel {
         const minimumDelay = this._calculateMinimumDelayFromSpeed();
         const averageDelay = TIME.ONE_HOUR_IN_SECONDS / this.rate;
 
+        console.log(`[SUSTAINED DEBUG] Route: ${this.routeString}, Rate: ${this.rate}, Speed: ${this.speed}`);
+        console.log(`[SUSTAINED DEBUG] Minimum delay: ${minimumDelay}, Average delay: ${averageDelay}`);
+
         if (averageDelay < minimumDelay) {
             console.error(`Too many aircraft requested on spawn pattern "${this.routeString}"`);
 
@@ -851,7 +854,10 @@ export default class SpawnPatternModel extends BaseModel {
         const minimumSustainedDelay = averageDelay - delayVariation;
         const maximumSustainedDelay = averageDelay + delayVariation;
 
-        return _random(minimumSustainedDelay, maximumSustainedDelay);
+        const result = _random(minimumSustainedDelay, maximumSustainedDelay);
+        console.log(`[SUSTAINED DEBUG] Delay variation: ${delayVariation}, Min: ${minimumSustainedDelay}, Max: ${maximumSustainedDelay}, Result: ${result}`);
+
+        return result;
     }
 
     /**
