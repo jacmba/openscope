@@ -16,7 +16,7 @@ RUN apk add --no-cache \
 COPY package.json package-lock.json* ./
 
 # Install dependencies with optimizations
-RUN npm ci --silent --no-audit --no-fund && \
+RUN npm install --silent --no-audit --no-fund && \
     npm cache clean --force
 
 # Copy source code
