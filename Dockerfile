@@ -16,7 +16,7 @@ RUN apk add --no-cache \
 COPY package.json package-lock.json* ./
 
 # Install dependencies with optimizations
-RUN npm ci --only=production --silent --no-audit --no-fund && \
+RUN npm ci --silent --no-audit --no-fund && \
     npm cache clean --force
 
 # Copy source code
@@ -37,7 +37,7 @@ WORKDIR /app
 
 # Install only production dependencies
 COPY package.json package-lock.json* ./
-RUN npm ci --only=production --silent --no-audit --no-fund && \
+RUN npm install --only=production --silent --no-audit --no-fund && \
     npm cache clean --force
 
 # Copy built application from builder stage
