@@ -12,11 +12,12 @@ RUN apk add --no-cache \
     g++ \
     git
 
-# Copy package files
-COPY package.json ./
+# Copy package files first for better layer caching
+COPY package.json package-lock.json* ./
 
-# Install dependencies
-RUN npm install --silent
+# Install dependencies with optimizations
+RUN npm ci --only=production --silent --no-audit --no-fund && \
+    npm cache clean --force
 
 # Copy source code
 COPY . .
@@ -35,8 +36,8 @@ RUN addgroup -g 1001 -S nodejs && \
 WORKDIR /app
 
 # Install only production dependencies
-COPY package.json ./
-RUN npm install --production --silent && \
+COPY package.json package-lock.json* ./
+RUN npm ci --only=production --silent --no-audit --no-fund && \
     npm cache clean --force
 
 # Copy built application from builder stage
