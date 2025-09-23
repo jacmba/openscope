@@ -25,7 +25,7 @@ jobs:
         node-version: 11.3
         cache: 'npm'
     - name: Install dependencies
-      run: npm ci --no-audit --no-fund
+      run: npm install --no-audit --no-fund
     - name: Find lint errors on changed lines
       run: npm run lint-diff HEAD~1..HEAD
   build:
@@ -40,7 +40,7 @@ jobs:
         node-version: 11.3
         cache: 'npm'
     - name: Install dependencies
-      run: npm ci --no-audit --no-fund
+      run: npm install --no-audit --no-fund
     - name: Build application
       run: npm run build
   test:
@@ -55,7 +55,7 @@ jobs:
         node-version: 11.3
         cache: 'npm'
     - name: Install dependencies
-      run: npm ci --no-audit --no-fund
+      run: npm install --no-audit --no-fund
     - name: Run test suite
       run: npm run test
 
